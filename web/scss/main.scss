@@ -1,0 +1,45 @@
+/* Font-faces */
+@font-face {
+    font-family: 'ms-light';
+	src: url('../fonts/montserrat/montserrat-light-webfont.eot');    
+	src: url('../fonts/montserrat/montserrat-light-webfont.eot?#iefix') format('embedded-opentype'),         
+	url('../fonts/montserrat/montserrat-light-webfont.woff2') format('woff2'),         
+	url('../fonts/montserrat/montserrat-light-webfont.woff') format('woff'),         
+	url('../fonts/montserrat/montserrat-light-webfont.ttf') format('truetype'),         
+	url('../fonts/montserrat/montserrat-light-webfont.svg#montserratlight') format('svg');    
+	font-weight: normal;    
+	font-style: normal;
+}
+
+@font-face {
+    font-family: 'ms-regular';    
+	src: url('../fonts/montserrat/montserrat-regular-webfont.eot');    
+	src: url('../fonts/montserrat/montserrat-regular-webfont.eot?#iefix') format('embedded-opentype'),         
+	url('../fonts/montserrat/montserrat-regular-webfont.woff2') format('woff2'),         
+	url('../fonts/montserrat/montserrat-regular-webfont.woff') format('woff'),         
+	url('../fonts/montserrat/montserrat-regular-webfont.ttf') format('truetype'),    
+	url('../fonts/montserrat/montserrat-regular-webfont.svg#montserratregular') format('svg');
+	font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'ds-regular';    
+	src: url('../fonts/droidserif/droidserif-regular-webfont.eot');    
+	src: url('../fonts/droidserif/droidserif-regular-webfont.eot?#iefix') format('embedded-opentype'),         
+	url('../fonts/droidserif/droidserif-regular-webfont.woff2') format('woff2'),         
+	url('../fonts/droidserif/droidserif-regular-webfont.woff') format('woff'),         
+	url('../fonts/droidserif/droidserif-regular-webfont.ttf') format('truetype'),         
+	url('../fonts/droidserif/droidserif-regular-webfont.svg#droid_serifregular') format('svg');
+	font-weight: normal;
+    font-style: normal;
+}
+
+/* Variables */
+$font-family-headline: 'ms-regular', Arial, Helvetica, sans-serif;
+$font-family-date: 'ms-light', Arial, Helvetica, sans-serif;
+$font-family-content: 'ds-regular', Times, serif;
+
+body {
+	background-color: red;
+}
