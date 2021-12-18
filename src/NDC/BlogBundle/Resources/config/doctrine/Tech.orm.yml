@@ -1,0 +1,18 @@
+NDC\BlogBundle\Entity\Tech:
+    type: entity
+    table: ndc_tech
+    repositoryClass: NDC\BlogBundle\Repository\TechRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            length: 100
+
+        color:
+            type: string
+            length: 6

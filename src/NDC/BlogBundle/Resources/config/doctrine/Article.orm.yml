@@ -1,0 +1,50 @@
+NDC\BlogBundle\Entity\Article:
+    type: entity
+    table: ndc_article
+    repositoryClass: NDC\BlogBundle\Repository\ArticleRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        title:
+            type: string
+            length: 255
+
+        createdAt:
+            column: created_at
+            type: date
+            gedmo:
+                timestampable:
+                    on: create
+
+        updatedAt:
+            column: updated_at
+            type: datetime
+            gedmo:
+                timestampable:
+                    on: update
+
+
+    manyToOne:
+        author:
+            targetEntity: NDC\UserBundle\Entity\User
+            fetch: EAGER
+            nullable: false
+            gedmo:
+                blameable:
+                    on: create
+
+    manyToMany:
+        techs:
+            targetEntity: NDC\BlogBundle\Entity\Tech
+            joinTable:
+                name: ndc_article_tech_relationship
+                joinColumns:
+                    article_id:
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    tech_id:
+                        referencedColumnName: id
