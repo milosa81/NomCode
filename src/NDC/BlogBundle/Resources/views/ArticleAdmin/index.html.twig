@@ -1,0 +1,37 @@
+{% extends 'NDCBlogBundle:ArticleAdmin:layout.html.twig' %}
+
+{% block body %}
+    <table class="table table-bordered table-striped table-condensed table-hover">
+        <tr>
+            <th>ID</th>
+            <th>Titre</th>
+            <th>Auteur</th>
+            <th>Créé le</th>
+            <th>Edité le</th>
+            <th>Actions</th>
+        </tr>
+        {% for article in articles %}
+            <tr>
+                <td>{{ article.id }}</td>
+                <td>{{ article }}</td>
+                <td>{{ article.author }}</td>
+                <td>{{ article.createdAt|fullDate }}</td>
+                <td>{{ article.updatedAt|fullDate }}</td>
+                <td>
+                    <div class="btn-group btn-group-xs">
+                        <a class="btn btn-default" href="{{ path('blog_article_admin_edit', {id: article.id}) }}">
+                            <i class="glyphicon glyphicon-pencil"></i>
+                            Editer
+                        </a>
+                        <a class="btn btn-danger">
+                            <i class="glyphicon glyphicon-remove"></i>
+                        </a>
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    {{ knp_pagination_render(articles) }}
+
+{% endblock %}

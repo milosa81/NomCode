@@ -41,11 +41,21 @@ class Article
     private $techs;
 
     /**
+     * @var string
+     */
+    private $slug;
+
+    /**
      * Constructor
      */
     public function __construct()
     {
         $this->techs = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->title;
     }
 
     /**
@@ -181,5 +191,28 @@ class Article
     public function getTechs()
     {
         return $this->techs;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     * @return Article
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
     }
 }

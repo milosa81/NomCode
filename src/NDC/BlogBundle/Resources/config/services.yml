@@ -1,7 +1,7 @@
 services:
     ndc_blog.date_extension:
-    class: NDC\BlogBundle\Twig\DateExtension
-    arguments:
-        - @translator
-    tags:
-        - { name: twig.extension }
+        class: NDC\BlogBundle\Twig\DateExtension
+        arguments:
+            - @translator
+        tags:
+            - { name: twig.extension }

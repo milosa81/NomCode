@@ -67,12 +67,14 @@ swiftmailer:
 jms_di_extra:
     locations:
         all_bundles: false
-        bundles: []
+        bundles: [NDCBlogBundle]
         directories: ["%kernel.root_dir%/../src"]
     automatic_controller_injections:
         properties:
             em: @doctrine.orm.entity_manager
             paginator: @knp_paginator
+            session: @session
+            uploadableManager: @stof_doctrine_extensions.uploadable.manager
 
 # Paginator Configuration
 knp_paginator:
@@ -82,6 +84,9 @@ knp_paginator:
         sort_field_name: sort
         sort_direction_name: direction
         distinct: true
+    template:
+        pagination: KnpPaginatorBundle:Pagination:twitter_bootstrap_v3_pagination.html.twig
+        sortable: KnpPaginatorBundle:Pagination:sortable_link.html.twig
 
 # User Configuration
 fos_user:

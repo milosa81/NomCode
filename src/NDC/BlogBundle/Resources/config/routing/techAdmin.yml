@@ -1,0 +1,11 @@
+blog_tech_admin_index:
+    pattern: /
+    defaults: { _controller: NDCBlogBundle:TechAdmin:index }
+
+blog_tech_admin_add:
+    pattern: /add
+    defaults: { _controller: NDCBlogBundle:TechAdmin:add }
+
+blog_tech_admin_edit:
+    pattern: /{id}/edit
+    defaults: { _controller: NDCBlogBundle:TechAdmin:edit }

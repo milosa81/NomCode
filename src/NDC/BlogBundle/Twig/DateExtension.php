@@ -3,14 +3,14 @@
 
 namespace NDC\BlogBundle\Twig;
 
-use Symfony\Component\Translation\Translator;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class DateExtension extends \Twig_Extension
 {
-    /** @var Translator */
+    /** @var TranslatorInterface */
     private $translator;
 
-    public function __construct(Translator $translator)
+    public function __construct(TranslatorInterface $translator)
     {
         $this->translator = $translator;
     }

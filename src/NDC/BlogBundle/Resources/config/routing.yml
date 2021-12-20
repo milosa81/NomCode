@@ -1,0 +1,7 @@
+ndc_blog_bundle_article_admin:
+    resource: routing/articleAdmin.yml
+    prefix: /admin/articles
+
+ndc_blog_bundle_tech_admin:
+    resource: routing/techAdmin.yml
+    prefix: /admin/techs

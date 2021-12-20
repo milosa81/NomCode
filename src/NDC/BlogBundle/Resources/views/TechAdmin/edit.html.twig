@@ -1,0 +1,14 @@
+{% extends 'NDCBlogBundle:TechAdmin:layout.html.twig' %}
+
+{% block breadcrumb %}
+    {{ parent() }}
+    {{ helper.breadcrumb(null, tech) }}
+    {{ helper.breadcrumb(null, 'Editer') }}
+{% endblock %}
+
+{% block body %}
+    <h1>Editer une techno</h1>
+
+    {% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
+    {{ form(form) }}
+{% endblock %}

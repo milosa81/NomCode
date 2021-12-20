@@ -1,6 +1,18 @@
+index:
+    path: /
+    defaults:
+        _controller: FrameworkBundle:Template:template
+        template:    '::index.html.twig'
+
 ndc_blog_bundle:
     resource: "@NDCBlogBundle/Resources/config/routing.yml"
     prefix:   /
+
+ndc_admin_index:
+    path: /admin
+    defaults:
+        _controller: FrameworkBundle:Template:template
+        template: '::admin.html.twig'
 
 fos_user_bundle:
     resource: "@FOSUserBundle/Resources/config/routing/all.xml"

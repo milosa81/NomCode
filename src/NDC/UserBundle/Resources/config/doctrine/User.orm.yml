@@ -8,3 +8,8 @@ NDC\UserBundle\Entity\User:
             id: true
             generator:
                 strategy: AUTO
+
+    fields:
+        color:
+            type: string
+            length: 6

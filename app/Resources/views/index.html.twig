@@ -1,5 +1,143 @@
 {% extends '::base.html.twig' %}
 
 {% block body %}
-let's write the body here
+
+<!-- fake data -->
+
+{% set colors = ['655492', 'C15B68', '80CED7', '76C46F'] %}
+{% set author = {
+	'photo': 'https://dl.dropboxusercontent.com/u/18517066/nomdecode/author.png',
+	'name': 'Jean-Elie',
+	'color': colors[0]
+} %}
+{% set categories = [
+	{
+		'name': "Symfony",
+		'img': 'https://dl.dropboxusercontent.com/u/18517066/nomdecode/categories/symfony.png'
+	},
+	{
+		'name': "PHP",
+		'img': 'https://dl.dropboxusercontent.com/u/18517066/nomdecode/categories/php.png'
+	},
+	{
+		'name': "JS",
+		'img': 'https://dl.dropboxusercontent.com/u/18517066/nomdecode/categories/js.png'
+	}
+] %}
+{% set article_listed = {
+	'author': author,
+	'categories': categories,
+	'date': date(),
+	'illustration': 'https://dl.dropboxusercontent.com/u/18517066/nomdecode/fond.jpg',
+	'title': 'Le plus beau titre possible, gros bisous les enfants'
+} %}
+{% set article = {
+	'author': author,
+	'categories': categories,
+	'date': date(),
+	'illustration': 'https://unsplash.imgix.net/reserve/URG2BbWQQ9SAcqLuTOLp_BP7A9947.jpg',
+	'title': 'Le plus beau titre possible, gros bisous les enfants',
+	'content': '
+	<h1>HTML Ipsum Presents</h1>
+	       
+	<p><strong>Pellentesque habitant morbi tristique</strong> senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. <em>Aenean ultricies mi vitae est.</em> Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, <code>commodo vitae</code>, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. <a href="#">Donec non enim</a> in turpis pulvinar facilisis. Ut felis.</p>
+
+	<h2>Header Level 2</h2>
+		       
+	<ol>
+	   <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
+	   <li>Aliquam tincidunt mauris eu risus.</li>
+	</ol>
+
+	<img src="https://dl.dropboxusercontent.com/u/18517066/nomdecode/fond.jpg">
+	       
+	<p><strong>Pellentesque habitant morbi tristique</strong> senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. <em>Aenean ultricies mi vitae est.</em> Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, <code>commodo vitae</code>, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. <a href="#">Donec non enim</a> in turpis pulvinar facilisis. Ut felis.</p>
+	<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>
+
+	<img src="https://unsplash.imgix.net/reserve/O7A9fAvYSXC7NTdz8gLQ_IMGP1039.jpg">
+
+	<blockquote><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus magna. Cras in mi at felis aliquet congue. Ut a est eget ligula molestie gravida. Curabitur massa. Donec eleifend, libero at sagittis mollis, tellus est malesuada tellus, at luctus turpis elit sit amet quam. Vivamus pretium ornare est.</p></blockquote>
+
+	<h3>Header Level 3</h3>
+
+	<ul>
+	   <li>Morbi in sem quis dui placerat ornare. Pellentesque odio nisi, euismod in, pharetra a, ultricies in, diam. Sed arcu. Cras consequat.</li>
+	   <li>Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus.</li>
+	   <li>Phasellus ultrices nulla quis nibh. Quisque a lectus. Donec consectetuer ligula vulputate sem tristique cursus. Nam nulla quam, gravida non, <mark>commodo a</mark>, sodales sit amet, nisi.</li>
+	   <li>Pellentesque fermentum dolor. Aliquam quam lectus, facilisis auctor, ultrices ut, elementum vulputate, nunc.</li>
+	</ul>
+            
+
+	<pre class="line-numbers"><code class="language-javascript">
+function mapFromImage(img) {
+    var c = document.createElement("canvas");
+    var ctx = c.getContext("2d");
+    c.width = img.width;
+    c.height = img.height;
+    ctx.drawImage(img,0,0);
+    var imgData = ctx.getImageData(0,0,c.width,c.height);ctx.getImageData(0,0,c.width,c.height);ctx.getImageData(0,0,c.width,c.height);
+
+    plan = [];
+    for (var y = 0; y < c.height; y++) {
+      plan[y] = [];
+        for (var x = 0; x < c.width ; x++) { 
+            data = getPixel(imgData, x, y);
+            plan[y][x] = couleurVersTile(data);
+        }
+    };
+    ctx.putImageData(imgData,0,0);
+
+    return plan;
+}</code></pre>'
+} %}
+
+<section class="left">
+	<nav>
+		<div class="logo"></div>
+		
+	</nav>
+
+	<section class="vignettes scrollbar-left">
+		<div class="opacity-cache"></div>
+		{% for i in 0..40 %}
+			{% set this_color = random(colors) %}
+			<div class="vignette" data-article-id="{{ i }}">
+				<a href="#article">
+					<div class="illustration" style="background-color:#{{ this_color }};"></div>
+					<div class="title"><span>{{ article_listed.title }}</span></div>
+				</a>
+				<div class="triangle" style="border-color:transparent transparent #{{ this_color }} transparent;"></div>
+				<div class="author">
+					<a href="#author" class="photo">
+						<img src="{{ article_listed.author.photo }}" alt="">
+					</a>
+				</div>
+				<div class="categories">
+					{% for category in categories %}
+						<a href="#cat"><img src="{{ category.img }}" alt=""></a>
+					{% endfor %}
+				</div>
+			</div>
+		{% endfor %}
+	</section>
+</section>
+
+<article>
+	{% include 'article.html.twig' %}
+</article>
+{% endblock %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link rel="stylesheet" href="{{ asset('css/scrollbar.css') }}">
+<link rel="stylesheet" href="{{ asset('css/prism.css') }}">
+<link href='http://fonts.googleapis.com/css?family=Roboto+Slab:700,400' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Roboto:700,400,300' rel='stylesheet' type='text/css'>
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+<script src="{{ asset('js/scrollbar.min.js') }}"></script>
+<script src="{{ asset('js/prism.min.js') }}"></script>
+<script src="{{ asset('js/scripts.js') }}"></script>
 {% endblock %}

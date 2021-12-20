@@ -25,6 +25,23 @@ class Tech
     private $color;
 
     /**
+     * @var string
+     */
+    private $slug;
+
+    private $file;
+
+    /**
+     * @var string
+     */
+    private $path;
+
+    public function __toString()
+    {
+        return $this->name;
+    }
+
+    /**
      * Get id
      *
      * @return integer
@@ -76,6 +93,73 @@ class Tech
     public function setColor($color)
     {
         $this->color = $color;
+
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     * @return Tech
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFile()
+    {
+        return $this->file;
+    }
+
+    /**
+     * @param mixed $file
+     */
+    public function setFile($file)
+    {
+        $this->file = $file;
+    }
+
+    /**
+     * Get path
+     *
+     * @return string
+     */
+    public function getPath()
+    {
+        return $this->path;
+    }
+
+    public function getWebPath()
+    {
+        return substr($this->path, strpos($this->path, 'app/../web/') + 11);
+    }
+
+    /**
+     * Set path
+     *
+     * @param string $path
+     * @return Tech
+     */
+    public function setPath($path)
+    {
+        $this->path = $path;
 
         return $this;
     }

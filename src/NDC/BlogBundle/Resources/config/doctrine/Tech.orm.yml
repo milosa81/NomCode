@@ -2,6 +2,10 @@ NDC\BlogBundle\Entity\Tech:
     type: entity
     table: ndc_tech
     repositoryClass: NDC\BlogBundle\Repository\TechRepository
+    gedmo:
+        uploadable:
+            allowOverwrite: true
+            filenameGenerator: SHA1
     id:
         id:
             type: integer
@@ -13,6 +17,19 @@ NDC\BlogBundle\Entity\Tech:
             type: string
             length: 100
 
+        slug:
+            type: string
+            length: 100
+            gedmo:
+                slug:
+                    fields:
+                        - name
+
         color:
             type: string
             length: 6
+
+        path:
+            type: string
+            gedmo:
+                - uploadableFilePath

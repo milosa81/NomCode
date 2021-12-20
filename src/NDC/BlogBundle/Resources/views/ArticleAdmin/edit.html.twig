@@ -1,0 +1,14 @@
+{% extends 'NDCBlogBundle:ArticleAdmin:layout.html.twig' %}
+
+{% block breadcrumb %}
+    {{ parent() }}
+    {{ helper.breadcrumb(null, article) }}
+    {{ helper.breadcrumb(null, 'Editer') }}
+{% endblock %}
+
+{% block body %}
+    <h1>Editer un article</h1>
+
+    {% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
+    {{ form(form) }}
+{% endblock %}

@@ -1,45 +1,316 @@
-/* Font-faces */
-@font-face {
-    font-family: 'ms-light';
-	src: url('../fonts/montserrat/montserrat-light-webfont.eot');    
-	src: url('../fonts/montserrat/montserrat-light-webfont.eot?#iefix') format('embedded-opentype'),         
-	url('../fonts/montserrat/montserrat-light-webfont.woff2') format('woff2'),         
-	url('../fonts/montserrat/montserrat-light-webfont.woff') format('woff'),         
-	url('../fonts/montserrat/montserrat-light-webfont.ttf') format('truetype'),         
-	url('../fonts/montserrat/montserrat-light-webfont.svg#montserratlight') format('svg');    
-	font-weight: normal;    
-	font-style: normal;
+@import "typography";
+@import "colors";
+
+
+// variables
+$height-author: 64px;
+$height-header: 40vh;
+$size-photo-author-vignette: 40px;
+$size-photo-author-article: 90px;
+$font-size-base: 1rem;
+$font-size-headline-vignette: 1.3rem;
+$font-size-headline-article: 3rem;
+$size-icon-category: 30px;
+$width-icon-menu: 28px;
+$width-left-menu: 50px;
+// IF WIDTH CHANGED IN PERCENTAGE -> EDIT WIDTH OF VIGNETTES IN VW
+$width-article: 72%;
+$width-vignettes: 100% - $width-article;
+
+// sizes for media queries
+$size-limit-little-screen: 1160px;
+
+// imports needing variables
+@import "article_theme";
+
+
+
+// mixins
+@mixin author-photo($diameter) {
+	width: $diameter;
+	height: $diameter;
+	border-radius: 50%;
 }
 
-@font-face {
-    font-family: 'ms-regular';    
-	src: url('../fonts/montserrat/montserrat-regular-webfont.eot');    
-	src: url('../fonts/montserrat/montserrat-regular-webfont.eot?#iefix') format('embedded-opentype'),         
-	url('../fonts/montserrat/montserrat-regular-webfont.woff2') format('woff2'),         
-	url('../fonts/montserrat/montserrat-regular-webfont.woff') format('woff'),         
-	url('../fonts/montserrat/montserrat-regular-webfont.ttf') format('truetype'),    
-	url('../fonts/montserrat/montserrat-regular-webfont.svg#montserratregular') format('svg');
-	font-weight: normal;
-    font-style: normal;
+
+// rules
+html, body {
+	height: 100%;
 }
 
-@font-face {
-    font-family: 'ds-regular';    
-	src: url('../fonts/droidserif/droidserif-regular-webfont.eot');    
-	src: url('../fonts/droidserif/droidserif-regular-webfont.eot?#iefix') format('embedded-opentype'),         
-	url('../fonts/droidserif/droidserif-regular-webfont.woff2') format('woff2'),         
-	url('../fonts/droidserif/droidserif-regular-webfont.woff') format('woff'),         
-	url('../fonts/droidserif/droidserif-regular-webfont.ttf') format('truetype'),         
-	url('../fonts/droidserif/droidserif-regular-webfont.svg#droid_serifregular') format('svg');
-	font-weight: normal;
-    font-style: normal;
+html {
+	font-size: $font-size-base;
 }
-
-/* Variables */
-$font-family-headline: 'ms-regular', Arial, Helvetica, sans-serif;
-$font-family-date: 'ms-light', Arial, Helvetica, sans-serif;
-$font-family-content: 'ds-regular', Times, serif;
 
 body {
-	background-color: red;
+	background-color: $background-color-base;
+	color: $font-color-base;
+
+	font-family: $font-family-base;
+}
+
+a {
+	color: inherit;
+}
+
+nav, section.vignettes, article {
+	float: left;
+	height: 100vh;
+	overflow:hidden;
+}
+
+nav {
+	width: $width-left-menu;
+	background-color: $background-color-menu;
+	z-index: 20;
+
+	.logo {
+		height: $width-left-menu;
+		background-color: $background-color-menu-icone;
+	}
+}
+
+section.left {
+	width: $width-vignettes;
+	float: left;
+	position: relative;
+
+	section.vignettes {
+		width: 100%;
+		margin-left: $width-left-menu;
+		padding-right: $width-left-menu;
+		position: absolute;
+		box-sizing: border-box;
+		top:0;
+		display: flex;
+		flex-direction: column;
+		align-items: stretch;
+
+		.opacity-cache {
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			right: 0;
+			left: 0;
+			pointer-events: none;
+			background-color: rgba(26, 34, 37, 0);
+			transition: all 0.2s ease;
+			z-index: 10;
+
+			&.active {
+				background-color: rgba(26, 34, 37, 0.5);
+			}
+		}
+
+		.vignette {
+			position: relative;
+			height: 130px;
+			min-height: 130px;
+			background-color: #fff;
+			font-weight: bold;
+			transition: all 0.1s ease-in-out;
+			font-family: $font-family-base;
+
+			margin: auto 12%;
+			margin-top: 50px;
+			font-size: $font-size-headline-vignette;
+			@media screen and (max-width: $size-limit-little-screen) {
+				margin: auto 8%;
+				margin-top: 40px;
+				font-size: $font-size-headline-vignette*0.8;
+			}
+
+			&:hover, &.selected {
+				$transform-scale-vignette-hover: 1.1;
+			    -webkit-transform: scale($transform-scale-vignette-hover,$transform-scale-vignette-hover);
+			    transform: scale($transform-scale-vignette-hover,$transform-scale-vignette-hover);
+			}
+
+			&.selected {
+
+			}
+
+			.illustration {
+				background-color: #333;
+				height: 100%;
+				width: 15px;
+			}
+
+			.title {
+				position: absolute;
+				top: 0;
+				bottom: 0;
+				left: 0;
+				right: 0;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				overflow: hidden;
+
+				span {
+					width: 70%;
+					overflow: hidden;
+					max-height: $font-size-headline-vignette*3 + $font-size-headline-vignette*1.2;
+				}
+			}
+
+			.triangle {
+				position: absolute;
+				width: 0;
+				height: 0;
+				border-bottom: 55px solid red;
+				border-left: 55px solid transparent;
+				bottom: 0;
+				right: 0;
+				pointer-events: none;
+			}
+
+			.author {
+				position: absolute;
+				right: 0;
+				bottom: 0;
+				width: $size-photo-author-vignette;
+				height: $size-photo-author-vignette;
+				margin-bottom: $size-photo-author-vignette/4;
+				margin-right: $size-photo-author-vignette/4;
+
+
+				.photo {
+					display: inline-block;
+
+					img {
+						@include author-photo($size-photo-author-vignette);
+					}
+				}
+			}
+
+			.categories {
+				position: absolute;
+				right: 0;
+				top: 0;
+				display: flex;
+				height: $size-icon-category;
+				margin-top: - $size-icon-category/2;
+				pointer-events: none;
+				a {
+					margin-right: $size-icon-category/2;
+					position: relative;
+					pointer-events: auto;
+					img {
+						width: $size-icon-category;
+						height: $size-icon-category;
+					}
+				}
+			}
+		}
+	}
+}
+
+article {
+	background-color: $background-color-article;
+	width: $width-article;
+
+	a {
+		text-decoration: none;
+		position: inherit;
+	}
+
+	header {
+		height: $height-header;
+		position: relative;
+		min-height: $height-header;
+		background-size: cover;
+		background-position: 50% 0px;
+
+		&.no-illustration {
+			height: $height-author;
+		}
+
+		.author {
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			height: $height-author;
+			background-color: $color-author;
+			font-family: $font-family-author;
+
+			&.fixed {
+				width: $width-article;
+				position: fixed;
+				top: 0;
+				margin-left: 100% - $width-article;
+				z-index: 10;
+			}
+
+			.info {
+				margin: auto;
+				position: relative;
+				font-size: $font-size-base*1.3;
+				color: #fff;
+
+				width: $width-article;
+				@media screen and (max-width: $size-limit-little-screen) {
+					width: $width-article + 17%;
+				}
+
+				.photo {
+					display: inline-block;
+
+					img {
+						@include author-photo($size-photo-author-article);
+						margin-top: $height-author - ($size-photo-author-article/2);
+						display: inline-block;
+					}
+				}
+
+				& > span {
+					position: absolute;
+					line-height: $height-author;
+				}
+
+				.name {
+					margin-left: 20px;
+					white-space: nowrap;
+				}
+
+				.date {
+					right: 0;
+					font-size: $font-size-base;
+					font-style: italic;
+					font-weight: lighter;
+				}
+
+				.categories {
+					position: absolute;
+					display: flex;
+					flex-direction: column;
+					width: $size-icon-category;
+					margin-left: ($size-photo-author-article - $size-icon-category)/2;
+
+					a {
+						margin-top: $size-icon-category/3;
+						position: relative;
+
+						img {
+							width: $size-icon-category;
+							height: $size-icon-category;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	.content {
+		margin: auto;
+		padding-bottom: 80px;
+		padding-left: 5%;
+
+		width: 55%;
+		@media screen and (max-width: $size-limit-little-screen) {
+			width: 70%;
+			padding-left: 15%;
+		}
+	}
 }

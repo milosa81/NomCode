@@ -1,0 +1,14 @@
+{% extends '::admin.html.twig' %}
+
+{% block breadcrumb %}
+    {{ parent() }}
+    {{ helper.breadcrumb('blog_article_admin_index', 'Articles') }}
+{% endblock %}
+
+{% block search %}
+    {{ helper.search('blog_article_admin_index') }}
+{% endblock %}
+
+{% block actions %}
+    {{ helper.action('blog_article_admin_add', 'plus', 'Ajouter') }}
+{% endblock %}
