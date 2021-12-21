@@ -31,6 +31,9 @@ class ArticleType extends AbstractType
             ->add('createdAt', 'datetime', array(
                 'label' => 'Créé le',
             ))
+            ->add('html', 'textarea', array(
+                'label' => 'HTML',
+            ))
             ->add('Enregistrer', 'submit')
         ;
     }

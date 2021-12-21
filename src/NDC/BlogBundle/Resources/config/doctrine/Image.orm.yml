@@ -1,0 +1,20 @@
+NDC\BlogBundle\Entity\Image:
+    type: entity
+    table: ndc_image
+    repositoryClass: NDC\BlogBundle\Repository\ImageRepository
+    gedmo:
+        uploadable:
+            allowOverwrite: true
+            filenameGenerator: SHA1
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+
+        path:
+            type: string
+            gedmo:
+                - uploadableFilePath

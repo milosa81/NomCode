@@ -5,6 +5,7 @@
         <tr>
             <th>ID</th>
             <th>Titre</th>
+            <th>Technos</th>
             <th>Auteur</th>
             <th>Créé le</th>
             <th>Edité le</th>
@@ -14,6 +15,11 @@
             <tr>
                 <td>{{ article.id }}</td>
                 <td>{{ article }}</td>
+                <td>
+                    {% for tech in article.techs %}
+                        {{ helper.tech(tech) }}
+                    {% endfor %}
+                </td>
                 <td>{{ article.author }}</td>
                 <td>{{ article.createdAt|fullDate }}</td>
                 <td>{{ article.updatedAt|fullDate }}</td>

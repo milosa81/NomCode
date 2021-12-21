@@ -1,0 +1,12 @@
+body{
+    margin-top: 70px;
+}
+
+.tech{
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+    background: center;
+    background-size: cover;
+    display: inline-block;
+}

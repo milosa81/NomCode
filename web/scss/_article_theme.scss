@@ -1,12 +1,10 @@
-$padding-inline: 2px 4px;
-
 article .content {
 	a {
 		color: #1290ff;
 	}
 
 	li {
-		margin-bottom: 0.5rem;
+		margin-bottom: $margin-for-blocks;
 	}
 
 	h1.title {
@@ -20,29 +18,31 @@ article .content {
 	}
 
 	img {
-		align: center;
-		width: 100%;
+		display: block;
+		max-width: 100%;
+		margin: 0 auto;
 	}
 
 	// inline code
-	code {
+	*:not(pre) > code {
 		padding: $padding-inline;
 		font-size: 90%;
-		color: #c7254e;
-		background-color: #f9f2f4;
+		color: inherit;
+		background-color: #E0E0E0;
 		border-radius: 4px;
 	}
 
+	// block of code
 	pre {
 		border-radius: 4px;
+		margin: $margin-for-blocks 0;
+
+		-moz-tab-size: 4;
+		-o-tab-size: 4;
+		tab-size: 4;
 
 		code {
-			padding: 0;
-			font-size: inherit;
-			color: inherit;
-			background: inherit;
-			text-shadow: none;
-			font-size: 0.9rem;
+			padding: 0.8rem;
 		}
 	}
 
@@ -52,7 +52,7 @@ article .content {
 	}
 
 	blockquote {
-		padding: 0.5rem 2rem;
+		padding: $margin-for-blocks 2rem;
 		margin: 1rem 0;
 		border-left: 5px solid #eee;
 	}

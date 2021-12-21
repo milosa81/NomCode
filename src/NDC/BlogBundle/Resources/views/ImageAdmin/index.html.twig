@@ -1,0 +1,39 @@
+{% extends 'NDCBlogBundle:ImageAdmin:layout.html.twig' %}
+
+{% block body %}
+
+    <div class="row">
+        <div class="col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <i class="glyphicon glyphicon-plus"></i>
+                    Ajouter
+                </div>
+                <div class="panel-body" style="overflow: hidden">
+                    {% form_theme form 'bootstrap_3_layout.html.twig' %}
+                    {{ form(form) }}
+                </div>
+            </div>
+        </div>
+        {% for image in images %}
+            <div class="col-md-3">
+                <div class="thumbnail">
+                    <img src="{{ asset(image.webPath) }}">
+                    <div class="caption">
+                        <label for="rel-{{ image.id }}">Relatif</label>
+                        <input id="rel-{{ image.id }}" class="form-control" value="{{ asset(image.webPath) }}">
+                        <label for="abs-{{ image.id }}" style="margin-top: 10px">Absolu</label>
+                        <input id="abs-{{ image.id }}" class="form-control" value="{{ app.request.scheme ~'://' ~ app.request.httpHost ~ asset(image.webPath) }}">
+                        <a class="btn btn-danger btn-block" style="margin-top: 15px">
+                            <i class="glyphicon glyphicon-remove"></i>
+                            Supprimer
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% if (loop.index +1) %4 == 0 %}
+    </div><div class="row">
+            {% endif %}
+        {% endfor %}
+    </div>
+{% endblock %}

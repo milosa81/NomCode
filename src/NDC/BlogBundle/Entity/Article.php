@@ -46,6 +46,11 @@ class Article
     private $slug;
 
     /**
+     * @var string
+     */
+    private $html;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -212,6 +217,29 @@ class Article
     public function setSlug($slug)
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * Get html
+     *
+     * @return string
+     */
+    public function getHtml()
+    {
+        return $this->html;
+    }
+
+    /**
+     * Set html
+     *
+     * @param string $html
+     * @return Article
+     */
+    public function setHtml($html)
+    {
+        $this->html = $html;
 
         return $this;
     }

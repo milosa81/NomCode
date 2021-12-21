@@ -1,0 +1,24 @@
+{# {% if article.illustration is null %} #}
+{% if false %}
+	<header class="no-illustration">
+		<div class="author" style="background-color:#{{ article.author.color }};" data-bg-transparency="{{ article.author.color|opacity(0.6) }}" data-max-transparency="0.6">
+{% else %}
+	<header style="background-image:url({{ article.illustration|default('https://unsplash.imgix.net/reserve/URG2BbWQQ9SAcqLuTOLp_BP7A9947.jpg') }});">
+		<div class="author" style="background-color:{{ article.author.color|opacity(0.6) }};" data-bg-transparency="{{ article.author.color|opacity(0.6) }}" data-max-transparency="0.6">
+{% endif %}
+		<div class="info">
+			<a href="#" class="photo"><img src="{{ article.author.photo|default('https://dl.dropboxusercontent.com/u/18517066/nomdecode/author.png') }}" alt=""></a>
+			<span><a href="#" class="name">{{ article.author.username }}</a></span>
+			<span class="date">{{ article.createdAt|fullDate }}</span>
+			<div class="categories">
+				{% for tech in article.techs %}
+					<a href="#" style="background-color:#{{ tech.color }};"><img src="{{ asset(tech.webPath) }}" alt=""></a>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+</header>
+<div class="content">
+	<h1 class="title">{{ article.title }}</h1>
+	<div class="text">{{ article.html|raw }}</div>
+</div>

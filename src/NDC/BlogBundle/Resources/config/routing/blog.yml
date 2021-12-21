@@ -1,0 +1,7 @@
+blog_index:
+    pattern: /
+    defaults: { _controller: NDCBlogBundle:Blog:index }
+
+blog_article:
+    pattern: /articles/{id}/template
+    defaults: { _controller: NDCBlogBundle:Blog:article }

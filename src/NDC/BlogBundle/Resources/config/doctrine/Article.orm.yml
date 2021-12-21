@@ -35,6 +35,9 @@ NDC\BlogBundle\Entity\Article:
                 timestampable:
                     on: update
 
+        html:
+            type: text
+
 
     manyToOne:
         author:

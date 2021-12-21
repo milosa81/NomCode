@@ -1,0 +1,8 @@
+{% extends '::admin.html.twig' %}
+
+{% set hide_actions_dropdown = true %}
+
+{% block breadcrumb %}
+    {{ parent() }}
+    {{ helper.breadcrumb('blog_image_admin_index', 'Images') }}
+{% endblock %}

@@ -3,9 +3,14 @@
 namespace NDC\BlogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
+use JMS\Serializer\Annotation\VirtualProperty;
+use JMS\Serializer\Annotation\SerializedName;
 
 /**
  * Tech
+ * @ExclusionPolicy("all")
  */
 class Tech
 {
@@ -16,16 +21,19 @@ class Tech
 
     /**
      * @var string
+     * @Expose
      */
     private $name;
 
     /**
      * @var string
+     * @Expose
      */
     private $color;
 
     /**
      * @var string
+     * @Expose
      */
     private $slug;
 
@@ -146,6 +154,11 @@ class Tech
         return $this->path;
     }
 
+    /**
+     * @VirtualProperty
+     * @SerializedName("icon")
+     * @return string
+     */
     public function getWebPath()
     {
         return substr($this->path, strpos($this->path, 'app/../web/') + 11);

@@ -1,0 +1,58 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+
+{% set colors = ['655492', 'C15B68', '80CED7', '76C46F'] %}
+
+<section class="left">
+	<nav>
+		<div class="logo"></div>
+		
+	</nav>
+
+	<section class="vignettes scrollbar-left">
+		{# <div class="opacity-cache"></div> #}
+		{% for article in articles %}
+			{# {% set this_color = random(colors) %} #}
+			{% set this_color = article.author.color %}
+			<div class="vignette" style="border-color:#{{ this_color }};" data-article-id="{{ article.id }}" data-get="{{ path('blog_article', {id: article.id}) }}">
+				<a href="#article">
+					<div class="title"><span>{{ article.title }}</span></div>
+				</a>
+				<div class="triangle" style="border-color:transparent transparent #{{ this_color }} transparent;"></div>
+				<div class="author">
+					<a href="#author" class="photo">
+						<img src="{{ article.author.photo|default('https://dl.dropboxusercontent.com/u/18517066/nomdecode/author.png') }}" alt="">
+					</a>
+				</div>
+				<div class="categories">
+					{% for tech in article.techs %}
+						<a href="#" style="background-color:#{{ tech.color }};"><img src="{{ asset(tech.webPath) }}" alt=""></a>
+					{% endfor %}
+				</div>
+			</div>
+		{% endfor %}
+	</section>
+</section>
+
+<article data-article-id="{{ articles[0].id }}">
+	{{ render(controller('NDCBlogBundle:Blog:article', { 'id': articles[0].id })) }}
+</article>
+{% endblock %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link rel="stylesheet" href="{{ asset('css/scrollbar.css') }}">
+<link rel="stylesheet" href="{{ asset('css/monokai_sublime.highlight_theme.css') }}">
+<link href='http://fonts.googleapis.com/css?family=Roboto+Slab:700,400' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Roboto:700,400,300' rel='stylesheet' type='text/css'>
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+<script src="{{ asset('js/scrollbar.min.js') }}"></script>
+<script src="{{ asset('js/scripts.js') }}"></script>
+
+<script src="{{ asset('js/highlight.pack.js') }}"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+{% endblock %}
