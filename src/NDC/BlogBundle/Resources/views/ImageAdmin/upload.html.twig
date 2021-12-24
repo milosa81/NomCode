@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Upload</title>
+
+    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+</head>
+
+<body>
+
+<div class="container">
+    {% if success %}
+        Upload réussie !
+    {% else %}
+        Erreur
+    {% endif %}
+</div>
+
+<script type="text/javascript" src="{{ asset('js/jquery.min.js') }}"></script>
+<script type='text/javascript'>
+    window.parent.CKEDITOR.tools.callFunction({{ funcNum }}, '{{ app.request.scheme ~'://' ~ app.request.httpHost ~ asset(image.webPath) }}' {% if not success %}, 'Erreur'{% endif %});
+</script>
+
+</body>
+</html>

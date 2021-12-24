@@ -1,24 +1,55 @@
-{# {% if article.illustration is null %} #}
-{% if false %}
-	<header class="no-illustration">
-		<div class="author" style="background-color:#{{ article.author.color }};" data-bg-transparency="{{ article.author.color|opacity(0.6) }}" data-max-transparency="0.6">
-{% else %}
-	<header style="background-image:url({{ article.illustration|default('https://unsplash.imgix.net/reserve/URG2BbWQQ9SAcqLuTOLp_BP7A9947.jpg') }});">
-		<div class="author" style="background-color:{{ article.author.color|opacity(0.6) }};" data-bg-transparency="{{ article.author.color|opacity(0.6) }}" data-max-transparency="0.6">
-{% endif %}
-		<div class="info">
-			<a href="#" class="photo"><img src="{{ article.author.photo|default('https://dl.dropboxusercontent.com/u/18517066/nomdecode/author.png') }}" alt=""></a>
-			<span><a href="#" class="name">{{ article.author.username }}</a></span>
+{% extends '::base.html.twig' %}
+
+{% block title %}{{ article.title }} - {{ parent() }}{% endblock %}
+
+{% block body %}
+
+<header class="article">
+	<input type="text" class="search" placeholder="Chercher...">
+	<div class="top" style="background-color:#{{ article.techs[0].color }};background-image:url(https://dl.dropboxusercontent.com/u/18517066/nomdecode/jollyt.png);">
+	</div>
+	<div class="container text">
+		<h1>{{ article.title|capitalize }}</h1>
+		<span>{{ article.createdAt|fullDate }} - 5 commentaires</span>
+	</div>
+</header>
+<article class="long-text">{{ article.html|raw }}</article>
+<section class="comments">
+	<div class="container">
+		<h1>Commentaires</h1>
+		<div class="comment">
+			<a href="#author">
+				<img src="{{ article.author.photo|default('https://dl.dropboxusercontent.com/u/18517066/nomdecode/author.png') }}" class="author-img">
+			</a>
+			<a class="author" href="#author">Jean-Elie</a>
 			<span class="date">{{ article.createdAt|fullDate }}</span>
-			<div class="categories">
-				{% for tech in article.techs %}
-					<a href="#" style="background-color:#{{ tech.color }};"><img src="{{ asset(tech.webPath) }}" alt=""></a>
-				{% endfor %}
+			<div class="html long-text">
+				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero impedit, molestias repellendus sit. Libero, excepturi? Quas molestias nobis porro itaque, impedit eligendi beatae cum soluta quo numquam! Iure facere odio magnam aliquam reprehenderit eum sunt sapiente expedita molestiae praesentium minima pariatur libero eos rerum quaerat.</p>
+				<p>Dolor aliquam quo suscipit libero mollitia, optio pariatur qui obcaecati incidunt dolores necessitatibus quia modi, beatae aperiam impedit facilis sequi. Sint, vel.</p>
+			</div>
+		</div>
+		<div class="comment">
+			<a href="#author">
+				<img src="{{ article.author.photo|default('https://dl.dropboxusercontent.com/u/18517066/nomdecode/author.png') }}" class="author-img">
+			</a>
+			<a class="author" href="#author">Jean-Elie</a>
+			<span class="date">{{ article.createdAt|fullDate }}</span>
+			<div class="html long-text">
+				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero impedit, molestias repellendus sit. Libero, excepturi? Quas molestias nobis porro itaque, impedit eligendi beatae cum soluta quo numquam! Iure facere odio magnam aliquam reprehenderit eum sunt sapiente expedita molestiae praesentium minima pariatur libero eos rerum quaerat.</p>
 			</div>
 		</div>
 	</div>
-</header>
-<div class="content">
-	<h1 class="title">{{ article.title }}</h1>
-	<div class="text">{{ article.html|raw }}</div>
-</div>
+</section>
+{% endblock %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link rel="stylesheet" href="{{ asset('css/monokai_sublime.highlight_theme.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+<script src="{{ asset('js/scripts-article.js') }}"></script>
+<script src="{{ asset('js/highlight.pack.js') }}"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+{% endblock %}

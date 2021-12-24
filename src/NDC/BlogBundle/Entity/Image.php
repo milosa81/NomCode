@@ -48,6 +48,22 @@ class Image
     }
 
     /**
+     * @param mixed $file
+     */
+    public function setUpload($file)
+    {
+        $this->file = $file;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUpload()
+    {
+        return $this->file;
+    }
+
+    /**
      * Get path
      *
      * @return string

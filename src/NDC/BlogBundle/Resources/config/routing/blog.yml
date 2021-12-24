@@ -3,5 +3,8 @@ blog_index:
     defaults: { _controller: NDCBlogBundle:Blog:index }
 
 blog_article:
-    pattern: /articles/{id}/template
-    defaults: { _controller: NDCBlogBundle:Blog:article }
+    pattern: /article/{id}-{slug}
+    defaults: { _controller: NDCBlogBundle:Blog:article, slug:null }
+    requirements:
+        id: \d+
+        slug: "[a-zA-Z0-9-_/]+"

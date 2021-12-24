@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Choisir un fichier</title>
+
+    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+    <style type="text/css">
+        .preview{
+            display: inline-block;
+            width: 150px;
+            height: 150px;
+            background: center no-repeat;
+            background-size: contain;
+            margin: 5px;
+            cursor: pointer;
+            transition: all .3s;
+        }
+
+        .preview:hover{
+            box-shadow: 0 0 0 10px #7aaedb;
+            background-color: #7aaedb;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1 class="page-header">Choisir une image</h1>
+    <div class="row">
+        {% for image in images %}
+            <div class="preview" style="background-image:url({{ asset(image.webPath) }})" data-url="{{ app.request.scheme ~'://' ~ app.request.httpHost ~ asset(image.webPath) }}"></div>
+        {% endfor %}
+    </div>
+
+    {{ knp_pagination_render(images) }}
+</div>
+
+<script type="text/javascript" src="{{ asset('js/jquery.min.js') }}"></script>
+<script type='text/javascript'>
+    $(function(){
+        $('.preview').click(function(){
+            window.opener.CKEDITOR.tools.callFunction({{ funcNum }}, $(this).data('url'));
+            window.close();
+        });
+    });
+</script>
+
+</body>
+</html>

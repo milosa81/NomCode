@@ -155,6 +155,36 @@
 {% block javascripts %}
 <script type="text/javascript" src="{{ asset('js/jquery.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
+<script src="{{ asset('ckeditor/adapters/jquery.js') }}"></script>
+<script type="text/javascript">
+    $(function(){
+        $('[data-ckeditor]').ckeditor({
+            extraAllowedContent: 'code pre h1 h2 h3 h4',
+            contentsCss: '{{ asset('css/bootstrap.min.css') }}',
+            extraPlugins: 'resize,codesnippet,basicstyles,elementspath,justify,blockquote,codeTag,format,image,filebrowser',
+            format_tags: 'p;h1;h2;h3;h4',
+            removePlugins: 'about',
+            codeSnippet_languages: {
+                php: 'PHP',
+                javascript: 'JavaScript',
+                html: 'HTML',
+                yaml: 'YAML'
+            },
+            filebrowserImageBrowseUrl: '{{ path('blog_image_admin_browse') }}',
+            filebrowserImageUploadUrl: '{{ path('blog_image_admin_upload') }}',
+            justifyClasses: ['text-left', 'text-center', 'text-right', 'text-justify' ],
+            toolbar: [
+                    ['Format'],
+                    ['Image'],
+                    ['Bold', 'Italic', 'Underline','Strike','-','RemoveFormat'],
+                    ['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
+                    [ 'NumberedList','BulletedList','-','Blockquote'],
+                    ['CodeSnippet', 'Code']
+            ]
+        });
+    });
+</script>
 {% endblock %}
 
 </body>

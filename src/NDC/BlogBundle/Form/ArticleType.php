@@ -33,6 +33,9 @@ class ArticleType extends AbstractType
             ))
             ->add('html', 'textarea', array(
                 'label' => 'HTML',
+                'attr' => array(
+                    'data-ckeditor' => '',
+                )
             ))
             ->add('Enregistrer', 'submit')
         ;

@@ -4,6 +4,7 @@
 namespace NDC\BlogBundle\Controller;
 
 use NDC\BlogBundle\Entity\Image;
+use NDC\BlogBundle\Form\ImageCKEditorType;
 use NDC\BlogBundle\Form\ImageType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Doctrine\ORM\EntityManager;
@@ -60,6 +61,52 @@ class ImageAdminController extends Controller
         return array(
             'images' => $images,
             'form' => $form->createView(),
+        );
+    }
+
+    /**
+     * @Template
+     */
+    public function browseAction(Request $request)
+    {
+        $images = $this->paginator->paginate(
+            $this->em->getRepository('NDCBlogBundle:Image')->queryAll(),
+            $request->query->get('page', 1),
+            30
+        );
+
+        return array(
+            'images' => $images,
+            'funcNum' => $request->query->get('CKEditorFuncNum'),
+        );
+    }
+
+    /**
+     * @Template
+     */
+    public function uploadAction(Request $request)
+    {
+        $image = new Image;
+        $form = $this->createForm(new ImageCKEditorType, $image);
+
+        $form->handleRequest($request);
+
+        if($form->isValid()){
+            $this->em->persist($image);
+            $this->uploadableManager->markEntityToUpload($image, $image->getFile());
+            $this->em->flush();
+
+            return array(
+                'success' => true,
+                'image' => $image,
+                'funcNum' => $request->query->get('CKEditorFuncNum'),
+            );
+        }
+
+        return array(
+            'success' => false,
+            'image' => $image,
+            'funcNum' => $request->query->get('CKEditorFuncNum'),
         );
     }
 } 
