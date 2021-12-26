@@ -1,6 +1,12 @@
-blog_index:
+blog_index_first_page:
     pattern: /
+    defaults: { _controller: NDCBlogBundle:Blog:index, page: 1 }
+
+blog_index:
+    pattern: /page/{page}
     defaults: { _controller: NDCBlogBundle:Blog:index }
+    requirements:
+        page: \d+
 
 blog_article:
     pattern: /article/{id}-{slug}

@@ -22,8 +22,11 @@ class DateExtension extends \Twig_Extension
         );
     }
 
-    public function fullDateFilter(\DateTime $date, $showDay = true)
+    public function fullDateFilter(\DateTime $date = null, $showDay = true)
     {
+        if($date == null)
+            return '';
+
         $elements = array();;
 
         if($showDay)

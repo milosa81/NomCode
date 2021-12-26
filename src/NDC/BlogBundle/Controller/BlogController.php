@@ -25,12 +25,12 @@ class BlogController extends Controller
     /**
      * @Template
      */
-    public function indexAction(Request $request)
+    public function indexAction(Request $request, $page)
     {
         $articles = $this->paginator->paginate(
-            $this->em->getRepository('NDCBlogBundle:Article')->queryAll(),
-            $request->query->get('page', 1),
-            30
+            $this->em->getRepository('NDCBlogBundle:Article')->queryAllPublished(),
+            $page,
+            10
         );
 
         return array(
@@ -41,8 +41,14 @@ class BlogController extends Controller
     /**
      * @Template
      */
-    public function articleAction(Article $article)
+    public function articleAction(Article $article, $slug)
     {
+        if($article->getState() != 'published' && !$this->isGranted('ROLE_ADMIN'))
+            return $this->createNotFoundException();
+
+        if($article->getSlug() != $slug)
+            return $this->redirect($this->generateUrl('blog_article', array('id'=>$article->getId(), 'slug'=>$article->getSlug())), 301);
+
         return array();
     }
 } 

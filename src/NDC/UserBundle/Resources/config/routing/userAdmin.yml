@@ -1,0 +1,11 @@
+blog_user_admin_index:
+    pattern: /
+    defaults: { _controller: NDCUserBundle:UserAdmin:index }
+
+blog_user_admin_add:
+    pattern: /add
+    defaults: { _controller: NDCUserBundle:UserAdmin:add }
+
+blog_user_admin_edit:
+    pattern: /{id}/edit
+    defaults: { _controller: NDCUserBundle:UserAdmin:edit }

@@ -1,0 +1,7 @@
+<header class="{% block class %}{% endblock %}">
+	<input type="text" class="search" placeholder="Chercher..." title="Chercher un article">
+	<a href="/" class="logo" title="Accueil de Nomdecode">
+		<img src="{{ asset('css/img/logo.png') }}" alt="Logo">
+	</a>
+	{% block content %}{% endblock %}
+</header>

@@ -330,12 +330,12 @@
 
 				// Remove old .language-* class.
 				if ( oldData && newData.lang != oldData.lang )
-					this.parts.code.removeClass( 'language-' + oldData.lang );
+					this.parts.code.removeClass( 'language-' + oldData.lang ).removeClass(oldData.lang);
 
 				// Lang needs to be specified in order to apply formatting.
 				if ( newData.lang ) {
 					// Apply new .language-* class.
-					this.parts.code.addClass( 'language-' + newData.lang );
+					this.parts.code.addClass( 'language-' + newData.lang ).addClass(newData.lang);
 
 					this.highlight();
 				}

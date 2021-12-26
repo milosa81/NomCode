@@ -29,13 +29,14 @@ class ArticleAdminController extends Controller
     public function indexAction(Request $request)
     {
         $articles = $this->paginator->paginate(
-            $this->em->getRepository('NDCBlogBundle:Article')->queryAll(),
+            $this->em->getRepository('NDCBlogBundle:Article')->queryAllNotDraft(),
             $request->query->get('page', 1),
             30
         );
 
         return array(
             'articles' => $articles,
+            'drafts' => $this->em->getRepository('NDCBlogBundle:Article')->findByState('draft'),
         );
     }
 

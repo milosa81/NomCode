@@ -1,5 +1,6 @@
 @import "colors";
 
+
 // variables
 $height-header: 72vh;
 $size-photo-author-index: 40px;
@@ -39,16 +40,26 @@ $margin-for-blocks: 0.5rem;
 
 @mixin post-information() {
 	.author {
+		color: $font-color-article;
 		text-transform: initial;
 		font-weight: bold;
-		font-size: $font-size-base*1.2;
+		font-size: $font-size-base*1.25;
 		padding-left: 4px;
 	}
 
 	.date {
 		text-transform: uppercase;
-		padding-left: 10px;
+		padding-left: 6px;
 	}
+
+	.date::before {
+		content: "\25cf";
+		font-weight: normal;
+		font-size: $font-size-base*0.6;
+		padding-right: 6px;
+
+	}
+
 }
 
 // rules
@@ -75,6 +86,11 @@ h1 {
 a {
 	text-decoration: none;
 	color: inherit;
+}
+
+// prevent outline highlight from Chrome focusing input
+*:focus {
+    outline: 0;
 }
 
 input[type=text], textarea {
@@ -117,16 +133,17 @@ a.category {
 header {
 	height: 100vh;
 	background-color: $background-color-header;
+	background-image: url(img/pattern-illustration.png);
 
 	input[type=text].search {
-		$color-over-header: rgba(0, 0, 0, 0.4);
+		$color-over-header: white;
 		border: none;
 		border-bottom: 2px solid $color-over-header;
 		color: $color-over-header;
 
 		position: absolute;
-		right: 6vw;
-		top: 7vh;
+		right: 8vw;
+		top: 10vh;
 		width: 15vw;
 		&::-webkit-input-placeholder { color: $color-over-header; }
 		&:-moz-placeholder { color: $color-over-header; }
@@ -134,7 +151,22 @@ header {
 		&:-ms-input-placeholder { color: $color-over-header; }
 	}
 
-	.img {
+	.logo {
+		position: absolute;
+		left: 8vw;
+		top: 8vh;
+		width: 150px;
+
+		img {
+			width: 100%;
+		}
+
+		&:hover {
+			opacity: 0.6;
+		}
+	}
+
+	.illustration {
 		height: 70vh;
 		width: 36vw;
 		position: absolute;
@@ -186,7 +218,7 @@ header {
 
 article {
   	@extend .container;
-	margin-bottom: $margin-section;
+	margin-bottom: $margin-section/1.5;
 }
 
 footer {
@@ -245,13 +277,77 @@ section.articles_list {
 	}
 }
 
+.article-author {
+	text-align: center;
+	padding-bottom: $margin-section/1.5;
+
+	img.author-img {
+		@include author-photo($size-photo-author-article);
+	}
+
+	@include post-information();
+
+	* {
+		vertical-align: middle;
+	}
+
+	.author {
+		padding-right: 10px;
+	}
+
+	.author-link {
+		display: inline-block;
+		font-size: 18px;
+		width: 35px;
+		height: 35px;
+		background-color: #333;
+		color: #fff;
+		border-radius: 50%;
+		margin-left: 8px;
+
+		&:hover {
+			opacity: 0.6;
+		}
+
+		i {
+			padding-top: 8px;
+		}
+
+		&.author-link-personal {
+			background-color: #666;
+		}
+
+		&.author-link-github {
+			background-color: #333;
+		}
+
+		&.author-link-facebook {
+			background-color: #3d578d;
+			font-size: 23px;
+
+			i {
+				padding-top: 13px;
+				padding-right: 4px;
+			}
+		}
+
+		&.author-link-linkedin {
+			background-color: #1884bb;
+		}
+
+		&.author-link-twitter {
+			background-color: #55acee;
+		}
+	}
+}
+
 section.comments {
 	padding-top: $margin-section/2;
 	padding-bottom: $margin-section;
 	background-color: $background-color-header;
 
-	&.light {
-		color: #fff;
+	h1 {
+		margin-bottom: $margin-section/2;
 	}
 
 	.comment {

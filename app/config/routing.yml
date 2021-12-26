@@ -2,6 +2,10 @@ ndc_blog_bundle:
     resource: "@NDCBlogBundle/Resources/config/routing.yml"
     prefix:   /
 
+ndc_user_bundle:
+    resource: "@NDCUserBundle/Resources/config/routing.yml"
+    prefix:   /
+
 ndc_admin_index:
     path: /admin
     defaults:

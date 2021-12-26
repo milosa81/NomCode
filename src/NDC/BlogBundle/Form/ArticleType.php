@@ -22,11 +22,17 @@ class ArticleType extends AbstractType
                 'label' => 'Auteur',
                 'class' => 'NDC\UserBundle\Entity\User',
             ))
-            ->add('techs', 'entity', array(
-                'label' => 'Technos',
+            ->add('tech', 'entity', array(
+                'label' => 'Techno',
                 'class' => 'NDC\BlogBundle\Entity\Tech',
-                'multiple' => true,
-                'expanded' => true,
+            ))
+            ->add('state', 'choice', array(
+                'label' => 'Etat',
+                'choices' => array(
+                    'published' => 'Publié',
+                    'draft' => 'Brouillon',
+                    'removed' => 'Supprimé',
+                )
             ))
             ->add('createdAt', 'datetime', array(
                 'label' => 'Créé le',
@@ -37,7 +43,7 @@ class ArticleType extends AbstractType
                     'data-ckeditor' => '',
                 )
             ))
-            ->add('Enregistrer', 'submit')
+            ->add('Enregistrer et quitter', 'submit')
         ;
     }
     

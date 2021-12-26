@@ -12,4 +12,8 @@ use Doctrine\ORM\EntityRepository;
  */
 class UserRepository extends EntityRepository
 {
+    public function queryAll()
+    {
+        return $this->createQueryBuilder('u');
+    }
 }

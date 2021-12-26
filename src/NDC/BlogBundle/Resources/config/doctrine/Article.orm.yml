@@ -38,6 +38,10 @@ NDC\BlogBundle\Entity\Article:
         html:
             type: text
 
+        state:
+            type: string
+            length: 20
+
 
     manyToOne:
         author:
@@ -48,14 +52,7 @@ NDC\BlogBundle\Entity\Article:
                 blameable:
                     on: create
 
-    manyToMany:
-        techs:
+        tech:
             targetEntity: NDC\BlogBundle\Entity\Tech
-            joinTable:
-                name: ndc_article_tech_relationship
-                joinColumns:
-                    article_id:
-                        referencedColumnName: id
-                inverseJoinColumns:
-                    tech_id:
-                        referencedColumnName: id
+            fetch: EAGER
+            nullable: false

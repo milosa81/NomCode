@@ -17,4 +17,20 @@ class ArticleRepository extends EntityRepository
         return $this->createQueryBuilder('a')
             ->orderBy('a.createdAt', 'DESC');
     }
+
+    public function queryAllNotDraft()
+    {
+        return $this->createQueryBuilder('a')
+            ->where('a.state != :state')
+            ->setParameter('state', 'draft')
+            ->orderBy('a.createdAt', 'DESC');
+    }
+
+    public function queryAllPublished()
+    {
+        return $this->createQueryBuilder('a')
+            ->where('a.state = :state')
+            ->setParameter('state', 'published')
+            ->orderBy('a.createdAt', 'DESC');
+    }
 }

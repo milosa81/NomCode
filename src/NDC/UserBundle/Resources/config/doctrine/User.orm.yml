@@ -10,6 +10,3 @@ NDC\UserBundle\Entity\User:
                 strategy: AUTO
 
     fields:
-        color:
-            type: string
-            length: 6

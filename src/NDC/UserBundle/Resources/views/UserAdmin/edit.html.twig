@@ -1,0 +1,8 @@
+{% extends '@NDCUser/UserAdmin/layout.html.twig' %}
+
+{% block body %}
+    <h1>Editer un utilisateur</h1>
+
+    {% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
+    {{ form(form) }}
+{% endblock %}

@@ -36,11 +36,6 @@ class Article
     private $updatedAt;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $techs;
-
-    /**
      * @var string
      */
     private $slug;
@@ -51,11 +46,20 @@ class Article
     private $html;
 
     /**
+     * @var \NDC\BlogBundle\Entity\Tech
+     */
+    private $tech;
+    /**
+     * @var string
+     */
+    private $state;
+
+    /**
      * Constructor
      */
     public function __construct()
     {
-        $this->techs = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->createdAt = new \DateTime();
     }
 
     public function __toString()
@@ -166,39 +170,6 @@ class Article
     }
 
     /**
-     * Add techs
-     *
-     * @param \NDC\BlogBundle\Entity\Tech $techs
-     * @return Article
-     */
-    public function addTech(\NDC\BlogBundle\Entity\Tech $techs)
-    {
-        $this->techs[] = $techs;
-
-        return $this;
-    }
-
-    /**
-     * Remove techs
-     *
-     * @param \NDC\BlogBundle\Entity\Tech $techs
-     */
-    public function removeTech(\NDC\BlogBundle\Entity\Tech $techs)
-    {
-        $this->techs->removeElement($techs);
-    }
-
-    /**
-     * Get techs
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getTechs()
-    {
-        return $this->techs;
-    }
-
-    /**
      * Get slug
      *
      * @return string
@@ -240,6 +211,52 @@ class Article
     public function setHtml($html)
     {
         $this->html = $html;
+
+        return $this;
+    }
+
+    /**
+     * Get tech
+     *
+     * @return \NDC\BlogBundle\Entity\Tech
+     */
+    public function getTech()
+    {
+        return $this->tech;
+    }
+
+    /**
+     * Set tech
+     *
+     * @param \NDC\BlogBundle\Entity\Tech $tech
+     * @return Article
+     */
+    public function setTech(\NDC\BlogBundle\Entity\Tech $tech = null)
+    {
+        $this->tech = $tech;
+
+        return $this;
+    }
+
+    /**
+     * Get state
+     *
+     * @return string
+     */
+    public function getState()
+    {
+        return $this->state;
+    }
+
+    /**
+     * Set state
+     *
+     * @param string $state
+     * @return Article
+     */
+    public function setState($state)
+    {
+        $this->state = $state;
 
         return $this;
     }
