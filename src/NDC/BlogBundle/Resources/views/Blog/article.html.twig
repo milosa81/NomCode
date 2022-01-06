@@ -1,20 +1,32 @@
 {% extends '::base.html.twig' %}
 
-{% block title %}{{ article.title }} - {{ parent() }}{% endblock %}
+{% block title %}{{ article.title }} [{{ article.tech.name }}] | {{ parent() }}{% endblock %}
+
+{% block header_class %}article{% endblock %}
+
+{% block header %}
+	<div class="top" style="background-color:#{{ article.tech.color }};background-image:url(https://dl.dropboxusercontent.com/u/18517066/nomdecode/jollyt.png);">	
+		{% if article.state != "published" %}
+		    {% set states = {
+		        'draft':  {'icon': 'pencil', 'info': 'Cet article est un brouillon'},
+		        'removed': {'icon': 'trash-o', 'info': 'Cet article est supprimé'}
+		    } %}
+		    <div class="mask"></div>
+		    <div class="state state-{{ article.state }}">
+				<div class="state-icon">
+					<i class="fa fa-{{ attribute(states[article.state], 'icon') }}"></i>
+				</div>
+				<span>{{ attribute(states[article.state], 'info') }}</span>
+			</div>
+		{% endif %}
+	</div>
+	<div class="container text">
+		<h1>{{ article.title|capitalize }}</h1>
+		<span class="muted">{{ article.createdAt|fullDate }} - 5 commentaires</span>
+	</div>
+{% endblock %}
 
 {% block body %}
-
-{% embed "::header.html.twig" %}
-	{% block class %}article{% endblock %}
-	{% block content %}
-		<div class="top" style="background-color:#{{ article.tech.color }};background-image:url(https://dl.dropboxusercontent.com/u/18517066/nomdecode/jollyt.png);"></div>
-		<div class="container text">
-			<h1>{{ article.title|capitalize }}</h1>
-			<span>{{ article.createdAt|fullDate }} - 5 commentaires</span>
-		</div>
-	{% endblock %}
-{% endembed %}
-
 <article class="long-text">{{ article.html|raw }}</article>
 <div class="article-author">
 	<div class="container">
@@ -22,11 +34,7 @@
 			<a href="#author" title="Rédacteur : {{ article.author.username|capitalize }}">
 				<img src="{{ article.author.photo|default('https://dl.dropboxusercontent.com/u/18517066/nomdecode/author.png') }}" class="author-img">
 			</a>
-			<a class="author-link author-link-personal" href="#" title="Page personnelle de {{ article.author.username|capitalize }}" target="_blank"><i class="fa fa-link"></i></a>
-			<a class="author-link author-link-github" href="#" title="Page Github de {{ article.author.username|capitalize }}" target="_blank"><i class="fa fa-github-alt"></i></a>
-			<a class="author-link author-link-facebook" href="#" title="Page Facebook de {{ article.author.username|capitalize }}" target="_blank"><i class="fa fa-facebook"></i></a>
-			<a class="author-link author-link-linkedin" href="#" title="Page LinkedIn de {{ article.author.username|capitalize }}" target="_blank"><i class="fa fa-linkedin"></i></a>
-			<a class="author-link author-link-twitter" href="#" title="Page Twitter de {{ article.author.username|capitalize }}" target="_blank"><i class="fa fa-twitter"></i></a>
+			{{ helper.author_link(article.author) }}
 	</div>
 </div>
 <section class="comments">
@@ -34,7 +42,9 @@
 		<h1>Commentaires</h1>
 		<div class="comment">
 			<a href="#author">
-				<img src="{{ article.author.photo|default('https://dl.dropboxusercontent.com/u/18517066/nomdecode/author.png') }}" class="author-img">
+				{# <img src="{{ article.author.photo|default('https://dl.dropboxusercontent.com/u/18517066/nomdecode/author.png') }}" class="author-img"> #}
+				{% set avatar = random(7) + 1 %}
+				<img src="{{ asset('css/img/avatar/'~avatar~'.png') }}" class="author-img">
 			</a>
 			<a class="author" href="#author">{{ article.author.username|capitalize }}</a>
 			<span class="date">{{ article.createdAt|fullDate }}</span>
@@ -45,7 +55,19 @@
 		</div>
 		<div class="comment">
 			<a href="#author">
-				<img src="{{ article.author.photo|default('https://dl.dropboxusercontent.com/u/18517066/nomdecode/author.png') }}" class="author-img">
+				{% set avatar = random(7) + 1 %}
+				<img src="{{ asset('css/img/avatar/'~avatar~'.png') }}" class="author-img">
+			</a>
+			<a class="author" href="#author">{{ article.author.username|capitalize }}</a>
+			<span class="date">{{ article.createdAt|fullDate }}</span>
+			<div class="html long-text">
+				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero impedit, molestias repellendus sit.</p>
+			</div>
+		</div>
+		<div class="comment">
+			<a href="#author">
+				{% set avatar = random(7) + 1 %}
+				<img src="{{ asset('css/img/avatar/'~avatar~'.png') }}" class="author-img">
 			</a>
 			<a class="author" href="#author">{{ article.author.username|capitalize }}</a>
 			<span class="date">{{ article.createdAt|fullDate }}</span>
@@ -64,7 +86,6 @@
 
 {% block javascripts %}
 {{ parent() }}
-<script src="{{ asset('js/scripts-article.js') }}"></script>
 <script src="{{ asset('js/highlight.pack.js') }}"></script>
 <script>hljs.initHighlightingOnLoad();</script>
 {% endblock %}

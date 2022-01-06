@@ -60,6 +60,7 @@ class Article
     public function __construct()
     {
         $this->createdAt = new \DateTime();
+        $this->state = "draft";
     }
 
     public function __toString()

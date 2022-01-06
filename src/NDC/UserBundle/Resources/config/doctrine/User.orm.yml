@@ -10,3 +10,23 @@ NDC\UserBundle\Entity\User:
                 strategy: AUTO
 
     fields:
+        facebook:
+            type: string
+            length: 255
+
+        github:
+            type: string
+            length: 255
+
+        twitter:
+            type: string
+            length: 255
+
+        linkedin:
+            type: string
+            length: 255
+
+        website:
+            type: string
+            length: 255
+

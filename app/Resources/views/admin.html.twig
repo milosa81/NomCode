@@ -113,7 +113,7 @@
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="/">Accueil du blog</a></li>
+                <li><a href="{{ path('blog_index_first_page') }}">Accueil du blog</a></li>
             </ul>
         </div>
     </div>
@@ -170,9 +170,10 @@
             height: '900px',
             extraAllowedContent: 'code pre h2 h3 h4',
             contentsCss: ['{{ asset('css/bootstrap.min.css') }}', '{{ asset('ckeditor/theme.css') }}'],
-            extraPlugins: 'resize,removeformat,codesnippet,basicstyles,elementspath,justify,blockquote,codeTag,format,image,filebrowser',
+            extraPlugins: 'autolink,resize,removeformat,codesnippet,basicstyles,elementspath,justify,blockquote,codeTag,format,image,filebrowser,pastetext',
             format_tags: 'p;h2;h3;h4',
             removePlugins: 'about',
+            forcePasteAsPlainText: true,
             codeSnippet_languages: {
                 php: 'PHP',
                 javascript: 'JavaScript',
@@ -190,6 +191,7 @@
                     ['Format'],
                     ['Image'],
                     ['Bold', 'Italic', 'Underline','Strike','-','RemoveFormat'],
+                    ['Link', 'Unlink'],
                     /*['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],*/
                     [ 'NumberedList','BulletedList','-','Blockquote'],
                     ['CodeSnippet', 'Code']

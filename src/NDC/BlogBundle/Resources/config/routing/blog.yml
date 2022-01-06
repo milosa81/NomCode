@@ -14,3 +14,11 @@ blog_article:
     requirements:
         id: \d+
         slug: "[a-zA-Z0-9-_/]+"
+
+blog_cgu:
+    pattern: /cgu
+    defaults: { _controller: NDCBlogBundle:Blog:cgu }
+
+blog_authors:
+    pattern: /authors
+    defaults: { _controller: NDCBlogBundle:Blog:authors }

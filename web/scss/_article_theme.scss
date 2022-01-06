@@ -1,6 +1,18 @@
-article {
+.long-text {
 	h1 {
 		text-align: initial;
+	}
+
+	h2 {
+		font-size: 1.8em;
+	}
+
+	h3 {
+		font-size: 1.6em;
+	}
+
+	h4 {
+		font-size: 1.4em;
 	}
 
 	a {
@@ -38,15 +50,28 @@ article {
 
 	// block of code
 	pre {
-		border-radius: 4px;
-		margin: $margin-for-blocks 0;
+		margin: $margin-for-blocks*2 0;
+		line-height: $line-height-pre-code;
 
 		-moz-tab-size: 4;
 		-o-tab-size: 4;
 		tab-size: 4;
+		overflow: visible;
 
 		code {
+			border-radius: 4px;
 			padding: 1em;
+			position: relative;
+			word-wrap: normal;
+
+			&::before {
+				content: attr(class);
+				position: absolute;
+				color: red;
+				left: 0;
+				top: 0;
+				transform: translateY(-100%);
+			}
 		}
 	}
 
@@ -56,8 +81,9 @@ article {
 	}
 
 	blockquote {
-		padding: $margin-for-blocks 2rem;
-		margin: 1rem 0;
+		padding: $margin-for-blocks $margin-for-blocks*4;
+		margin: $margin-for-blocks*2 0;
 		border-left: 5px solid #eee;
+		font-style: italic;
 	}
 }

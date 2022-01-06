@@ -1,39 +1,64 @@
 {% extends '::base.html.twig' %}
 
-{% block body %}
+{% block header_class %}index{% endblock %}
 
-{% embed "::header.html.twig" %}
-	{% block content %}
+	{% block header %}
 		<div class="illustration">
-			<img src="https://dl.dropboxusercontent.com/u/18517066/nomdecode/illu.png" alt="">
+			{% include 'NDCBlogBundle:Blog:index_animation.html.twig' %}
 		</div>
-	{% endblock %}
-{% endembed %}
+{% endblock %}
 
-<section class="container articles_list">
-	{% for article in articles %}
-		<div class="article">
-			<a href="{{ path('blog_article', { 'id': article.id, 'slug': article.slug }) }}" title="{{ article.title|capitalize }}">
-				<h2>{{ article.title|capitalize }}</h2>
-				<p class="long-text">{{ article.html|striptags|slice(0, 230) }}{% if article.html|striptags|length > 230 %}...{% endif %}</p>
-			</a>
-			<div class="information">
-				<a href="#author" title="Rédacteur : {{ article.author.username|capitalize }}">
-					<img src="{{ article.author.photo|default('https://dl.dropboxusercontent.com/u/18517066/nomdecode/author.png') }}" class="author-img">
+{% block body %}
+	<section class="container spacer articles_list">
+		{% for article in articles %}
+			<div class="article">
+				<a href="{{ path('blog_article', { 'id': article.id, 'slug': article.slug }) }}" title="{{ article.title|capitalize }}">
+					<h2>{{ article.title|capitalize }}</h2>
+					<p class="long-text">{{ article.html|striptags|slice(0, 250)|raw }}{% if article.html|striptags|length|raw > 250 %}...{% endif %}</p>
 				</a>
-				<a class="author" href="#author" title="Rédacteur : {{ article.author.username|capitalize }}">
-					<span class="author">{{ article.author.username|capitalize }}</span>
-				</a>
-				<span class="date">{{ article.createdAt|fullDate|lower }}</span>
-				<a href="#category" class="category" style="background-color:#{{ article.tech.color }};background-image:url({{ asset(article.tech.webPath) }});" title="{{ article.tech.name }}"></a>
-				<span class="comments">5 commentaires</span>
+				<div class="information muted">
+					<a href="#author" title="Rédacteur : {{ article.author.username|capitalize }}">
+						<img src="{{ article.author.photo|default('https://dl.dropboxusercontent.com/u/18517066/nomdecode/author.png') }}" class="author-img">
+					</a>
+					<a class="author" href="#author" title="Rédacteur : {{ article.author.username|capitalize }}">
+						<span class="author">{{ article.author.username|capitalize }}</span>
+					</a>
+					<span class="date">{{ article.createdAt|fullDate|lower }}</span>
+					<a href="#category" class="category" style="background-color:#{{ article.tech.color }};background-image:url({{ asset(article.tech.webPath) }});" title="{{ article.tech.name }}"></a>
+					<span class="comments">5 commentaires</span>
+				</div>
 			</div>
-		</div>
-	{% endfor %}
-</section>
+		{% endfor %}
+
+		{{ helper.pagination(page, articles.pageCount) }}
+	</section>
 {% endblock %}
 
 {% block javascripts %}
-{{ parent() }}
-<script src="{{ asset('js/anim_header.js') }}"></script>
+	{{ parent() }}
+	<script src="{{ asset('js/velocity.min.js') }}"></script>
+	<script>
+		$(function () {
+			function anim(currentSide) {
+				var currentSide = currentSide || "1";
+
+				var vDelay = Math.floor((Math.random() * 3000) + 1000),
+				vDuration = Math.floor((Math.random() * 1500) + 500),
+				heightSVG = $(".animated-code svg:nth-child(1)").height(),
+				vMove = - Math.floor((Math.random() * heightSVG*0.8) + 50) % heightSVG;
+				$(".animated-code svg:nth-child("+ currentSide +")").velocity(
+					{ top: vMove + "px" },
+					{
+						duration: vDuration,
+						delay: vDelay,
+						easing: "easeInSine",
+						complete: function() {
+							anim(currentSide == 1 ? 2 : 1);
+						}
+					});
+			}
+
+			anim()
+		});
+	</script>
 {% endblock %}

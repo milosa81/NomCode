@@ -1,4 +1,39 @@
 <!DOCTYPE html>
+
+{% macro pagination(currentPage, pageCount) %}
+    {% if currentPage > 1 or currentPage < pageCount %}
+        <div class="pagination">
+            {% if currentPage > 1 %}
+                <a href="{% if currentPage == 2 %}{{ path('blog_index_first_page') }}{% else %}{{ path('blog_index', { 'page': currentPage - 1 }) }}{% endif %}" rel="prev">Page précédente</a>
+            {% endif %}
+            {% if currentPage < pageCount %}
+                <a href="{{ path('blog_index', { 'page': currentPage + 1 }) }}" rel="next">Page suivante</a>
+            {% endif %}
+        </div>
+    {% endif %}
+{% endmacro %}
+
+{% macro author_link(author) %}
+    {% set links = {
+        'website': {'title': 'personnelle', 'icon': 'link'},
+        'github': {'title': 'GitHub', 'icon': 'github-alt'},
+        'facebook': {},
+        'linkedin': {'title': 'LinkedIn'},
+        'twitter': {}
+    } %}
+    <div class="author-links">
+        {% for key, link in links %}
+            {% if attribute(author, key) is not empty %}
+                {% if link.title is not defined %}{% set link = link|merge({'title': key|capitalize}) %}{% endif %}
+                {% if link.icon is not defined %}{% set link = link|merge({'icon': key}) %}{% endif %}
+                <a class="author-link-{{ key }}" href="{{ attribute(author, key) }}" title="Page {{ link.title }} de {{ author.username|capitalize }}" target="_blank"><i class="fa fa-{{ link.icon }}"></i></a>
+            {% endif %}
+        {% endfor %}
+    </div>
+{% endmacro %}
+
+{% import _self as helper %}
+
 <html>
     <head>
         <meta charset="UTF-8" />
@@ -7,19 +42,54 @@
             <link rel="stylesheet" href="{{ asset('css/normalize.css') }}">
             <link rel="stylesheet" href="{{ asset('css/main.css') }}">
             <link rel="stylesheet" href="{{ asset('font-awesome/css/font-awesome.min.css') }}">
-            <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:700,400' rel='stylesheet' type='text/css'>
-            <link href='http://fonts.googleapis.com/css?family=Droid+Serif:700,400,300' rel='stylesheet' type='text/css'>
+            <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700' rel='stylesheet' type='text/css'>
+            <link href='http://fonts.googleapis.com/css?family=Montserrat:700' rel='stylesheet' type='text/css'>
         {% endblock %}
         <link rel="icon" type="image/png" href="{{ asset('css/img/favicon.png') }}" />
     </head>
     <body>
+
+        <header class="{% block header_class %}classic{% endblock %}">
+            {% block header %}{% endblock %}
+            <nav>
+                <input type="text" class="search" placeholder="Chercher..." title="Chercher un article">
+                {% if app.user %}
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <a href="{{ path('ndc_admin_index') }}">Administration</a>
+                    {% else %}
+                        <a href="{{ path('ndc_admin_index') }}">Modération</a>
+                    {% endif %}
+
+                    <a href="{{ path('blog_user_admin_edit', { 'id': app.user.id}) }}">Éditer son compte</a>
+
+                    {% if article is defined %}
+                        {% if is_granted('ROLE_ADMIN') or article.author == app.user %}
+                            <a href="{{ path('blog_article_admin_edit', { 'id': article.id }) }}">Éditer cet article</a>
+                        {% endif %}
+                    {% endif %}
+                {% endif %}
+            </nav>
+            <a href="{{ path('blog_index_first_page') }}" class="logo" title="Accueil de Nomdecode">
+                <img src="{{ asset('css/img/logo.png') }}" alt="Logo">
+            </a>
+        </header>
+
         {% block body %}{% endblock %}
 
-        <footer></footer>
+        <footer>
+            <div>
+                <p><a href="{{ path('blog_cgu') }}">CGU</a></p>
+                <p><a href="#">FAQ</a></p>
+                <p class="muted">© {{ "now"|date("Y") }} Nomdecode</p>
+            </div>
+            <div>
+                <p><a href="#">Nous contacter</a></p>
+                <p><a href="{{ path('blog_authors') }}">Rédacteurs</a></p>
+            </div>
+        </footer>
 
         {% block javascripts %}
             <script src="{{ asset('js/jquery.min.js') }}"></script>
-            <script src="{{ asset('js/velocity.min.js') }}"></script>
         {% endblock %}
     </body>
 </html>

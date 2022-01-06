@@ -13,15 +13,15 @@
         <tr>
             <td>{{ article.id }}</td>
             {% if article.state == 'published' %}
-                <td class="success text-center">
+                <td class="success text-center" title="Publié">
                     <i class="glyphicon glyphicon-list-alt"></i>
                 </td>
             {% elseif article.state == 'draft' %}
-                <td class="info text-center">
+                <td class="info text-center" title="Brouillon">
                     <i class="glyphicon glyphicon-pencil"></i>
                 </td>
             {% else %}
-                <td class="danger text-center">
+                <td class="danger text-center" title="Supprimé">
                     <i class="glyphicon glyphicon-trash"></i>
                 </td>
             {% endif %}
