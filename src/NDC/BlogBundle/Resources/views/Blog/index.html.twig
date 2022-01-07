@@ -39,7 +39,60 @@
 	<script src="{{ asset('js/velocity.min.js') }}"></script>
 	<script>
 		$(function () {
-			function anim(currentSide) {
+			var velocity_steps = 0,
+				velocity_delay = 140,
+				velocity_duration = velocity_delay*1.5;
+			jQuery.fn.extend({
+				velocity_delay: function(has_delay) {
+			    	return this.each(function() {
+			    		if(!has_delay)
+			    			velocity_steps -= 1;
+			    		$(this).delay(velocity_delay*velocity_steps);
+			    		velocity_steps += 1;
+			    	});
+			  	},
+				velocity_reset_position: function(has_delay) {
+			    	return this.each(function() {
+			    		$(this)
+			    			.velocity_delay(has_delay)
+			    			.velocity({
+								translateY: 0,
+								translateX: 0,
+								rotateZ: 0,
+								scale: 1,
+								scaleX: 1,
+								scaleY: 1,
+								opacity: 1
+							}, {
+								duration: velocity_duration,
+								easing: [ 18, 5 ]
+							});
+			    	});
+			  	}
+			});
+
+			var svg = $(".illustration"),
+				deploy = [
+					{ "e": "#second-element", "p": { translateY: 100, translateX: -100 } },
+					{ "e": "#third-element", "p": { translateX: 100 } },
+					{ "e": "#second-element #tapis", "p": { translateX: -200 } },
+					{ "e": "#fourth-element", "p": { translateX: 100 } },
+					{ "e": "#third-element #boitier", "p": { translateY: 50 } },
+					{ "e": "#fourth-element #fiole2", "p": { translateY: -50 } },
+					{ "e": "#fourth-element #fiole3", "p": { translateY: -50 } },
+					{ "e": "#fourth-element #fiole1", "p": { translateY: -50 } },
+				];
+
+				jQuery.each(deploy, function(i, v) {
+					if(!("has_delay" in v))
+						$.extend(v, { "has_delay" : true } );
+					$.extend(v.p, { opacity: 0, scale: 0.8 } );
+				    svg.find(v.e)
+				    .velocity(v.p, { duration: 0 })
+				    .velocity_reset_position(v.has_delay);
+				});
+
+			function code_animation(currentSide) {
 				var currentSide = currentSide || "1";
 
 				var vDelay = Math.floor((Math.random() * 3000) + 1000),
@@ -53,12 +106,12 @@
 						delay: vDelay,
 						easing: "easeInSine",
 						complete: function() {
-							anim(currentSide == 1 ? 2 : 1);
+							code_animation(currentSide == 1 ? 2 : 1);
 						}
 					});
 			}
 
-			anim()
+			code_animation();
 		});
 	</script>
 {% endblock %}

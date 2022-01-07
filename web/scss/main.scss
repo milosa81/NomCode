@@ -60,7 +60,36 @@ $margin-for-blocks: 0.5rem;
 		padding-right: 6px;
 
 	}
+}
 
+
+// animations
+@-webkit-keyframes svg_chaton {
+	90% { transform: translateX(0px); }
+	100% { transform:  translateX(260px); }
+}
+
+@keyframes svg_chaton {
+	90% { transform: translateX(0px); }
+	100% { transform:  translateX(260px); }
+}
+
+@-webkit-keyframes svg_carton {
+	0% { -webkit-transform: translateX(0); opacity:0; }
+	44% { -webkit-transform: translateX(0); opacity:0; }
+	45% { -webkit-transform: translateX(0); opacity:1; }
+	65% { -webkit-transform: translateX(130px); opacity:1; }
+	85% { -webkit-transform: translateX(130px); opacity:1; }
+	100% { -webkit-transform: translateX(130px); opacity:0; }
+}
+
+@keyframes svg_carton {
+	0% { transform: translateX(0); opacity:0; }
+	44% { transform: translateX(0); opacity:0; }
+	45% { transform: translateX(0); opacity:1; }
+	65% { transform: translateX(130px); opacity:1; }
+	85% { transform: translateX(130px); opacity:1; }
+	100% { transform: translateX(130px); opacity:0; }
 }
 
 // rules
@@ -256,8 +285,36 @@ header {
 			height: 546px;
 		}
 
+		#contentsvg {
+			#second-element {
+				#carton {
+					opacity: 0;
+					-webkit-animation: svg_carton 18s linear infinite;
+					-moz-animation: svg_carton 18s linear infinite;
+					-o-animation: svg_carton 18s linear infinite;
+					animation: svg_carton 18s linear infinite;
+				}
+			}
+
+			#third-element #chaton {
+				-webkit-animation: svg_chaton 10s -5s linear infinite;
+				-moz-animation: svg_chaton 10s -5s linear infinite;
+				-o-animation: svg_chaton 10s -5s linear infinite;
+				animation: svg_chaton 10s -5s linear infinite;
+			}
+
+			& g {
+				transform-origin: center center;
+				-moz-transform-origin: center center;
+			}
+
+			& > g:not(#first-element) {
+				opacity: 0;
+			}
+		}
+
 		@media screen and (min-width: $size-limit-bigger-screen) {
-			$ratio-bigger-anim: 1.13;
+			$ratio-bigger-anim: 1.1;
 			bottom: $bottom-illustration/$ratio-bigger-anim;
 
 			#background-svg {

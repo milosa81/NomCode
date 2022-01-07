@@ -10,6 +10,7 @@ use Doctrine\ORM\EntityManager;
 use Knp\Component\Pager\Paginator;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class ArticleAdminController extends Controller
 {
@@ -70,11 +71,17 @@ class ArticleAdminController extends Controller
                 $this->em->persist($article);
                 $this->em->flush();
 
+                if($request->query->get('r', null) == 'ajax')
+                    return new Response();
+
                 $this->addFlash('success', 'Article mis-à-jour.');
 
                 return $this->redirect($this->generateUrl('blog_article_admin_index'));
             }
         }
+
+        if($request->query->get('r', null) == 'ajax')
+            return new Response('', 400);
 
         return array(
             'form' => $form->createView(),

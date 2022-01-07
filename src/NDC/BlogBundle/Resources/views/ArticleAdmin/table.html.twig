@@ -25,7 +25,11 @@
                     <i class="glyphicon glyphicon-trash"></i>
                 </td>
             {% endif %}
-            <td>{{ article }}</td>
+            <td>
+                <a href="{{ path('blog_article', {id: article.id, slug:article.slug}) }}">
+                    {{ article }}
+                </a>
+            </td>
             <td>
                 {{ helper.tech(article.tech) }}
             </td>

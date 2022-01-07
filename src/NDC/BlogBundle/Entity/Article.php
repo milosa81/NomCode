@@ -4,6 +4,7 @@ namespace NDC\BlogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use NDC\UserBundle\Entity\User;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Article
@@ -17,6 +18,7 @@ class Article
 
     /**
      * @var string
+     * @Assert\NotBlank()
      */
     private $title;
 
@@ -65,7 +67,7 @@ class Article
 
     public function __toString()
     {
-        return $this->title;
+        return $this->title == null ? '' : $this->title;
     }
 
     /**

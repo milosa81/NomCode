@@ -70,6 +70,7 @@
 
     {% block stylesheets %}
         <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
         <link href="{{ asset('css/admin.css') }}" rel="stylesheet">
     {% endblock %}
 </head>
@@ -162,6 +163,7 @@
 {% block javascripts %}
 <script type="text/javascript" src="{{ asset('js/jquery.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/bootstrap.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/ajax-save.js') }}"></script>
 <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
 <script src="{{ asset('ckeditor/adapters/jquery.js') }}"></script>
 <script type="text/javascript">
@@ -173,7 +175,7 @@
             extraPlugins: 'autolink,resize,removeformat,codesnippet,basicstyles,elementspath,justify,blockquote,codeTag,format,image,filebrowser,pastetext',
             format_tags: 'p;h2;h3;h4',
             removePlugins: 'about',
-            forcePasteAsPlainText: true,
+            // forcePasteAsPlainText: true,
             codeSnippet_languages: {
                 php: 'PHP',
                 javascript: 'JavaScript',
@@ -190,6 +192,7 @@
             toolbar: [
                     ['Format'],
                     ['Image'],
+                    ['PasteText'],
                     ['Bold', 'Italic', 'Underline','Strike','-','RemoveFormat'],
                     ['Link', 'Unlink'],
                     /*['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],*/

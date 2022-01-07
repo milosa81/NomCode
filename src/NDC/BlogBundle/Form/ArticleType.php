@@ -43,6 +43,11 @@ class ArticleType extends AbstractType
                     'data-ckeditor' => '',
                 )
             ))
+            ->add('Enregistrer', 'submit', array(
+                'attr' => array(
+                    'data-type' => 'ajax',
+                ),
+            ))
             ->add('Enregistrer et quitter', 'submit')
         ;
     }
