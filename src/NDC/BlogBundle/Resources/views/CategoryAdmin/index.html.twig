@@ -1,18 +1,18 @@
-{% extends 'NDCBlogBundle:TechAdmin:layout.html.twig' %}
+{% extends 'NDCBlogBundle:CategoryAdmin:layout.html.twig' %}
 
 {% block body %}
     <div class="row">
-        {% for tech in techs %}
+        {% for category in categories %}
             <div class="col-sm-3 col-md-2">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <span class="text-muted pull-right">#{{ tech.id }}</span>
-                        {{ tech }}
+                        <span class="text-muted pull-right">#{{ category.id }}</span>
+                        {{ category }}
                     </div>
-                    <div style="background: #{{ tech.color }};line-height:100px;height: 100px;font-size: 40px;text-align: center;color: #{{ tech.txtColor }}">{{ tech.abbr }}</div>
+                    <div style="background: #{{ category.color }};line-height:100px;height: 100px;font-size: 40px;text-align: center;color: #{{ category.txtColor }}">{{ category.abbr }}</div>
                     <div class="panel-body">
                         <div class="btn-group btn-group-xs btn-group-justified">
-                            <a class="btn btn-default" href="{{ path('blog_tech_admin_edit', {id: tech.id}) }}">
+                            <a class="btn btn-default" href="{{ path('blog_tech_admin_edit', {id: category.id}) }}">
                                 <i class="glyphicon glyphicon-pencil"></i>
                                 Editer
                             </a>
@@ -26,6 +26,6 @@
         {% endfor %}
     </div>
 
-    {{ knp_pagination_render(techs) }}
+    {{ knp_pagination_render(categories) }}
 
 {% endblock %}

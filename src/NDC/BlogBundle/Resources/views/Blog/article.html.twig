@@ -1,11 +1,11 @@
 {% extends '::base.html.twig' %}
 
-{% block title %}{{ article.title }} [{{ article.tech.name }}] | {{ parent() }}{% endblock %}
+{% block title %}{{ article.title }} | {{ parent() }}{% endblock %}
 
 {% block header_class %}article{% endblock %}
 
 {% block header %}
-	<div class="top" style="background-color:#{{ article.tech.color }};background-image:url(https://dl.dropboxusercontent.com/u/18517066/nomdecode/jollyt.png);">	
+	<div class="top" style="background-color:#{{ article.category.color }};background-image:url(https://dl.dropboxusercontent.com/u/18517066/nomdecode/jollyt.png);">
 		{% if article.state != "published" %}
 		    {% set states = {
 		        'draft':  {'icon': 'pencil', 'info': 'Cet article est un brouillon'},

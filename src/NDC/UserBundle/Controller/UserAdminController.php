@@ -10,6 +10,7 @@ use Doctrine\ORM\EntityManager;
 use Knp\Component\Pager\Paginator;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
+use Stof\DoctrineExtensionsBundle\Uploadable\UploadableManager;
 
 class UserAdminController extends Controller
 {
@@ -22,6 +23,11 @@ class UserAdminController extends Controller
      * @var Paginator
      */
     private $paginator;
+
+    /**
+     * @var UploadableManager
+     */
+    private $uploadableManager;
 
     /**
      * @Template
@@ -53,6 +59,8 @@ class UserAdminController extends Controller
 
             if($form->isValid()){
                 $userManager->updateUser($user);
+                $this->uploadableManager->markEntityToUpload($user, $user->getFile());
+                $userManager->updateUser($user);
 
                 return $this->redirect($this->generateUrl('blog_user_admin_index'));
             }
@@ -76,6 +84,8 @@ class UserAdminController extends Controller
             if($form->isValid()){
                 $userManager = $this->get('fos_user.user_manager');
 
+                $userManager->updateUser($user);
+                $this->uploadableManager->markEntityToUpload($user, $user->getFile());
                 $userManager->updateUser($user);
 
                 return $this->redirect($this->generateUrl('blog_user_admin_index'));

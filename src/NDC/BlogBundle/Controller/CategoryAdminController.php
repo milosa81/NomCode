@@ -3,8 +3,8 @@
 
 namespace NDC\BlogBundle\Controller;
 
-use NDC\BlogBundle\Entity\Tech;
-use NDC\BlogBundle\Form\TechType;
+use NDC\BlogBundle\Entity\Category;
+use NDC\BlogBundle\Form\CategoryType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Doctrine\ORM\EntityManager;
 use Knp\Component\Pager\Paginator;
@@ -12,7 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Stof\DoctrineExtensionsBundle\Uploadable\UploadableManager;
 use Symfony\Component\HttpFoundation\Request;
 
-class TechAdminController extends Controller
+class CategoryAdminController extends Controller
 {
     /**
      * @var EntityManager
@@ -29,14 +29,14 @@ class TechAdminController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $tech = $this->paginator->paginate(
-            $this->em->getRepository('NDCBlogBundle:Tech')->queryAll(),
+        $categories = $this->paginator->paginate(
+            $this->em->getRepository('NDCBlogBundle:Category')->queryAll(),
             $request->query->get('page', 1),
             30
         );
 
         return array(
-            'techs' => $tech,
+            'categories' => $categories,
         );
     }
 
@@ -45,39 +45,39 @@ class TechAdminController extends Controller
      */
     public function addAction(Request $request)
     {
-        $tech = new Tech;
+        $category = new Category();
 
-        return $this->handleForm($tech, $request);
+        return $this->handleForm($category, $request);
     }
 
     /**
      * @Template
      */
-    public function editAction(Tech $tech, Request $request)
+    public function editAction(Category $category, Request $request)
     {
-        return $this->handleForm($tech, $request);
+        return $this->handleForm($category, $request);
     }
 
-    private function handleForm(Tech $tech, Request $request = null)
+    private function handleForm(Category $category, Request $request = null)
     {
-        $form = $this->createForm(new TechType, $tech);
+        $form = $this->createForm(new CategoryType, $category);
 
         if($request != null && $request->isMethod('POST')){
             $form->handleRequest($request);
 
             if($form->isValid()){
-                $this->em->persist($tech);
+                $this->em->persist($category);
                 $this->em->flush();
 
-                $this->addFlash('success', 'Techno mis-à-jour.');
+                $this->addFlash('success', 'Catégorie mise-à-jour.');
 
-                return $this->redirect($this->generateUrl('blog_tech_admin_index'));
+                return $this->redirect($this->generateUrl('blog_category_admin_index'));
             }
         }
 
         return array(
             'form' => $form->createView(),
-            'tech' => $tech,
+            'category' => $category,
         );
     }
 } 

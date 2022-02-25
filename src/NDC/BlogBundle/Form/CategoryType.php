@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class TechType extends AbstractType
+class CategoryType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -37,7 +37,7 @@ class TechType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'NDC\BlogBundle\Entity\Tech'
+            'data_class' => 'NDC\BlogBundle\Entity\Category'
         ));
     }
 
@@ -46,6 +46,6 @@ class TechType extends AbstractType
      */
     public function getName()
     {
-        return 'ndc_blogbundle_tech';
+        return 'ndc_blogbundle_category';
     }
 }

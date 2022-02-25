@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class TechType extends AbstractType
+class CommentType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -15,19 +15,16 @@ class TechType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', 'text', array(
-                'label' => 'Nom',
+            ->add('username', 'text', array(
+                'label' => 'Pseudo'
             ))
-            ->add('abbr', 'text', array(
-                'label' => 'Sigle',
+            ->add('email', 'text', array(
+                'label' => 'Email'
             ))
-            ->add('color', 'text', array(
-                'label' => 'Couleur de fond',
+            ->add('message', 'text', array(
+                'label' => 'Message'
             ))
-            ->add('txtColor', 'text', array(
-                'label' => 'Couleur du texte',
-            ))
-            ->add('Enregistrer', 'submit')
+            ->add('Envoyer', 'submit')
         ;
     }
     
@@ -37,7 +34,7 @@ class TechType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'NDC\BlogBundle\Entity\Tech'
+            'data_class' => 'NDC\BlogBundle\Entity\Comment'
         ));
     }
 
@@ -46,6 +43,6 @@ class TechType extends AbstractType
      */
     public function getName()
     {
-        return 'ndc_blogbundle_tech';
+        return 'ndc_blogbundle_comment';
     }
 }

@@ -52,7 +52,20 @@ NDC\BlogBundle\Entity\Article:
                 blameable:
                     on: create
 
+        category:
+            targetEntity: NDC\BlogBundle\Entity\Category
+            fetch: EAGER
+            nullable: false
+
+    manyToMany:
         tech:
             targetEntity: NDC\BlogBundle\Entity\Tech
             fetch: EAGER
-            nullable: false
+            joinTable:
+                name: ndc_article_tech
+                joinColumns:
+                    article_id:
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    tech_id:
+                        referencedColumnName: id

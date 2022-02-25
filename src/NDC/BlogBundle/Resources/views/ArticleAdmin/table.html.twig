@@ -31,7 +31,10 @@
                 </a>
             </td>
             <td>
-                {{ helper.tech(article.tech) }}
+                {{ helper.tech(article.category) }}
+                {% for tech in article.tech %}
+                    {{ helper.tech(tech) }}
+                {% endfor %}
             </td>
             <td>{{ article.author }}</td>
             <td>{{ article.createdAt|fullDate }}</td>

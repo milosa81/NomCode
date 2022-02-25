@@ -9,4 +9,7 @@ body{
     background: center;
     background-size: cover;
     display: inline-block;
+    text-align: center;
+    font-size: 10px;
+    line-height: 20px;
 }

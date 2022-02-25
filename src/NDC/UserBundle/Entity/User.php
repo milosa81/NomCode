@@ -3,6 +3,7 @@
 namespace NDC\UserBundle\Entity;
 
 use FOS\UserBundle\Model\User as BaseUser;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * User
@@ -13,6 +14,19 @@ class User extends BaseUser
      * @var integer
      */
     protected $id;
+
+    /**
+     * @var string
+     * @Assert\NotBlank()
+     */
+    protected $username;
+
+    /**
+     * @var string
+     * @Assert\Email()
+     */
+    protected $email;
+
     /**
      * @var string
      */
@@ -33,6 +47,13 @@ class User extends BaseUser
      * @var string
      */
     private $website;
+
+    private $file;
+
+    /**
+     * @var string
+     */
+    private $path;
 
     public function __construct()
     {
@@ -160,6 +181,50 @@ class User extends BaseUser
     public function setWebsite($website)
     {
         $this->website = $website;
+
+        return $this;
+    }
+
+    /**
+     * @param mixed $file
+     */
+    public function setFile($file)
+    {
+        $this->file = $file;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFile()
+    {
+        return $this->file;
+    }
+
+    /**
+     * Get path
+     *
+     * @return string
+     */
+    public function getPath()
+    {
+        return $this->path;
+    }
+
+    public function getWebPath()
+    {
+        return substr($this->path, strpos($this->path, 'app/../web/') + 11);
+    }
+
+    /**
+     * Set path
+     *
+     * @param string $path
+     * @return User
+     */
+    public function setPath($path)
+    {
+        $this->path = $path;
 
         return $this;
     }

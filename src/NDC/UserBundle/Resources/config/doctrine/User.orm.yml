@@ -9,24 +9,39 @@ NDC\UserBundle\Entity\User:
             generator:
                 strategy: AUTO
 
+    gedmo:
+        uploadable:
+            allowOverwrite: true
+            filenameGenerator: SHA1
+
     fields:
         facebook:
             type: string
             length: 255
+            nullable: true
 
         github:
             type: string
             length: 255
+            nullable: true
 
         twitter:
             type: string
             length: 255
+            nullable: true
 
         linkedin:
             type: string
             length: 255
+            nullable: true
 
         website:
             type: string
             length: 255
+            nullable: true
+
+        path:
+            type: string
+            gedmo:
+                - uploadableFilePath
 

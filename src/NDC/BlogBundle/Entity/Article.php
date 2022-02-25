@@ -2,6 +2,7 @@
 
 namespace NDC\BlogBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use NDC\UserBundle\Entity\User;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -24,6 +25,7 @@ class Article
 
     /**
      * @var User
+     * @Assert\NotBlank()
      */
     private $author;
 
@@ -44,17 +46,25 @@ class Article
 
     /**
      * @var string
+     * @Assert\NotBlank()
      */
     private $html;
 
     /**
-     * @var \NDC\BlogBundle\Entity\Tech
-     */
-    private $tech;
-    /**
      * @var string
+     * @Assert\NotBlank()
      */
     private $state;
+
+    /**
+     * @var \NDC\BlogBundle\Entity\Category
+     * @Assert\NotBlank()
+     */
+    private $category;
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $tech;
 
     /**
      * Constructor
@@ -62,7 +72,8 @@ class Article
     public function __construct()
     {
         $this->createdAt = new \DateTime();
-        $this->state = "draft";
+        $this->state     = "draft";
+        $this->tech = new ArrayCollection();
     }
 
     public function __toString()
@@ -219,29 +230,6 @@ class Article
     }
 
     /**
-     * Get tech
-     *
-     * @return \NDC\BlogBundle\Entity\Tech
-     */
-    public function getTech()
-    {
-        return $this->tech;
-    }
-
-    /**
-     * Set tech
-     *
-     * @param \NDC\BlogBundle\Entity\Tech $tech
-     * @return Article
-     */
-    public function setTech(\NDC\BlogBundle\Entity\Tech $tech = null)
-    {
-        $this->tech = $tech;
-
-        return $this;
-    }
-
-    /**
      * Get state
      *
      * @return string
@@ -262,5 +250,61 @@ class Article
         $this->state = $state;
 
         return $this;
+    }
+
+    /**
+     * Get category
+     *
+     * @return \NDC\BlogBundle\Entity\Category
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    /**
+     * Set category
+     *
+     * @param \NDC\BlogBundle\Entity\Category $category
+     * @return Article
+     */
+    public function setCategory(\NDC\BlogBundle\Entity\Category $category = null)
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * Add tech
+     *
+     * @param \NDC\BlogBundle\Entity\Tech $tech
+     * @return Article
+     */
+    public function addTech(\NDC\BlogBundle\Entity\Tech $tech)
+    {
+        $this->tech[] = $tech;
+
+        return $this;
+    }
+
+    /**
+     * Remove tech
+     *
+     * @param \NDC\BlogBundle\Entity\Tech $tech
+     */
+    public function removeTech(\NDC\BlogBundle\Entity\Tech $tech)
+    {
+        $this->tech->removeElement($tech);
+    }
+
+    /**
+     * Get tech
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getTech()
+    {
+        return $this->tech;
     }
 }

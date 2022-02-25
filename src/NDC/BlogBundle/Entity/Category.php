@@ -3,17 +3,12 @@
 namespace NDC\BlogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use JMS\Serializer\Annotation\ExclusionPolicy;
-use JMS\Serializer\Annotation\Expose;
-use JMS\Serializer\Annotation\VirtualProperty;
-use JMS\Serializer\Annotation\SerializedName;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Tech
- * @ExclusionPolicy("all")
+ * Category
  */
-class Tech
+class Category
 {
     /**
      * @var integer
@@ -22,24 +17,9 @@ class Tech
 
     /**
      * @var string
-     * @Expose
      * @Assert\NotBlank()
      */
     private $name;
-
-    /**
-     * @var string
-     * @Expose
-     * @Assert\NotBlank()
-     * @Assert\Regex("/^[a-fA-F0-9]{6}$/")
-     */
-    private $color;
-
-    /**
-     * @var string
-     * @Expose
-     */
-    private $slug;
 
     /**
      * @var string
@@ -49,32 +29,35 @@ class Tech
 
     /**
      * @var string
+     */
+    private $slug;
+
+    /**
+     * @var string
+     * @Assert\NotBlank()
+     * @Assert\Regex("/^[a-fA-F0-9]{6}$/")
+     */
+    private $color;
+
+    /**
+     * @var string
      * @Assert\NotBlank()
      * @Assert\Regex("/^[a-fA-F0-9]{6}$/")
      */
     private $txtColor;
 
-    public function __toString()
-    {
-        return $this->name;
-    }
 
     /**
      * Get id
      *
-     * @return integer
+     * @return integer 
      */
     public function getId()
     {
         return $this->id;
     }
 
-    /**
-     * Get name
-     *
-     * @return string
-     */
-    public function getName()
+    public function __toString()
     {
         return $this->name;
     }
@@ -83,7 +66,7 @@ class Tech
      * Set name
      *
      * @param string $name
-     * @return Tech
+     * @return Category
      */
     public function setName($name)
     {
@@ -93,66 +76,20 @@ class Tech
     }
 
     /**
-     * Get color
+     * Get name
      *
-     * @return string
+     * @return string 
      */
-    public function getColor()
+    public function getName()
     {
-        return $this->color;
-    }
-
-    /**
-     * Set color
-     *
-     * @param string $color
-     * @return Tech
-     */
-    public function setColor($color)
-    {
-        $this->color = $color;
-
-        return $this;
-    }
-
-    /**
-     * Get slug
-     *
-     * @return string
-     */
-    public function getSlug()
-    {
-        return $this->slug;
-    }
-
-    /**
-     * Set slug
-     *
-     * @param string $slug
-     * @return Tech
-     */
-    public function setSlug($slug)
-    {
-        $this->slug = $slug;
-
-        return $this;
-    }
-
-    /**
-     * Get abbr
-     *
-     * @return string
-     */
-    public function getAbbr()
-    {
-        return $this->abbr;
+        return $this->name;
     }
 
     /**
      * Set abbr
      *
      * @param string $abbr
-     * @return Tech
+     * @return Category
      */
     public function setAbbr($abbr)
     {
@@ -162,25 +99,81 @@ class Tech
     }
 
     /**
-     * Get txtColor
+     * Get abbr
      *
-     * @return string
+     * @return string 
      */
-    public function getTxtColor()
+    public function getAbbr()
     {
-        return $this->txtColor;
+        return $this->abbr;
+    }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     * @return Category
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string 
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
+     * Set color
+     *
+     * @param string $color
+     * @return Category
+     */
+    public function setColor($color)
+    {
+        $this->color = $color;
+
+        return $this;
+    }
+
+    /**
+     * Get color
+     *
+     * @return string 
+     */
+    public function getColor()
+    {
+        return $this->color;
     }
 
     /**
      * Set txtColor
      *
      * @param string $txtColor
-     * @return Tech
+     * @return Category
      */
     public function setTxtColor($txtColor)
     {
         $this->txtColor = $txtColor;
 
         return $this;
+    }
+
+    /**
+     * Get txtColor
+     *
+     * @return string 
+     */
+    public function getTxtColor()
+    {
+        return $this->txtColor;
     }
 }

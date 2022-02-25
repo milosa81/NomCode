@@ -8,6 +8,5 @@
 {% block body %}
     <h1>Ajouter un article</h1>
 
-    {% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
-    {{ form(form) }}
+    {% include '@NDCBlog/ArticleAdmin/form.html.twig' %}
 {% endblock %}

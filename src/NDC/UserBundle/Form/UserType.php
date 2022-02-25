@@ -37,6 +37,9 @@ class UserType extends AbstractType
                 ),
                 'required' => false,
             ))
+            ->add('file', 'file', array(
+                'label' => 'Photo',
+            ))
             ->add('enabled', 'checkbox', array(
                 'label' => 'Activé',
                 'required' => false,

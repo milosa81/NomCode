@@ -11,6 +11,10 @@ ndc_blog_bundle_tech_admin:
     resource: routing/techAdmin.yml
     prefix: /admin/techs
 
+ndc_blog_bundle_category_admin:
+    resource: routing/categoryAdmin.yml
+    prefix: /admin/categories
+
 ndc_blog_bundle_image_admin:
     resource: routing/imageAdmin.yml
     prefix: /admin/images

@@ -1,0 +1,10 @@
+{% extends '::admin.html.twig' %}
+
+{% block breadcrumb %}
+    {{ parent() }}
+    {{ helper.breadcrumb('blog_category_admin_index', 'Catégories') }}
+{% endblock %}
+
+{% block actions %}
+    {{ helper.action('blog_category_admin_add', 'plus', 'Ajouter') }}
+{% endblock %}

@@ -1,7 +1,7 @@
 @import "colors";
 
 // variables
-$height-header: 72vh;
+$height-header: 65vh;
 $height-input-text: 30px;
 $size-photo-author-index: 40px;
 $size-photo-author-article: 70px;
@@ -147,19 +147,16 @@ input[type=text] {
 	}
 }
 
-a.category {
+a.tech {
 	width: $size-icon-category;
 	height: $size-icon-category;
 	border-radius: 50%;
 	background-color: $font-color-base;
 	position: relative;
 	pointer-events: auto;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	background-position: center center;
-	background-size: $size-icon-category*0.8;
-	background-repeat: no-repeat;
+	text-align: center;
+	font-size: 85%;
+	line-height: $size-icon-category !important;
 }
 
 .container {
@@ -495,10 +492,14 @@ section.articles_list {
 				padding-right: 10px;
 			}
 			
-			a.category {
+			a.tech {
 				margin-top: ($size-photo-author-index - $size-icon-category)/2;
 				display: inline-block;
 				float: right;
+
+				&.tech-framework {
+					margin-right: 5px;
+				}
 			}
 		}
 	}
