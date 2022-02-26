@@ -65,6 +65,10 @@ class Article
      * @var \Doctrine\Common\Collections\Collection
      */
     private $tech;
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $comments;
 
     /**
      * Constructor
@@ -73,7 +77,8 @@ class Article
     {
         $this->createdAt = new \DateTime();
         $this->state     = "draft";
-        $this->tech = new ArrayCollection();
+        $this->tech      = new ArrayCollection();
+        $this->comments  = new ArrayCollection();
     }
 
     public function __toString()
@@ -306,5 +311,38 @@ class Article
     public function getTech()
     {
         return $this->tech;
+    }
+
+    /**
+     * Add comments
+     *
+     * @param \NDC\BlogBundle\Entity\Comment $comments
+     * @return Article
+     */
+    public function addComment(\NDC\BlogBundle\Entity\Comment $comments)
+    {
+        $this->comments[] = $comments;
+
+        return $this;
+    }
+
+    /**
+     * Remove comments
+     *
+     * @param \NDC\BlogBundle\Entity\Comment $comments
+     */
+    public function removeComment(\NDC\BlogBundle\Entity\Comment $comments)
+    {
+        $this->comments->removeElement($comments);
+    }
+
+    /**
+     * Get comments
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getComments()
+    {
+        return $this->comments;
     }
 }

@@ -5,7 +5,17 @@
 {% block body %}
 <section class="container spacer">
 	<h1>Rédacteurs</h1>
-	<p>A venir</p>
+	{% for author in authors %}
+		<div class="article-author list-authors">
+			<div class="container">
+					<a class="author" href="#author" title="Rédacteur : {{ author.username|capitalize }}">{{ author.username|capitalize }}</a>
+					<a href="#author" title="Rédacteur : {{ author.username|capitalize }}">
+						<img src="{{ author.webPath }}" class="author-img">
+					</a>
+					{{ helper.author_link(author) }}
+			</div>
+		</div>
+	{% endfor %}
 </section>
 {% endblock %}
 

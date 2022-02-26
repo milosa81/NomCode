@@ -1,0 +1,8 @@
+<div class="comment">
+	<a>
+		<img src="http://www.gravatar.com/avatar/{{ comment.gravatar }}?d=retro" class="author-img">
+	</a>
+	<a class="author">{{ comment.username|capitalize }}</a>
+	<span class="date">{{ comment.createdAt|fullDate }}{% if date(comment.createdAt) > date('-1day') %} à {{ comment.createdAt|date('H:i') }}{% endif %}</span>
+	<div class="html long-text">{{ comment.message|nl2br }}</div>
+</div>

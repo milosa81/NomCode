@@ -69,3 +69,8 @@ NDC\BlogBundle\Entity\Article:
                 inverseJoinColumns:
                     tech_id:
                         referencedColumnName: id
+
+    oneToMany:
+        comments:
+            targetEntity: NDC\BlogBundle\Entity\Comment
+            mappedBy: article

@@ -18,7 +18,7 @@
 				</a>
 				<div class="information muted">
 					<a title="Rédacteur : {{ article.author.username|capitalize }}">
-						<img src="{{ article.author.photo|default('https://dl.dropboxusercontent.com/u/18517066/nomdecode/author.png') }}" class="author-img">
+						<img src="{{ article.author.webPath }}" class="author-img">
 					</a>
 					<a class="author" title="Rédacteur : {{ article.author.username|capitalize }}">
 						<span class="author">{{ article.author.username|capitalize }}</span>

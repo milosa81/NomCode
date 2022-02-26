@@ -21,6 +21,7 @@ $line-height-article: 28px; // 1.2em;
 $line-height-pre-code: $line-height-article*0.86;
 $font-size-headline-index: 2.3rem;
 $font-size-headline-article: 3rem;
+$color-over-header: white;
 
 // sizes for media queries
 $size-limit-bigger-screen: 1500px;
@@ -124,16 +125,39 @@ a {
 	outline: 0;
 }
 
-input[type=text], textarea {
+input[type=text], input[type=email], textarea {
 	box-sizing: border-box;
 	padding-left: 10px;
+	background-color: transparent;
+	border: none;
+	border-bottom: 2px solid $color-over-header;
+	color: $color-over-header;
+	margin-bottom: 10px;
+
+	&::-webkit-input-placeholder { color: $color-over-header; }
+	&:-moz-placeholder { color: $color-over-header; }
+	&::-moz-placeholder { color: $color-over-header; }
+	&:-ms-input-placeholder { color: $color-over-header; }
 }
 
-input[type=text] {
-	background-color: transparent;
+input[type=text], input[type=email] {
 	height: $height-input-text;
 }
 
+textarea {
+	resize: vertical;
+}
+
+.btn {
+	display: inline-block;
+	border: none;
+	background-color: $color-over-header;
+	padding: 15px 25px;
+	text-transform: uppercase;
+	color: inherit;
+	font-weight: bold;
+	border-radius: 4px;
+}
 
 .long-text {
 	font-family: $font-family-article;
@@ -182,7 +206,6 @@ header {
 	background-color: $background-color-header;
 
 	nav {
-		$color-over-header: white;
 		position: absolute;
 		right: 8vw;
 		top: $margin-top-logo;
@@ -202,16 +225,7 @@ header {
 		}
 
 		input[type=text].search {
-			border: none;
-			border-bottom: 2px solid $color-over-header;
-			color: $color-over-header;
-			margin-bottom: 10px;
-			
 			width: 100%;
-			&::-webkit-input-placeholder { color: $color-over-header; }
-			&:-moz-placeholder { color: $color-over-header; }
-			&::-moz-placeholder { color: $color-over-header; }
-			&:-ms-input-placeholder { color: $color-over-header; }
 		}
 	}
 
@@ -339,8 +353,9 @@ header {
 		.top {
 			position: relative;
 			background-color: #333;
-			background-position: 50% $margin-section;
-			background-repeat: no-repeat;
+			background-position: center center, top left;
+			background-size: 40vh, auto;
+			background-repeat: no-repeat, repeat;
 			height: $height-header;
 			overflow: hidden;
 
@@ -507,7 +522,16 @@ section.articles_list {
 
 .article-author {
 	text-align: center;
-	padding-bottom: $margin-section/1.2;
+
+	.container {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+
+		& > * {
+			margin: 8px 0;
+		}
+	}
 
 	img.author-img {
 		@include author-photo($size-photo-author-article);
@@ -520,15 +544,13 @@ section.articles_list {
 	}
 
 	.author {
-		padding-right: 10px;
+		font-size: 1.3rem;
 	}
 
 	.author-links {
 		display: inline-flex;
 		font-size: 18px;
-		height: 35px;
 		color: #fff;
-		margin-left: 8px;
 
 		a {
 			width: 35px;
@@ -575,15 +597,38 @@ section.articles_list {
 			}
 		}
 	}
+
+	&.list-authors {
+		margin-bottom: 40px;
+
+		img.author-img {
+			@include author-photo($size-photo-author-article*1.5);
+		}
+	}
 }
 
 section.comments {
 	padding-top: $margin-section/2;
 	padding-bottom: $margin-section;
+	margin-top: $margin-section/1.2;
 	background-color: $background-color-header;
 
 	h1 {
 		margin-bottom: $margin-section/2;
+	}
+
+	form {
+		margin-bottom: 50px;
+
+		input:not([type=submit]), textarea {
+			width: 100%;
+			margin-bottom: 20px;
+		}
+
+		.btn {
+			display: block;
+			margin: auto;
+		}
 	}
 
 	.comment {

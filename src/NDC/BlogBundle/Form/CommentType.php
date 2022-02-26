@@ -16,15 +16,32 @@ class CommentType extends AbstractType
     {
         $builder
             ->add('username', 'text', array(
-                'label' => 'Pseudo'
+                'label' => false,
+                'attr' => array(
+                    'placeholder' => 'Nom',
+                ),
             ))
-            ->add('email', 'text', array(
-                'label' => 'Email'
+            ->add('email', 'email', array(
+                'label' => false,
+                'attr' => array(
+                    'placeholder' => 'Adresse mail',
+                ),
             ))
-            ->add('message', 'text', array(
-                'label' => 'Message'
+            ->add('message', 'textarea', array(
+                'label' => false,
+                'attr' => array(
+                    'placeholder' => 'Message',
+                    'rows' => '6',
+                ),
             ))
-            ->add('Envoyer', 'submit')
+            ->add('Envoyer', 'submit', array(
+                'label' => false,
+                'attr' => array(
+                    'placeholder' => 'Message',
+                    'rows' => '6',
+                    'class' => 'btn',
+                ),
+            ))
         ;
     }
     

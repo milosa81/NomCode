@@ -5,7 +5,7 @@
 {% block header_class %}article{% endblock %}
 
 {% block header %}
-	<div class="top" style="background-color:#{{ article.category.color }};background-image:url(https://dl.dropboxusercontent.com/u/18517066/nomdecode/jollyt.png);">
+	<div class="top" style="background-color:#{{ article.category.color }};background-image:url({{asset('css/img/bg_category/'~article.category.abbr|lower~'.png')}}), url({{asset('css/img/bg_category/motif_'~article.category.abbr|lower~'.png')}});">
 		{% if article.state != "published" %}
 		    {% set states = {
 		        'draft':  {'icon': 'pencil', 'info': 'Cet article est un brouillon'},
@@ -22,7 +22,7 @@
 	</div>
 	<div class="container text">
 		<h1>{{ article.title|capitalize }}</h1>
-		<span class="muted">{{ article.createdAt|fullDate }} - 5 commentaires</span>
+		<span class="muted">{{ article.createdAt|fullDate }} - 5 commentaires{% if article.tech|length > 0 %} - {{ article.tech|join(" + ") }}{% endif %}</span>
 	</div>
 {% endblock %}
 
@@ -32,7 +32,7 @@
 	<div class="container">
 			<a class="author" href="#author" title="Rédacteur : {{ article.author.username|capitalize }}">{{ article.author.username|capitalize }}</a>
 			<a href="#author" title="Rédacteur : {{ article.author.username|capitalize }}">
-				<img src="{{ article.author.photo|default('https://dl.dropboxusercontent.com/u/18517066/nomdecode/author.png') }}" class="author-img">
+				<img src="../{{ article.author.webPath }}" class="author-img">
 			</a>
 			{{ helper.author_link(article.author) }}
 	</div>
@@ -40,41 +40,13 @@
 <section class="comments">
 	<div class="container">
 		<h1>Commentaires</h1>
-		<div class="comment">
-			<a href="#author">
-				{# <img src="{{ article.author.photo|default('https://dl.dropboxusercontent.com/u/18517066/nomdecode/author.png') }}" class="author-img"> #}
-				{% set avatar = random(7) + 1 %}
-				<img src="{{ asset('css/img/avatar/'~avatar~'.png') }}" class="author-img">
-			</a>
-			<a class="author" href="#author">{{ article.author.username|capitalize }}</a>
-			<span class="date">{{ article.createdAt|fullDate }}</span>
-			<div class="html long-text">
-				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero impedit, molestias repellendus sit. Libero, excepturi? Quas molestias nobis porro itaque, impedit eligendi beatae cum soluta quo numquam! Iure facere odio magnam aliquam reprehenderit eum sunt sapiente expedita molestiae praesentium minima pariatur libero eos rerum quaerat.</p>
-				<p>Dolor aliquam quo suscipit libero mollitia, optio pariatur qui obcaecati incidunt dolores necessitatibus quia modi, beatae aperiam impedit facilis sequi. Sint, vel.</p>
-			</div>
-		</div>
-		<div class="comment">
-			<a href="#author">
-				{% set avatar = random(7) + 1 %}
-				<img src="{{ asset('css/img/avatar/'~avatar~'.png') }}" class="author-img">
-			</a>
-			<a class="author" href="#author">{{ article.author.username|capitalize }}</a>
-			<span class="date">{{ article.createdAt|fullDate }}</span>
-			<div class="html long-text">
-				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero impedit, molestias repellendus sit.</p>
-			</div>
-		</div>
-		<div class="comment">
-			<a href="#author">
-				{% set avatar = random(7) + 1 %}
-				<img src="{{ asset('css/img/avatar/'~avatar~'.png') }}" class="author-img">
-			</a>
-			<a class="author" href="#author">{{ article.author.username|capitalize }}</a>
-			<span class="date">{{ article.createdAt|fullDate }}</span>
-			<div class="html long-text">
-				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero impedit, molestias repellendus sit. Libero, excepturi? Quas molestias nobis porro itaque, impedit eligendi beatae cum soluta quo numquam! Iure facere odio magnam aliquam reprehenderit eum sunt sapiente expedita molestiae praesentium minima pariatur libero eos rerum quaerat.</p>
-			</div>
-		</div>
+		<p><i class="fa fa-exclamation-circle"></i> Les commentaires se limitent à du texte simple</p>
+        {{ form(form) }}
+		{% for comment in article.comments|reverse %}
+			{% include 'NDCBlogBundle:Blog:comment.html.twig' %}
+		{% else %}
+			<p>Il n'y a pas encore de commentaire sur cet article !</p>
+		{% endfor %}
 	</div>
 </section>
 {% endblock %}
