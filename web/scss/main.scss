@@ -157,6 +157,11 @@ textarea {
 	color: inherit;
 	font-weight: bold;
 	border-radius: 4px;
+	transition: background-color 0.3s linear;
+}
+
+.btn:disabled {
+	background-color: #ccc;
 }
 
 .long-text {
@@ -196,6 +201,31 @@ a.tech {
 
 .muted {
 	color: $font-color-muted;
+}
+
+.bulle {
+	background-color: #fff;
+	padding: 1rem;
+	border-radius: $border-radius-common;
+	border-top-left-radius: 0;
+
+	&.bulle-top {
+		border-radius: $border-radius-common;
+		border-bottom-left-radius: 0;
+	}
+
+	&.bulle-danger {
+		color: white;
+		background-color: #EC7676;
+	}
+
+	p:first-child {
+		margin-top: 0;
+	}
+
+	p:last-child {
+		margin-bottom: 0;
+	}
 }
 
 header {
@@ -645,27 +675,12 @@ section.comments {
 			vertical-align: middle;
 		}
 
-		.html {
-			margin-left: $size-photo-author-article + 10px;
-		}
-
 		.author {
 			padding-left: 10px;
 		}
 
-		.html {
-			background-color: #fff;
-			padding: 1rem;
-			border-radius: $border-radius-common;
-			border-top-left-radius: 0;
-
-			p:first-child {
-				margin-top: 0;
-			}
-
-			p:last-child {
-				margin-bottom: 0;
-			}
+		.bulle {
+			margin-left: $size-photo-author-article + 10px;
 		}
 	}
 }
