@@ -55,6 +55,11 @@ class User extends BaseUser
      */
     private $path;
 
+    /**
+     * @var string
+     */
+    private $desc;
+
     public function __construct()
     {
         parent::__construct();
@@ -186,19 +191,19 @@ class User extends BaseUser
     }
 
     /**
-     * @param mixed $file
-     */
-    public function setFile($file)
-    {
-        $this->file = $file;
-    }
-
-    /**
      * @return mixed
      */
     public function getFile()
     {
         return $this->file;
+    }
+
+    /**
+     * @param mixed $file
+     */
+    public function setFile($file)
+    {
+        $this->file = $file;
     }
 
     /**
@@ -211,11 +216,6 @@ class User extends BaseUser
         return $this->path;
     }
 
-    public function getWebPath()
-    {
-        return substr($this->path, strpos($this->path, 'app/../web/') + 11);
-    }
-
     /**
      * Set path
      *
@@ -225,6 +225,34 @@ class User extends BaseUser
     public function setPath($path)
     {
         $this->path = $path;
+
+        return $this;
+    }
+
+    public function getWebPath()
+    {
+        return substr($this->path, strpos($this->path, 'app/../web/') + 11);
+    }
+
+    /**
+     * Get desc
+     *
+     * @return string
+     */
+    public function getDesc()
+    {
+        return $this->desc;
+    }
+
+    /**
+     * Set desc
+     *
+     * @param string $desc
+     * @return User
+     */
+    public function setDesc($desc)
+    {
+        $this->desc = $desc;
 
         return $this;
     }

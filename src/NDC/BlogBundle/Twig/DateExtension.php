@@ -27,6 +27,11 @@ class DateExtension extends \Twig_Extension
         if($date == null)
             return '';
 
+        if((new \DateTime())->format('d-m-Y') == $date->format('d-m-Y'))
+            return "aujourd'hui";
+        if((new \DateTime("-1day"))->format('d-m-Y') == $date->format('d-m-Y'))
+            return "hier";
+
         $elements = array();;
 
         if($showDay)

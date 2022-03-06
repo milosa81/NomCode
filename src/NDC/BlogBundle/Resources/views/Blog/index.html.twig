@@ -18,7 +18,7 @@
 				</a>
 				<div class="information muted">
 					<a title="Rédacteur : {{ article.author.username|capitalize }}">
-						<img src="{{ article.author.webPath }}" class="author-img">
+						<img src="{{ asset(article.author.webPath) }}" class="author-img">
 					</a>
 					<a class="author" title="Rédacteur : {{ article.author.username|capitalize }}">
 						<span class="author">{{ article.author.username|capitalize }}</span>
@@ -29,7 +29,7 @@
 					{% for t in article.tech %}
 						<a class="tech tech-framework" style="background-color:#{{ t.color }};color:#{{ t.txtColor }};" title="{{ t.name }}">{{ t.abbr }}</a>
 					{% endfor %}
-					<span class="comments">5 commentaires</span>
+					<span class="comments">{{ article.comments|length }} commentaire{% if article.comments|length > 1 %}s{% endif %}</span>
 				</div>
 			</div>
 		{% endfor %}

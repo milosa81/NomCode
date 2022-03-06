@@ -12,6 +12,7 @@ use Knp\Component\Pager\Paginator;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\HttpFoundation\Response;
 
 class BlogController extends Controller
 {
@@ -57,20 +58,27 @@ class BlogController extends Controller
         if($article->getSlug() != $slug)
             return $this->redirect($this->generateUrl('blog_article', array('id'=>$article->getId(), 'slug'=>$article->getSlug())), 301);
 
-        $comment = new Comment($article);
-        $form = $this->createForm(new CommentType, $comment);
+        $comment = new Comment($article, $this->getUser());
+        $form = $this->createForm(new CommentType($this->getUser()), $comment);
 
-        if($request->isMethod('POST')){
-            $form->handleRequest($request);
+        if($request->query->get('r', null) == 'ajax') {
+            if($request->isMethod('POST')){
+                $form->handleRequest($request);
 
-            if($form->isValid()){
-                $this->em->persist($comment);
-                $this->em->flush();
+                if($form->isValid()){
+                    if($this->isGranted('ROLE_ADMIN'))
+                        $comment->setIsRegistered(true);
 
-                return $this->render('@NDCBlog/Blog/comment.html.twig', array(
-                    'comment' => $comment,
-                ));
+                    $this->em->persist($comment);
+                    $this->em->flush();
+
+                    return $this->render('@NDCBlog/Blog/comment.html.twig', array(
+                        'comment' => $comment,
+                    ));
+                }
             }
+
+            return new Response('retttt', 400);
         }
 
         return array(

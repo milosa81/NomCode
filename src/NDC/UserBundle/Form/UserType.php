@@ -41,6 +41,10 @@ class UserType extends AbstractType
                 'label' => 'Photo',
                 'required' => false,
             ))
+            ->add('desc', 'textarea', array(
+                'label' => 'Description',
+                'required' => false,
+            ))
             ->add('enabled', 'checkbox', array(
                 'label' => 'Activé',
                 'required' => false,

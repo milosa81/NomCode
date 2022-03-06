@@ -8,10 +8,11 @@
 	{% for author in authors %}
 		<div class="article-author list-authors">
 			<div class="container">
-					<a class="author" href="#author" title="Rédacteur : {{ author.username|capitalize }}">{{ author.username|capitalize }}</a>
-					<a href="#author" title="Rédacteur : {{ author.username|capitalize }}">
-						<img src="{{ author.webPath }}" class="author-img">
+					<a class="author" href="#author" title="Rédacteur : {{ author.username }}">{{ author.username }}</a>
+					<a href="#author" title="Rédacteur : {{ author.username }}">
+						<img src="{{ asset(author.webPath) }}" class="author-img">
 					</a>
+					<p>{{ author.desc|raw }}</p>
 					{{ helper.author_link(author) }}
 			</div>
 		</div>

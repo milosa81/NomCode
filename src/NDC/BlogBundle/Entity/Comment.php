@@ -3,7 +3,9 @@
 namespace NDC\BlogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use NDC\UserBundle\Entity\User;
 use Symfony\Component\Validator\Constraints as Assert;
+use NDC\BlogBundle\Validator\Constraints as NDCAssert;
 
 /**
  * Comment
@@ -18,6 +20,7 @@ class Comment
     /**
      * @var string
      * @Assert\NotBlank()
+     * @NDCAssert\AllowedUsername()
      */
     private $username;
 
@@ -25,6 +28,10 @@ class Comment
      * @var string
      * @Assert\NotBlank()
      * @Assert\Email()
+     * @NDCAssert\AllowedUsername(
+     *     field="email",
+     *     message="Cette adresse mail est réservée."
+     * )
      */
     private $email;
 
@@ -38,7 +45,7 @@ class Comment
      * @var \DateTime
      */
     private $createdAt;
-    
+
     /**
      * @var \NDC\BlogBundle\Entity\Article
      */
@@ -49,10 +56,15 @@ class Comment
      */
     private $isRegistered;
 
-    public function __construct(Article $article = null)
+    public function __construct(Article $article = null, User $user = null)
     {
         $this->article = $article;
         $this->isRegistered = false;
+
+        if($user != null){
+            $this->username = $user->getUsername();
+            $this->email = $user->getEmail();
+        }
     }
 
     /**
@@ -111,9 +123,14 @@ class Comment
         return $this;
     }
 
-    public function getGravatar()
+    public function getMd5()
     {
         return md5(strtolower(trim($this->email)));
+    }
+
+    public function getIdentifier()
+    {
+        return abs(crc32($this->email));
     }
 
     /**

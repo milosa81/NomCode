@@ -1,8 +1,10 @@
 <div class="comment">
 	<a>
-		<img src="http://www.gravatar.com/avatar/{{ comment.gravatar }}?d=retro" class="author-img">
+		{% set avatar_max = 8 %}
+		{% set avatar_number = comment.identifier % (avatar_max - 1) + 1 %}
+		<img src="http://www.gravatar.com/avatar/{{ comment.md5 }}?d={{ app.request.scheme ~'://' ~ app.request.httpHost ~ asset('css/img/avatar/'~ avatar_number ~'.png') }}" class="author-img">
 	</a>
 	<a class="author">{{ comment.username|capitalize }}</a>
 	<span class="date">{{ comment.createdAt|fullDate }}{% if date(comment.createdAt) > date('-1day') %} à {{ comment.createdAt|date('H:i') }}{% endif %}</span>
-	<div class="html long-text">{{ comment.message|nl2br }}</div>
+	<div class="bulle long-text">{{ comment.message|nl2br }}</div>
 </div>
