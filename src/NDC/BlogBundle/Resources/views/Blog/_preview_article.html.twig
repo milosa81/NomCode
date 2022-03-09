@@ -1,0 +1,28 @@
+<div class="article_preview">
+	{% if is_granted('ROLE_ADMIN') or article.author == app.user %}
+		<div class="admin_panel">
+			<a href="{{ path('blog_article_admin_edit', { 'id': article.id }) }}"> <i class="fa fa-pencil"></i> Éditer cet article</a>
+		</div>
+	{% endif %}
+
+	<a href="{{ path('blog_article', { 'id': article.id, category: article.category.slug, 'slug': article.slug }) }}" title="{{ article.title|capitalize }}">
+		<h2>{{ article.title|capitalize }}</h2>
+		<p class="long-text">{{ article.html|striptags|slice(0, 250)|raw }}{% if article.html|striptags|length > 250 %}...{% endif %}</p>
+	</a>
+	
+	<div class="information muted">
+		<a  href="{{ path('blog_search', {q: article.author.username}) }}" title="Rédacteur : {{ article.author.username }}">
+			<img src="{{ asset(article.author.webPath) }}" class="author-img">
+		</a>
+		<a class="author" href="{{ path('blog_search', {q: article.author.username}) }}" title="Rédacteur : {{ article.author.username }}">
+			<span class="author">{{ article.author.username }}</span>
+		</a>
+		<span class="date">{{ article.createdAt|fullDate|lower }}</span>
+					
+		<a class="tech" href="{{ path('blog_search', {q: article.category.slug}) }}" style="background-color:#{{ article.category.color }};color:#{{ article.category.txtColor }};" title="{{ article.category.name }}">{{ article.category.abbr }}</a>
+		{% for t in article.tech %}
+			<a class="tech tech-framework" href="{{ path('blog_search', {q: t.slug}) }}" style="background-color:#{{ t.color }};color:#{{ t.txtColor }};" title="{{ t.name }}">{{ t.abbr }}</a>
+		{% endfor %}
+		<span class="comments">{{ article.comments|length }} commentaire{% if article.comments|length > 1 %}s{% endif %}</span>
+	</div>
+</div>

@@ -1,40 +1,26 @@
 {% extends '::base.html.twig' %}
 
+{% block meta %}
+	<meta property="og:title" content="Nomdecode" />
+	<meta property="og:type" content="website" />
+	<meta name="description" content="Nomdecode est un blog de jeunes développeurs qui partagent leurs connaissances !" />
+{% endblock %}
+
 {% block header_class %}index{% endblock %}
 
-	{% block header %}
-		<div class="illustration">
-			{% include 'NDCBlogBundle:Blog:index_animation.html.twig' %}
-		</div>
+{% block header %}
+	<div class="illustration">
+		{% include 'NDCBlogBundle:Blog:_index_animation.html.twig' %}
+	</div>
 {% endblock %}
 
 {% block body %}
-	<section class="container spacer articles_list">
+	<section class="container spacer">
 		{% for article in articles %}
-			<div class="article">
-				<a href="{{ path('blog_article', { 'id': article.id, 'slug': article.slug }) }}" title="{{ article.title|capitalize }}">
-					<h2>{{ article.title|capitalize }}</h2>
-					<p class="long-text">{{ article.html|striptags|slice(0, 250)|raw }}{% if article.html|striptags|length|raw > 250 %}...{% endif %}</p>
-				</a>
-				<div class="information muted">
-					<a title="Rédacteur : {{ article.author.username|capitalize }}">
-						<img src="{{ asset(article.author.webPath) }}" class="author-img">
-					</a>
-					<a class="author" title="Rédacteur : {{ article.author.username|capitalize }}">
-						<span class="author">{{ article.author.username|capitalize }}</span>
-					</a>
-					<span class="date">{{ article.createdAt|fullDate|lower }}</span>
-					
-					<a class="tech" style="background-color:#{{ article.category.color }};color:#{{ article.category.txtColor }};" title="{{ article.category.name }}">{{ article.category.abbr }}</a>
-					{% for t in article.tech %}
-						<a class="tech tech-framework" style="background-color:#{{ t.color }};color:#{{ t.txtColor }};" title="{{ t.name }}">{{ t.abbr }}</a>
-					{% endfor %}
-					<span class="comments">{{ article.comments|length }} commentaire{% if article.comments|length > 1 %}s{% endif %}</span>
-				</div>
-			</div>
+			{% include 'NDCBlogBundle:Blog:_preview_article.html.twig' %}
 		{% endfor %}
 
-		{{ helper.pagination(page, articles.pageCount) }}
+		{{ helper.pagination(page, articles.pageCount, 'blog_index', null) }}
 	</section>
 {% endblock %}
 

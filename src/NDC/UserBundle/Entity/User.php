@@ -231,7 +231,7 @@ class User extends BaseUser
 
     public function getWebPath()
     {
-        return substr($this->path, strpos($this->path, 'app/../web/') + 11);
+        return substr($this->path, strpos($this->path, 'app/../htdocs/') + 14);
     }
 
     /**

@@ -4,6 +4,7 @@
 namespace NDC\BlogBundle\Controller;
 
 use NDC\BlogBundle\Entity\Article;
+use NDC\BlogBundle\Entity\CommentMonitoring;
 use NDC\BlogBundle\Form\ArticleType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Doctrine\ORM\EntityManager;
@@ -49,7 +50,7 @@ class ArticleAdminController extends Controller
         $article = new Article;
         $article->setAuthor($this->getUser());
 
-        return $this->handleForm($article, $request);
+        return $this->handleForm($article, $request, true);
     }
 
     /**
@@ -60,7 +61,7 @@ class ArticleAdminController extends Controller
         return $this->handleForm($article, $request);
     }
 
-    private function handleForm(Article $article, Request $request = null)
+    private function handleForm(Article $article, Request $request = null, $add = false)
     {
         $form = $this->createForm(new ArticleType, $article);
 
@@ -68,8 +69,17 @@ class ArticleAdminController extends Controller
             $form->handleRequest($request);
 
             if($form->isValid()){
+
                 $this->em->persist($article);
                 $this->em->flush();
+
+                if($add){
+                    $users = $this->em->getRepository('NDCUserBundle:User')->findAll();
+
+                    foreach($users as $user)
+                        $this->em->persist(new CommentMonitoring($user, $article));
+                    $this->em->flush();
+                }
 
                 if($request->query->get('r', null) == 'ajax')
                     return new Response();

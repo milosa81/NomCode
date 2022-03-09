@@ -19,6 +19,10 @@ ndc_blog_bundle_image_admin:
     resource: routing/imageAdmin.yml
     prefix: /admin/images
 
+ndc_blog_bundle_comment_admin:
+    resource: routing/commentAdmin.yml
+    prefix: /admin/comments
+
 ndc_blog_bundle_blog:
     resource: routing/blog.yml
     prefix: /

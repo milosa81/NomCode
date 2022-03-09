@@ -1,0 +1,34 @@
+{% if comments|length %}
+    <table class="table table-bordered">
+        <tr>
+            <th>#</th>
+            <th>Article</th>
+            <th>Date</th>
+            <th>Pseudo</th>
+            <th>Message</th>
+            <th>Action</th>
+        </tr>
+        {% for comment in comments %}
+            <tr>
+                <td>{{ comment.id }}</td>
+                <td>
+                    <div class="user" style="background-image: url({{ asset(comment.article.author.webPath) }})"></div>
+                    {{ comment.article.title }}
+                </td>
+                <td>{{ comment.createdAt|fullDate }} à {{ comment.createdAt|date('h:i') }}</td>
+                <td>{{ comment.username }}</td>
+                <td>
+                    {{ comment.message|striptags|slice(0, 50)|raw }}{% if comment.message|striptags|length > 50 %}...{% endif %}
+                </td>
+                <td>
+                    <a href="{{ path('blog_article', {category:comment.article.category.slug, id: comment.article.id, slug:comment.article.slug}) }}#comment-{{ comment.id }}" class="btn btn-default btn-xs">
+                        <i class="glyphicon glyphicon-arrow-right"></i>
+                        Lire
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% else %}
+    <p>Aucun commentaire...</p>
+{% endif %}

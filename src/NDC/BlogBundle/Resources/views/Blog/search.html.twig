@@ -1,0 +1,13 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+<section class="container spacer">
+	<h1>Résultats de la recherche : "{{ query }}"</h1>
+	<br/>
+	{% for article in articles %}
+		{% include 'NDCBlogBundle:Blog:_preview_article.html.twig' %}
+	{% endfor %}
+
+	{{ helper.pagination(page, articles.pageCount, 'blog_search', {'q': query}) }}
+</section>
+{% endblock %}

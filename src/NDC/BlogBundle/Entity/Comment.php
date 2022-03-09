@@ -19,15 +19,27 @@ class Comment
 
     /**
      * @var string
-     * @Assert\NotBlank()
-     * @NDCAssert\AllowedUsername()
+     * @Assert\NotBlank(
+     *     message="Le champ nom est vide."
+     *  )
+     *  @Assert\Length(
+     *     max = "50",
+     *     maxMessage = "Le nom ne doit pas dépasser {{ limit }} caractères."
+     * )
+     * @NDCAssert\AllowedUsername(
+     *     message="Ce nom est réservé."
+     * )
      */
     private $username;
 
     /**
      * @var string
-     * @Assert\NotBlank()
-     * @Assert\Email()
+     * @Assert\NotBlank(
+     *     message="Le champ email est vide."
+     *  )
+     * @Assert\Email(
+     *     message = "'{{ value }}' n'est pas un email valide."
+     * )
      * @NDCAssert\AllowedUsername(
      *     field="email",
      *     message="Cette adresse mail est réservée."
@@ -37,7 +49,15 @@ class Comment
 
     /**
      * @var string
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(
+     *     message="Le champ message est vide."
+     *  )
+     *  @Assert\Length(
+     *     min = "5",
+     *     max = "1500",
+     *     minMessage = "Le message doit faire {{ limit }} caractères minimum.",
+     *     maxMessage = "Le message ne doit pas dépasser {{ limit }} caractères."
+     * )
      */
     private $message;
 

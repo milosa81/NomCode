@@ -79,6 +79,7 @@ class Article
         $this->state     = "draft";
         $this->tech      = new ArrayCollection();
         $this->comments  = new ArrayCollection();
+        $this->views     = 0;
     }
 
     public function __toString()
@@ -344,5 +345,33 @@ class Article
     public function getComments()
     {
         return $this->comments;
+    }
+    /**
+     * @var integer
+     */
+    private $views;
+
+
+    /**
+     * Set views
+     *
+     * @param integer $views
+     * @return Article
+     */
+    public function setViews($views)
+    {
+        $this->views = $views;
+
+        return $this;
+    }
+
+    /**
+     * Get views
+     *
+     * @return integer 
+     */
+    public function getViews()
+    {
+        return $this->views;
     }
 }

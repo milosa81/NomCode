@@ -42,6 +42,11 @@ NDC\BlogBundle\Entity\Article:
             type: string
             length: 20
 
+        views:
+            type: integer
+            options:
+                unsigned:
+                    true
 
     manyToOne:
         author:

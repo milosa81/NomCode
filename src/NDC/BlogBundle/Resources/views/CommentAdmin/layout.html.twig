@@ -1,0 +1,8 @@
+{% extends '::admin.html.twig' %}
+
+{% set hide_actions_dropdown = true %}
+
+{% block breadcrumb %}
+    {{ parent() }}
+    {{ helper.breadcrumb('blog_comment_admin_index', 'Commentaires') }}
+{% endblock %}

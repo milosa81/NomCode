@@ -1,0 +1,10 @@
+ <div id="comment-{{ comment.id }}" class="comment">
+	<a {% if comment.isRegistered %}href="{{ path('blog_search', {q: comment.username}) }}"{% endif %}>
+		{% set avatar_max = 8 %}
+		{% set avatar_number = comment.identifier % (avatar_max - 1) + 1 %}
+		<img src="http://www.gravatar.com/avatar/{{ comment.md5 }}?d={{ app.request.scheme ~'://' ~ app.request.httpHost ~ asset('css/img/avatar/'~ avatar_number ~'.png') }}" class="author-img">
+	</a>
+	<a class="author {% if comment.isRegistered %}author-registered{% endif %}" {% if comment.isRegistered %}href="{{ path('blog_search', {q: comment.username}) }}"{% endif %}>{{ comment.username }}{% if comment.isRegistered %} <i class="fa fa-star" title="Rédacteur"></i>{% endif %}</a>
+	<span class="date">{{ comment.createdAt|fullDate }}{% if date(comment.createdAt) > date('-1day') %} à {{ comment.createdAt|date('H:i') }}{% endif %}</span>
+	<div class="bulle long-text">{{ comment.message|commentify }}</div>
+</div>

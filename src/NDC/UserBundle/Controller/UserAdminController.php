@@ -3,6 +3,7 @@
 
 namespace NDC\UserBundle\Controller;
 
+use NDC\BlogBundle\Entity\CommentMonitoring;
 use NDC\UserBundle\Entity\User;
 use NDC\UserBundle\Form\UserType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -58,10 +59,17 @@ class UserAdminController extends Controller
             $form->handleRequest($request);
 
             if($form->isValid()){
+                $user->setPath('lol');
                 $userManager->updateUser($user);
                 if($user->getFile() != null)
                     $this->uploadableManager->markEntityToUpload($user, $user->getFile());
                 $userManager->updateUser($user);
+
+                $articles = $this->em->getRepository('NDCBlogBundle:Article')->findAll();
+
+                foreach($articles as $article)
+                    $this->em->persist(new CommentMonitoring($user, $article));
+                $this->em->flush();
 
                 return $this->redirect($this->generateUrl('blog_user_admin_index'));
             }

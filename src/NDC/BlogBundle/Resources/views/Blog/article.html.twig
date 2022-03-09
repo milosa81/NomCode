@@ -2,27 +2,45 @@
 
 {% block title %}{{ article.title }} | {{ parent() }}{% endblock %}
 
+{% block meta %}
+	<meta property="og:title" content="{{ article.title }}" />
+	<meta property="og:type" content="article" />
+	<meta property="article:section" content="{{ article.category.name }}"/>
+	<meta property="article:published_time" content="{{ article.createdAt|date('Y-m-d\TH:i:sO') }}"/>
+	<meta property="article:modified_time" content="{{ article.updatedAt|date('Y-m-d\TH:i:sO') }}"/>
+	<meta name="description" content="{{ article.html|striptags|slice(0, 150)|raw }}{% if article.html|striptags|length|raw > 150 %}...{% endif %}" />
+{% endblock %}
+
 {% block header_class %}article{% endblock %}
 
 {% block header %}
 	<div class="top" style="background-color:#{{ article.category.color }};background-image:url({{asset('css/img/bg_category/'~article.category.abbr|lower~'.png')}}), url({{asset('css/img/bg_category/motif_'~article.category.abbr|lower~'.png')}});">
-		{% if article.state != "published" %}
+		{% if article.state != "published" or article.createdAt > date("now") %}
+			{% set article_state = article.createdAt > date("now") ? 'future' : article.state %}
 		    {% set states = {
+		        'future':  {'icon': 'clock-o', 'info': 'Publication future'},
 		        'draft':  {'icon': 'pencil', 'info': 'Cet article est un brouillon'},
 		        'removed': {'icon': 'trash-o', 'info': 'Cet article est supprimé'}
 		    } %}
 		    <div class="mask"></div>
-		    <div class="state state-{{ article.state }}">
+		    <div class="state state-{{ article_state }}">
 				<div class="state-icon">
-					<i class="fa fa-{{ attribute(states[article.state], 'icon') }}"></i>
+					<i class="fa fa-{{ attribute(states[article_state], 'icon') }}"></i>
 				</div>
-				<span>{{ attribute(states[article.state], 'info') }}</span>
+				<span>{{ attribute(states[article_state], 'info') }}</span>
 			</div>
 		{% endif %}
 	</div>
 	<div class="container text">
 		<h1>{{ article.title|capitalize }}</h1>
-		<span class="muted">{{ article.createdAt|fullDate }}{% if article.tech|length > 0 %} - {{ article.tech|join(" + ") }}{% endif %}</span>
+		<span class="muted">publié {{ article.createdAt|fullDate }}
+			{% if article.tech|length > 0 %} - 
+				{% for t in article.tech %}
+					<a href="{{ path('blog_search', {q: t.slug}) }}">{{ t.name }}</a>
+					{% if not loop.last %} + {% endif %}
+				{% endfor %}
+			{% endif %}
+		</span>
 	</div>
 {% endblock %}
 
@@ -30,8 +48,8 @@
 <article class="long-text">{{ article.html|raw }}</article>
 <div class="article-author">
 	<div class="container">
-			<a class="author" href="#author" title="Rédacteur : {{ article.author.username|capitalize }}">{{ article.author.username|capitalize }}</a>
-			<a href="#author" title="Rédacteur : {{ article.author.username|capitalize }}">
+			<a class="author" href="{{ path('blog_search', {q: article.author.username}) }}" title="Rédacteur : {{ article.author.username }}">{{ article.author.username }}</a>
+			<a href="#author" href="{{ path('blog_search', {q: article.author.username}) }}" title="Rédacteur : {{ article.author.username }}">
 				<img src="{{ asset(article.author.webPath) }}" class="author-img">
 			</a>
 			{{ helper.author_link(article.author) }}
@@ -40,12 +58,15 @@
 <section class="comments">
 	<div class="container">
 		<h1>Commentaires</h1>
-		<p><i class="fa fa-exclamation-circle"></i> Les commentaires se limitent à du texte simple</p>
-        {{ form(form) }}
+		<div class="bulle bulle-top bulle-helper-article">
+			<p>Les commentaires se limitent à du <b>texte simple</b> (pas de balise html)</p>
+			<p>L'adresse email sera utilisée pour générer un avatar unique et ne sera pas rendue publique.</p>
+		</div>
+		{{ form(form) }}
 		{% for comment in article.comments|reverse %}
-			{% include 'NDCBlogBundle:Blog:comment.html.twig' %}
+			{% include 'NDCBlogBundle:Blog:_comment.html.twig' %}
 		{% else %}
-			<p>Il n'y a pas encore de commentaire sur cet article !</p>
+			<p data-purpose="help">Il n'y a pas encore de commentaire sur cet article !</p>
 		{% endfor %}
 	</div>
 </section>

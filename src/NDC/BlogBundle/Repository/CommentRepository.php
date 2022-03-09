@@ -3,6 +3,8 @@
 namespace NDC\BlogBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query\Expr\Join;
+use NDC\UserBundle\Entity\User;
 
 /**
  * CommentRepository
@@ -12,4 +14,25 @@ use Doctrine\ORM\EntityRepository;
  */
 class CommentRepository extends EntityRepository
 {
+    public function queryAll()
+    {
+        return $this->createQueryBuilder('c')
+            ->orderBy('c.createdAt', 'DESC');
+    }
+
+    public function findUnseen(User $user)
+    {
+        return $this->getEntityManager()->createQueryBuilder()
+            ->select('c')
+            ->from($this->_entityName, 'c')
+            ->innerJoin('c.article', 'a')
+            ->innerJoin('NDCBlogBundle:CommentMonitoring', 'cm', Join::WITH, 'cm.article = a')
+            ->where('cm.user = :user')
+            ->andWhere('c.createdAt > cm.lastViewed')
+            ->setParameter('user', $user)
+            ->orderBy('a.id', 'DESC')
+            ->addOrderBy('c.createdAt', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
 }

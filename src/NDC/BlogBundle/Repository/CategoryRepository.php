@@ -17,4 +17,18 @@ class CategoryRepository extends EntityRepository
         return $this->createQueryBuilder('c')
             ->orderBy('c.name');
     }
+
+    public function findAllSlug()
+    {
+        $r = $this->createQueryBuilder('c')
+            ->select('c.slug')
+            ->getQuery()
+            ->getArrayResult();
+
+        $result = array();
+        foreach($r as $l)
+            $result[] = $l['slug'];
+
+        return $result;
+    }
 }

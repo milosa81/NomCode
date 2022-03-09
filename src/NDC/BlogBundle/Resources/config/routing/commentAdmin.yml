@@ -1,0 +1,3 @@
+blog_comment_admin_index:
+    pattern: /
+    defaults: { _controller: NDCBlogBundle:CommentAdmin:index }

@@ -29,4 +29,18 @@ class UserRepository extends EntityRepository
             ->getQuery()
             ->getSingleScalarResult() > 0;
     }
+
+    public function findAllSlug()
+    {
+        $r = $this->createQueryBuilder('u')
+            ->select('u.username')
+            ->getQuery()
+            ->getArrayResult();
+
+        $result = array();
+        foreach($r as $l)
+            $result[] = strtolower($l['username']);
+
+        return $result;
+    }
 }

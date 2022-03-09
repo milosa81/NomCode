@@ -1,0 +1,21 @@
+NDC\BlogBundle\Entity\CommentMonitoring:
+    type: entity
+    table: ndc_comment_monitoring
+    repositoryClass: NDC\BlogBundle\Repository\CommentMonitoringRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        lastViewed:
+            type: datetime
+            column: last_viewed
+
+    manyToOne:
+        user:
+            targetEntity: NDC\UserBundle\Entity\User
+
+        article:
+            targetEntity: NDC\BlogBundle\Entity\Article

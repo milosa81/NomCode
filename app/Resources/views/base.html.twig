@@ -1,13 +1,21 @@
 <!DOCTYPE html>
 
-{% macro pagination(currentPage, pageCount) %}
+{% macro pagination(currentPage, pageCount, url, params) %}
     {% if currentPage > 1 or currentPage < pageCount %}
         <div class="pagination">
             {% if currentPage > 1 %}
-                <a href="{% if currentPage == 2 %}{{ path('blog_index_first_page') }}{% else %}{{ path('blog_index', { 'page': currentPage - 1 }) }}{% endif %}" rel="prev">Page précédente</a>
+                {% set parameters = {'page': currentPage - 1} %}
+                {% if params is not null %}
+                    {% set parameters = parameters|merge(params) %}
+                {% endif %}
+                <a href="{{ path(url, parameters) }}" rel="prev">Page précédente</a>
             {% endif %}
             {% if currentPage < pageCount %}
-                <a href="{{ path('blog_index', { 'page': currentPage + 1 }) }}" rel="next">Page suivante</a>
+                {% set parameters = {'page': currentPage + 1} %}
+                {% if params is not null %}
+                    {% set parameters = parameters|merge(params) %}
+                {% endif %}
+                <a href="{{ path(url, parameters) }}" rel="next">Page suivante</a>
             {% endif %}
         </div>
     {% endif %}
@@ -26,7 +34,7 @@
             {% if attribute(author, key) is not empty %}
                 {% if link.title is not defined %}{% set link = link|merge({'title': key|capitalize}) %}{% endif %}
                 {% if link.icon is not defined %}{% set link = link|merge({'icon': key}) %}{% endif %}
-                <a class="author-link-{{ key }}" href="{{ attribute(author, key) }}" title="Page {{ link.title }} de {{ author.username|capitalize }}" target="_blank"><i class="fa fa-{{ link.icon }}"></i></a>
+                <a class="author-link-{{ key }}" href="{{ attribute(author, key) }}" title="Page {{ link.title }} de {{ author.username }}" target="_blank"><i class="fa fa-{{ link.icon }}"></i></a>
             {% endif %}
         {% endfor %}
     </div>
@@ -37,6 +45,12 @@
 <html>
     <head>
         <meta charset="UTF-8" />
+        <meta name="language" content="fr-FR" />
+        <meta name="google-site-verification" content="u4KBzk7hvGDGxoO_Nwm5eeBi2CwLbAvGB8kMips1WOw" />
+        <meta property="og:url" content="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) }}" />
+        <meta property="og:image" content="{{ app.request.scheme ~'://' ~ app.request.httpHost ~ asset('css/img/og_logo.png') }}" />
+        <meta property="og:locale" content="fr_FR" />
+        {% block meta %}{% endblock %}
         <title>{% block title %}Nomdecode{% endblock %}</title>
         {% block stylesheets %}
             <link rel="stylesheet" href="{{ asset('css/normalize.css') }}">
@@ -52,7 +66,11 @@
         <header class="{% block header_class %}classic{% endblock %}">
             {% block header %}{% endblock %}
             <nav>
-                <input type="text" class="search" placeholder="Chercher..." title="Chercher un article">
+                <form action="{{ path('blog_search') }}" method="get" class="search">
+                    <input type="text" name="q" placeholder="Chercher..." title="Chercher un article" {% if query is defined %}value="{{ query }}"{% endif %}>
+                    <button type="submit"><i class="fa fa-search"></i></button>
+                </form>
+
                 {% if app.user %}
                     {% if is_granted('ROLE_ADMIN') %}
                         <a href="{{ path('ndc_admin_index') }}">Administration</a>
@@ -67,6 +85,8 @@
                             <a href="{{ path('blog_article_admin_edit', { 'id': article.id }) }}">Éditer cet article</a>
                         {% endif %}
                     {% endif %}
+
+                    <a href="{{ path('fos_user_security_logout') }} ">Se déconnecter</a>
                 {% endif %}
             </nav>
             <a href="{{ path('blog_index_first_page') }}" class="logo" title="Accueil de Nomdecode">
@@ -86,6 +106,8 @@
                 <p><a href="#">Nous contacter</a></p>
                 <p><a href="{{ path('blog_authors') }}">Rédacteurs</a></p>
             </div>
+
+            {% include 'NDCBlogBundle:Blog:_analytics.html.twig' %}
         </footer>
 
         {% block javascripts %}

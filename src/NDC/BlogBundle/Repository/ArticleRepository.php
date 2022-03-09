@@ -31,6 +31,64 @@ class ArticleRepository extends EntityRepository
         return $this->createQueryBuilder('a')
             ->where('a.state = :state')
             ->setParameter('state', 'published')
+            ->andWhere('a.createdAt < :now')
+            ->setParameter('now', new \DateTime())
             ->orderBy('a.createdAt', 'DESC');
+    }
+
+    public function querySearch($query, array $techs, array $categories, array $users)
+    {
+        $keywords = explode(' ', strtolower($query));
+        $map = array(
+            'title' => array(),
+            'tech' => array(),
+            'category' => array(),
+            'author' => array(),
+        );
+
+        foreach($keywords as $word){
+            if(in_array($word, $techs))
+                $map['tech'][] = $word;
+            else if(in_array($word, $categories))
+                $map['category'][] = $word;
+            else if(in_array($word, $users))
+                $map['author'][] = $word;
+            else
+                $map['title'][] = $word;
+        }
+
+        $qb = $this->createQueryBuilder('a')
+            ->select('a')
+            ->where('a.createdAt < :now')
+            ->setParameter('now', new \DateTime())
+            ->andWhere('a.state = :state')
+            ->setParameter('state', 'published')
+            ->join('a.category', 'c')
+            ->join('a.author', 'u')
+            ->orderBy('a.createdAt', 'DESC');
+
+        foreach($map as $field => $data){
+            if(count($data) == 0)
+                continue;
+
+            if($field == 'title'){
+                foreach($data as $id => $keyword)
+                    $qb->andWhere("a.title LIKE :keyword$id")
+                        ->setParameter("keyword$id", "%$keyword%");
+            }else if($field == 'tech'){
+                $techs = $this->getEntityManager()->getRepository('NDCBlogBundle:Tech')->findFromSlugs($data);
+                foreach($techs as $id => $tech)
+                    $qb->andWhere(":tech$id MEMBER OF a.tech")
+                        ->setParameter("tech$id", $tech);
+            }else if($field == 'author'){
+                $qb->andWhere("u.username IN (:authors)")
+                    ->setParameter('authors', $data);
+            }else if($field == 'category'){
+                $qb->andWhere("c.slug IN (:categories)")
+                    ->setParameter('categories', $data);
+            }
+        }
+
+        return $qb->getQuery();
     }
 }
