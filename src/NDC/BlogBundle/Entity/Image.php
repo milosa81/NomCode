@@ -78,6 +78,11 @@ class Image
         return substr($this->path, strpos($this->path, 'app/../htdocs/') + 14);
     }
 
+    public function getFileName()
+    {
+        return substr($this->path, strrpos($this->path, '/') +1);
+    }
+
     /**
      * Set path
      *

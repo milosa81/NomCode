@@ -23,3 +23,33 @@ body{
     display: inline-block;
     vertical-align: middle;
 }
+
+.button-dependency.checkbox-inline {
+    padding-left: 0;
+    cursor: default;
+}
+
+.button-dependency.checkbox-inline > .checkbox {
+    display: inline-block;
+    margin-right: 10px;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.button-dependency.checkbox-inline > .checkbox:hover {
+    background: #e0e0e0;
+}
+
+.button-dependency.checkbox-inline > .checkbox:active {
+    background: #ccc;
+}
+
+.button-dependency .checkbox input[type=checkbox] {
+    display: none;
+}
+
+.button-dependency .checkbox label {
+    padding-bottom:8px;
+    padding-right: 20px;
+}

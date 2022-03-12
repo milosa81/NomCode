@@ -63,7 +63,10 @@ class ArticleAdminController extends Controller
 
     private function handleForm(Article $article, Request $request = null, $add = false)
     {
-        $form = $this->createForm(new ArticleType, $article);
+        $form = $this->createForm(new ArticleType($article), $article);
+        $oldDemo = $article->getDemo();
+        if($oldDemo !== null)       
+            $oldDemo->setArticle(null);
 
         if($request != null && $request->isMethod('POST')){
             $form->handleRequest($request);
@@ -71,6 +74,12 @@ class ArticleAdminController extends Controller
             if($form->isValid()){
 
                 $this->em->persist($article);
+                if($oldDemo !== null)
+                    $this->em->persist($oldDemo);
+                if($article->getDemo() !== null){
+                    $article->getDemo()->setArticle($article);
+                    $this->em->persist($article->getDemo());
+                }
                 $this->em->flush();
 
                 if($add){

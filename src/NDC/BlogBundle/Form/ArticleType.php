@@ -2,12 +2,22 @@
 
 namespace NDC\BlogBundle\Form;
 
+use NDC\BlogBundle\Entity\Article;
+use NDC\BlogBundle\Repository\DemoRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class ArticleType extends AbstractType
 {
+    /** @var  Article */
+    private $article;
+
+    public function __construct(Article $article)
+    {
+        $this->article = $article;
+    }
+
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
@@ -39,6 +49,12 @@ class ArticleType extends AbstractType
                     'draft' => 'Brouillon',
                     'removed' => 'Supprimé',
                 )
+            ))
+            ->add('demo', null, array(
+                'label' => 'Démo',
+                'query_builder' => function(DemoRepository $repo) {
+                    return $repo->queryDemoWithoutArticle($this->article);
+                },
             ))
             ->add('createdAt', 'datetime', array(
                 'label' => 'Créé le',

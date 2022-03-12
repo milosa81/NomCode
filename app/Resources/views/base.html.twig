@@ -106,8 +106,10 @@
                 <p><a href="#">Nous contacter</a></p>
                 <p><a href="{{ path('blog_authors') }}">Rédacteurs</a></p>
             </div>
-
-            {% include 'NDCBlogBundle:Blog:_analytics.html.twig' %}
+            
+            {% if 'localhost' not in app.request.httpHost and '127.0.0.1' not in app.request.httpHost %}
+                {% include 'NDCBlogBundle:Blog:_analytics.html.twig' %}
+            {% endif %}
         </footer>
 
         {% block javascripts %}

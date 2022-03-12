@@ -1,0 +1,27 @@
+{% extends 'NDCBlogBundle:ImageAdmin:layout.html.twig' %}
+
+{% block body %}
+    {% if articles|length %}
+        <h1>
+            <i class="glyphicon glyphicon-exclamation-sign"></i>
+            Erreur
+        </h1>
+        <p>Cette image ne peut pas être supprimée car elle est utilisée dans les articles suivants :</p>
+        <ul>
+            {% for article in articles %}
+                <li>
+                    <a href="{{ path('blog_article_admin_edit', {id:article.id}) }}">
+                        {{ article }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <h1>Image supprimée</h1>
+        <p>Image supprimée avec succes.</p>
+    {% endif %}
+    <a class="btn btn-primary" href="{{ path('blog_image_admin_index') }}">
+        <i class="glyphicon glyphicon-arrow-left"></i>
+        Retour à la liste
+    </a>
+{% endblock %}

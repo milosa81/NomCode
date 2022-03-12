@@ -11,6 +11,11 @@ services:
         tags:
             - { name: twig.extension }
 
+    ndc_blog.article_preview_extension:
+        class: NDC\BlogBundle\Twig\ArticlePreviewExtension
+        tags:
+            - { name: twig.extension }
+
     validator.allowed_username:
         class: NDC\BlogBundle\Validator\Constraints\AllowedUsernameValidator
         arguments:

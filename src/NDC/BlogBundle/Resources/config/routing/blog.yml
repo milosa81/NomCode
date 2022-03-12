@@ -19,6 +19,12 @@ blog_article:
         id: \d+
         slug: "[a-zA-Z0-9-_/]+"
 
+blog_demo:
+    pattern: /demo/{id}
+    defaults: { _controller: NDCBlogBundle:Blog:demo }
+    requirements:
+        id: \d+
+
 blog_cgu:
     pattern: /cgu
     defaults: { _controller: NDCBlogBundle:Blog:cgu }

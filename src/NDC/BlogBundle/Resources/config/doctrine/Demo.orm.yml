@@ -1,0 +1,51 @@
+NDC\BlogBundle\Entity\Demo:
+    type: entity
+    table: ndc_demo
+    repositoryClass: NDC\BlogBundle\Repository\DemoRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            length: 255
+
+        slug:
+            type: string
+            length: 255
+            gedmo:
+                slug:
+                    fields:
+                        - name
+
+        createdAt:
+            column: created_at
+            type: datetime
+            gedmo:
+                timestampable:
+                    on: create
+
+        dependencies:
+            type: text
+            nullable: true
+
+        html:
+            type: text
+            nullable: true
+
+        css:
+            type: text
+            nullable: true
+
+        js:
+            type: text
+            nullable: true
+
+    oneToOne:
+        article:
+            targetEntity: NDC\BlogBundle\Entity\Article
+            inversedBy: demo
+            fetch: EAGER

@@ -1,0 +1,39 @@
+{% extends 'NDCBlogBundle:DemoAdmin:layout.html.twig' %}
+
+{% block body %}
+    {% if demos|length %}
+        <table class="table table-bordered">
+            <tr>
+                <th>#</th>
+                <th>Nom</th>
+                <th>Créée le</th>
+                <th>Utilisée sur</th>
+                <th>Action</th>
+            </tr>
+            {% for demo in demos %}
+                <tr>
+                    <td>{{ demo.id }}</td>
+                    <td>{{ demo.name }}</td>
+                    <td>{{ demo.createdAt|fullDate }} à {{ demo.createdAt|date('H:i') }}</td>
+                    <td>
+                        {% if demo.article is defined and demo.article is not null %}
+                            <a href="{{ path('blog_article_admin_edit', {id: demo.article.id}) }}">
+                                {{ demo.article }}
+                            </a>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a class="btn btn-default btn-xs" href="{{ path('blog_demo_admin_edit', {id: demo.id}) }}">
+                            <i class="glyphicon glyphicon-pencil"></i>
+                            Editer
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>Aucune démo...</p>
+    {% endif %}
+
+    {{ knp_pagination_render(demos) }}
+{% endblock %}

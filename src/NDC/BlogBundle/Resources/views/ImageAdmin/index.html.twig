@@ -24,7 +24,7 @@
                         <input id="rel-{{ image.id }}" class="form-control" value="{{ asset(image.webPath) }}">
                         <label for="abs-{{ image.id }}" style="margin-top: 10px">Absolu</label>
                         <input id="abs-{{ image.id }}" class="form-control" value="{{ app.request.scheme ~'://' ~ app.request.httpHost ~ asset(image.webPath) }}">
-                        <a class="btn btn-danger btn-block" style="margin-top: 15px">
+                        <a class="btn btn-danger btn-block" style="margin-top: 15px" href="{{ path('blog_image_admin_remove', {id:image.id}) }}">
                             <i class="glyphicon glyphicon-remove"></i>
                             Supprimer
                         </a>

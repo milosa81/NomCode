@@ -2,6 +2,10 @@ blog_image_admin_index:
     pattern: /
     defaults: { _controller: NDCBlogBundle:ImageAdmin:index }
 
+blog_image_admin_remove:
+    pattern: /{id}/remove
+    defaults: { _controller: NDCBlogBundle:ImageAdmin:remove }
+
 blog_image_admin_browse:
     pattern: /browse
     defaults: { _controller: NDCBlogBundle:ImageAdmin:browse }

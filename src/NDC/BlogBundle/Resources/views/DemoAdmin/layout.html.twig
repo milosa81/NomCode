@@ -1,0 +1,10 @@
+{% extends '::admin.html.twig' %}
+
+{% block breadcrumb %}
+    {{ parent() }}
+    {{ helper.breadcrumb('blog_demo_admin_index', 'Démos') }}
+{% endblock %}
+
+{% block actions %}
+    {{ helper.action('blog_demo_admin_add', 'plus', 'Ajouter') }}
+{% endblock %}

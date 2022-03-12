@@ -15,7 +15,7 @@
                     <div class="user" style="background-image: url({{ asset(comment.article.author.webPath) }})"></div>
                     {{ comment.article.title }}
                 </td>
-                <td>{{ comment.createdAt|fullDate }} à {{ comment.createdAt|date('h:i') }}</td>
+                <td>{{ comment.createdAt|fullDate }} à {{ comment.createdAt|date('H:i') }}</td>
                 <td>{{ comment.username }}</td>
                 <td>
                     {{ comment.message|striptags|slice(0, 50)|raw }}{% if comment.message|striptags|length > 50 %}...{% endif %}

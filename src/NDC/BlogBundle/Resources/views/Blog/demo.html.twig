@@ -1,0 +1,26 @@
+<html>
+	{% set demo_dependencies = demo.dependencies|split('\r\n') %}
+
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="language" content="fr-FR" />
+        <meta property="og:locale" content="fr_FR" />
+        <title>{% block title %}Démo : {{ demo.article.title|capitalize}} | Nomdecode{% endblock %}</title>
+        {% block stylesheets %}
+			{% for c in demo_dependencies if c|split('.')|last == 'css' %}
+				<link rel="stylesheet" href="{{ c }}">
+			{% endfor %}
+			<style>{{ demo.css|raw }}</style>
+        {% endblock %}
+        <link rel="icon" type="image/png" href="{{ asset('css/img/favicon.png') }}" />
+    </head>
+    <body style="margin:0;padding-top:6vh;">
+    	{{ demo.html|raw }}
+
+		<script src="{{ asset('js/jquery.min.js') }}"></script>
+		{% for c in demo_dependencies if c|split('.')|last == 'js' %}
+			<script src="{{ c }}"></script>
+		{% endfor %}
+		<script>{{ demo.js|raw }}</script>
+    </body>
+</html>

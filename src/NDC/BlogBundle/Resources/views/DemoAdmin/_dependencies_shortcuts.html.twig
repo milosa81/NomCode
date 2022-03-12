@@ -1,0 +1,16 @@
+<script>
+// dependencies shortcuts
+$('.button-dependency').on('click', 'input', function () {
+	var $dependencies = $(this).val().split(','),
+		$list = $('[data-role="dependencies-list"]');
+	$.each($dependencies, function(key, value) {
+		if ($list.val().indexOf(value) < 0) {
+			if (!$list.val()) {
+				$list.val(value);
+			} else {
+				$list.val($list.val()+'\n'+value);
+			}
+		}
+	});
+});
+</script>

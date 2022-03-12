@@ -1,0 +1,19 @@
+{% extends 'NDCBlogBundle:DemoAdmin:layout.html.twig' %}
+
+{% block breadcrumb %}
+    {{ parent() }}
+    {{ helper.breadcrumb(null, demo) }}
+    {{ helper.breadcrumb(null, 'Editer') }}
+{% endblock %}
+
+{% block body %}
+    <h1>Editer une démo</h1>
+
+    {% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
+    {{ form(form) }}
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	{% include 'NDCBlogBundle:DemoAdmin:_dependencies_shortcuts.html.twig' %}
+{% endblock %}

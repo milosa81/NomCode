@@ -121,6 +121,13 @@ h1 {
 a {
 	text-decoration: none;
 	color: inherit;
+
+	&.lien_demo {
+		font-size: $font-size-headline-index*1.3;
+		display: table;
+		margin: 40px auto 70px;
+		font-weight: bold;
+	}
 }
 
 // prevent outline highlight from Chrome focusing input

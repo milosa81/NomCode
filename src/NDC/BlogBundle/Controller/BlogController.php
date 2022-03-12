@@ -6,7 +6,9 @@ namespace NDC\BlogBundle\Controller;
 use NDC\BlogBundle\Entity\Article;
 use NDC\BlogBundle\Entity\Comment;
 use NDC\BlogBundle\Entity\CommentMonitoring;
+use NDC\BlogBundle\Entity\Demo;
 use NDC\BlogBundle\Form\CommentType;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Doctrine\ORM\EntityManager;
 use Knp\Component\Pager\Paginator;
@@ -117,22 +119,6 @@ class BlogController extends Controller
     /**
      * @Template
      */
-    public function cguAction() { return array(); }
-
-    /**
-     * @Template
-     */
-    public function authorsAction() {
-        $authors = $this->em->getRepository('NDCUserBundle:User')->findBy(array("locked" => false, "expired" => false));
-
-        return array(
-            "authors" => $authors,
-        );
-    }
-
-    /**
-     * @Template
-     */
     public function searchAction(Request $request)
     {
         $query = $request->query->get('q', '');
@@ -154,4 +140,25 @@ class BlogController extends Controller
             'page' => $request->query->get('page', 1),
         );
     }
+
+    /**
+     * @Template
+     */
+    public function demoAction(Demo $demo) { return array(); }
+
+    /**
+     * @Template
+     */
+    public function authorsAction() {
+        $authors = $this->em->getRepository('NDCUserBundle:User')->findBy(array("locked" => false, "expired" => false));
+
+        return array(
+            "authors" => $authors,
+        );
+    }
+
+    /**
+     * @Template
+     */
+    public function cguAction() { return array(); }
 } 

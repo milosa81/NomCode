@@ -79,3 +79,9 @@ NDC\BlogBundle\Entity\Article:
         comments:
             targetEntity: NDC\BlogBundle\Entity\Comment
             mappedBy: article
+
+    oneToOne:
+        demo:
+            targetEntity: NDC\BlogBundle\Entity\Demo
+            mappedBy: article
+            fetch: EAGER

@@ -109,4 +109,21 @@ class ImageAdminController extends Controller
             'funcNum' => $request->query->get('CKEditorFuncNum'),
         );
     }
+
+    /**
+     * @Template
+     */
+    public function removeAction(Image $image, Request $request)
+    {
+        $articles = $this->em->getRepository('NDCBlogBundle:Article')->imageUsedIn($image);
+
+        if(count($articles) === 0){
+            $this->em->remove($image);
+            $this->em->flush();
+        }
+
+        return array(
+            'articles' => $articles,
+        );
+    }
 } 

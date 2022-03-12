@@ -69,6 +69,10 @@ class Article
      * @var \Doctrine\Common\Collections\Collection
      */
     private $comments;
+    /**
+     * @var \NDC\BlogBundle\Entity\Demo
+     */
+    private $demo;
 
     /**
      * Constructor
@@ -373,5 +377,28 @@ class Article
     public function getViews()
     {
         return $this->views;
+    }
+
+    /**
+     * Set demo
+     *
+     * @param \NDC\BlogBundle\Entity\Demo $demo
+     * @return Article
+     */
+    public function setDemo(\NDC\BlogBundle\Entity\Demo $demo = null)
+    {
+        $this->demo = $demo;
+
+        return $this;
+    }
+
+    /**
+     * Get demo
+     *
+     * @return \NDC\BlogBundle\Entity\Demo 
+     */
+    public function getDemo()
+    {
+        return $this->demo;
     }
 }

@@ -7,6 +7,10 @@ ndc_blog_bundle_article_api:
     resource: @NDCBlogBundle/Controller/ArticleApiController.php
     prefix: api
 
+ndc_blog_bundle_demo_admin:
+    resource: routing/demoAdmin.yml
+    prefix: /admin/demos
+
 ndc_blog_bundle_tech_admin:
     resource: routing/techAdmin.yml
     prefix: /admin/techs
