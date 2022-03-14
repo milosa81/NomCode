@@ -5,8 +5,8 @@
 		</div>
 	{% endif %}
 
-	<a href="{{ path('blog_article', { 'id': article.id, category: article.category.slug, 'slug': article.slug }) }}" title="{{ article.title|capitalize }}">
-		<h2>{{ article.title|capitalize }}</h2>
+	<a href="{{ path('blog_article', { 'id': article.id, category: article.category.slug, 'slug': article.slug }) }}" title="{{ article.title }}">
+		<h2>{{ article.title }}</h2>
 		<p class="long-text">{{ article.html|stripHTML(250) }}</p>
 	</a>
 	

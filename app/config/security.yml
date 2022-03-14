@@ -21,6 +21,9 @@ security:
                 provider: fos_userbundle
                 csrf_provider: form.csrf_provider
             logout:       true
+            remember_me:
+                key:        %secret%
+                lifetime:   31536000
             anonymous:    true
 
     access_control:

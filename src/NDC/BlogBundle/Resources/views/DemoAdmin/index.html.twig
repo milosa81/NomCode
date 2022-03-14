@@ -13,7 +13,11 @@
             {% for demo in demos %}
                 <tr>
                     <td>{{ demo.id }}</td>
-                    <td>{{ demo.name }}</td>
+                    <td>
+                        <a href="{{ path('blog_demo', {id: demo.id}) }}">
+                            {{ demo.name }}
+                        </a>
+                    </td>
                     <td>{{ demo.createdAt|fullDate }} à {{ demo.createdAt|date('H:i') }}</td>
                     <td>
                         {% if demo.article is defined and demo.article is not null %}
@@ -23,10 +27,12 @@
                         {% endif %}
                     </td>
                     <td>
-                        <a class="btn btn-default btn-xs" href="{{ path('blog_demo_admin_edit', {id: demo.id}) }}">
-                            <i class="glyphicon glyphicon-pencil"></i>
-                            Editer
-                        </a>
+                        <div class="btn-group btn-group-xs">
+                            <a class="btn btn-default btn-xs" href="{{ path('blog_demo_admin_edit', {id: demo.id}) }}">
+                                <i class="glyphicon glyphicon-pencil"></i>
+                                Editer
+                            </a>
+                        </div>
                     </td>
                 </tr>
             {% endfor %}

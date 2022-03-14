@@ -57,7 +57,7 @@ class ArticleType extends AbstractType
                 },
             ))
             ->add('createdAt', 'datetime', array(
-                'label' => 'Créé le',
+                'label' => 'Publié le',
             ))
             ->add('html', 'textarea', array(
                 'label' => 'HTML',

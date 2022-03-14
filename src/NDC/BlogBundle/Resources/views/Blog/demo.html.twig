@@ -5,7 +5,17 @@
         <meta charset="UTF-8" />
         <meta name="language" content="fr-FR" />
         <meta property="og:locale" content="fr_FR" />
-        <title>{% block title %}Démo : {{ demo.article.title|capitalize}} | Nomdecode{% endblock %}</title>
+        <title>{% block title %}Démo{% if demo.article is not null %} : {{ demo.article.title|capitalize}}{% endif %} | Nomdecode{% endblock %}</title>
+            
+        <style>
+		body {
+			margin:0;
+			padding-top:6vh;
+			font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+			font-size: 14px;
+		}
+        </style>
+
         {% block stylesheets %}
 			{% for c in demo_dependencies if c|split('.')|last == 'css' %}
 				<link rel="stylesheet" href="{{ c }}">
@@ -14,8 +24,10 @@
         {% endblock %}
         <link rel="icon" type="image/png" href="{{ asset('css/img/favicon.png') }}" />
     </head>
-    <body style="margin:0;padding-top:6vh;">
-    	{{ demo.html|raw }}
+    <body>
+    	<section style="display: table;margin: auto;">
+    		{{ demo.html|raw }}	
+    	</section>
 
 		<script src="{{ asset('js/jquery.min.js') }}"></script>
 		{% for c in demo_dependencies if c|split('.')|last == 'js' %}

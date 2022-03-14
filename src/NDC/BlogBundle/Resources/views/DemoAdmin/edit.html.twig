@@ -9,8 +9,7 @@
 {% block body %}
     <h1>Editer une démo</h1>
 
-    {% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
-    {{ form(form) }}
+    {% include '@NDCBlog/DemoAdmin/form.html.twig' %}
 {% endblock %}
 
 {% block javascripts %}

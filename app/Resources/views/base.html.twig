@@ -47,7 +47,7 @@
         <meta charset="UTF-8" />
         <meta name="language" content="fr-FR" />
         <meta name="google-site-verification" content="u4KBzk7hvGDGxoO_Nwm5eeBi2CwLbAvGB8kMips1WOw" />
-        <meta property="og:url" content="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) }}" />
+        <meta property="og:url" content="{{ app.request.scheme ~'://' ~ app.request.httpHost ~ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) }}" />
         <meta property="og:image" content="{{ app.request.scheme ~'://' ~ app.request.httpHost ~ asset('css/img/og_logo.png') }}" />
         <meta property="og:locale" content="fr_FR" />
         {% block meta %}{% endblock %}
@@ -107,7 +107,7 @@
                 <p><a href="{{ path('blog_authors') }}">Rédacteurs</a></p>
             </div>
             
-            {% if 'localhost' not in app.request.httpHost and '127.0.0.1' not in app.request.httpHost %}
+            {% if 'localhost' not in app.request.httpHost and '127.0.0.1' not in app.request.httpHost and not app.user %}
                 {% include 'NDCBlogBundle:Blog:_analytics.html.twig' %}
             {% endif %}
         </footer>

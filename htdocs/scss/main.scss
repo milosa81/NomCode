@@ -33,7 +33,6 @@ $margin-for-blocks: 0.5rem;
 // imports needing variables
 @import "article_theme";
 
-
 // mixins
 @mixin author-photo($diameter) {
 	width: $diameter;
@@ -126,7 +125,13 @@ a {
 		font-size: $font-size-headline-index*1.3;
 		display: table;
 		margin: 40px auto 70px;
-		font-weight: bold;
+		background-color: $background-color-header;
+		color: white;
+		padding: 0.8em;
+
+		&:hover {
+			background-color: transparentize($background-color-header, 0.3);
+		}
 	}
 }
 
@@ -196,6 +201,10 @@ textarea {
 
 	&:disabled {
 		background-color: #ccc;
+	}
+
+	&:hover {
+		background-color: transparentize($color-over-header, 0.3);
 	}
 
 	&.btn-bloc {

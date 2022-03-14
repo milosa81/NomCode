@@ -82,7 +82,7 @@ class DemoType extends AbstractType
                     'data-ajax' => 'js',
                 ),
             ))
-            ->add('Enregistrer', 'submit')
+            //->add('Enregistrer', 'submit')
         ;
     }
     

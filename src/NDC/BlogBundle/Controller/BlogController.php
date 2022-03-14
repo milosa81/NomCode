@@ -51,13 +51,7 @@ class BlogController extends Controller
     public function articleAction($category, Article $article, $slug, Request $request)
     {
         // Check if readable
-        if($article->getState() != 'published' || $article->getCreatedAt() > new \DateTime()) {
-            if($this->getUser() != $article->getAuthor() and !$this->isGranted('ROLE_ADMIN'))
-                if($article->getState() == 'removed')
-                    throw new HttpException(410);
-                else
-                    throw $this->createNotFoundException();
-        }
+        $this->isArticleReadable($article);
 
         // Check slug
         if($article->getSlug() != $slug)
@@ -107,8 +101,8 @@ class BlogController extends Controller
                 }
             }
 
-            $intro_responsse = count(explode('ERROR: ', $form->getErrors()))-1 > 1 ? '<b>Il y a quelques erreurs dans ce formulaire !</b><br>' : '';
-            return new Response($intro_responsse.str_replace("ERROR: ", "", nl2br($form->getErrors())), 400);
+            $intro_response = count(explode('ERROR: ', $form->getErrors()))-1 > 1 ? '<b>Il y a quelques erreurs dans ce formulaire !</b><br>' : '';
+            return new Response($intro_response.str_replace("ERROR: ", "", nl2br($form->getErrors())), 400);
         }
 
         return array(
@@ -144,7 +138,18 @@ class BlogController extends Controller
     /**
      * @Template
      */
-    public function demoAction(Demo $demo) { return array(); }
+    public function demoAction(Demo $demo) {
+        // Check if readable
+        $article = $demo->getArticle();
+        if(empty($article)) {
+            if(!$this->isGranted('ROLE_ADMIN'))
+                throw $this->createNotFoundException();
+        } else {
+            $this->isArticleReadable($article);
+        }
+
+        return array();
+    }
 
     /**
      * @Template
@@ -161,4 +166,16 @@ class BlogController extends Controller
      * @Template
      */
     public function cguAction() { return array(); }
+
+    private function isArticleReadable($article) {
+        if($article->getState() != 'published' || $article->getCreatedAt() > new \DateTime()) {
+            if($this->getUser() != $article->getAuthor() and !$this->isGranted('ROLE_ADMIN'))
+                if($article->getState() == 'removed')
+                    throw new HttpException(410);
+                else
+                    throw $this->createNotFoundException();
+        }
+
+        return true;
+    }
 } 

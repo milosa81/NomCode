@@ -32,7 +32,7 @@
 		{% endif %}
 	</div>
 	<div class="container text">
-		<h1>{{ article.title|capitalize }}</h1>
+		<h1>{{ article.title }}</h1>
 		<span class="muted">publié {{ article.createdAt|fullDate }}
 			{% if article.tech|length > 0 %} - 
 				{% for t in article.tech %}
@@ -40,6 +40,9 @@
 					{% if not loop.last %} + {% endif %}
 				{% endfor %}
 			{% endif %}
+            {% if app.user %} - 
+				{{ article.views }} vues
+            {% endif %}
 		</span>
 	</div>
 {% endblock %}
@@ -47,7 +50,7 @@
 {% block body %}
 <article class="long-text">
 	{% if article.demo is not null %}
-		<a href="{{ path('blog_demo', {id: article.demo.id }) }}" class="lien_demo" target="_blank">Voir la démo</a>
+		<a href="{{ path('blog_demo', {id: article.demo.id }) }}" class="lien_demo btn" target="_blank">Voir la démo</a>
 	{% endif %}
 
 	{{ article.html|raw }}
