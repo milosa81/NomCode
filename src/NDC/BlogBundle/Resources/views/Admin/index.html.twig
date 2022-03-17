@@ -1,0 +1,79 @@
+{% extends '::admin.html.twig' %}
+
+{% set hide_actions_dropdown = true %}
+
+{% block body %}
+    <h1 class="page-header">Bonjour {{ app.user }}</h1>
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <i class="glyphicon glyphicon-pencil"></i>
+                    Vos articles en cours de rédaction
+                </div>
+                <ul class="list-group">
+                    {% for article in wip %}
+                        <li class="list-group-item">
+                            {% if article.demo is not null %}
+                                <a class="btn btn-default btn-xs pull-right" href="{{ path('blog_demo_admin_edit', {id:article.demo.id}) }}">Démo</a>
+                            {% endif %}
+                            <a href="{{ path('blog_article_admin_edit', {id:article.id}) }}">
+                                {{ article.title }}
+                            </a>
+                        </li>
+                    {% else %}
+                        <li class="list-group-item">
+                            Aucun article en cours de rédaction
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <i class="glyphicon glyphicon-time"></i>
+                    Vos articles bientôt publiés
+                </div>
+                <ul class="list-group">
+                    {% for article in future %}
+                        <li class="list-group-item">
+                            <span class="text-muted pull-right">
+                                {{ article.createdAt|fullDate }}
+                            </span>
+                            <a href="{{ path('blog_article_admin_edit', {id:article.id}) }}">
+                                {{ article.title }}
+                            </a>
+                        </li>
+                    {% else %}
+                        <li class="list-group-item">
+                            Aucun article bientôt publié
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <i class="glyphicon glyphicon-comment"></i>
+                    Commentaires non-lus
+                </div>
+                <ul class="list-group">
+                    {% for comment in unseen %}
+                        <li class="list-group-item">
+                            <div class="text-muted">
+                                {{ comment.article.title }}
+                            </div>
+                            <a href="{{ path('blog_article', {category:comment.article.category.slug, id: comment.article.id, slug:comment.article.slug}) }}#comment-{{ comment.id }}">
+                                {{ comment.message|striptags|slice(0, 100)|raw }}{% if comment.message|striptags|length > 100 %}...{% endif %}
+                            </a>
+                        </li>
+                    {% else %}
+                        <li class="list-group-item">
+                            Aucun commentaire non-lu
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}

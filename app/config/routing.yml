@@ -9,8 +9,7 @@ ndc_user_bundle:
 ndc_admin_index:
     path: /admin
     defaults:
-        _controller: FrameworkBundle:Template:template
-        template: '::admin.html.twig'
+        _controller: NDCBlogBundle:Admin:index
 
 fos_user_bundle:
     resource: "@FOSUserBundle/Resources/config/routing/all.xml"

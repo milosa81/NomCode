@@ -56,6 +56,8 @@ class DemoType extends AbstractType
                     'data-role' => 'dependencies-list',
                     'data-ajax' => 'dependencies',
                     'placeholder' => 'Liens des dépendences en .css ou .js, une par ligne',
+                    'style' => 'background:#222222;border:none;color:#f8f8f2;font-family:monospace;',
+                    'spellcheck' => 'false',
                 ),
             ))
             ->add('html', null, array(
@@ -64,6 +66,8 @@ class DemoType extends AbstractType
                 'attr' => array(
                     'rows' => '12',
                     'data-ajax' => 'html',
+                    'style' => 'background:#222222;border:none;color:#f8f8f2;font-family:monospace;',
+                    'spellcheck' => 'false',
                 ),
             ))
             ->add('css', null, array(
@@ -72,6 +76,8 @@ class DemoType extends AbstractType
                 'attr' => array(
                     'rows' => '12',
                     'data-ajax' => 'css',
+                    'style' => 'background:#222222;border:none;color:#f8f8f2;font-family:monospace;',
+                    'spellcheck' => 'false',
                 ),
             ))
             ->add('js', null, array(
@@ -80,6 +86,8 @@ class DemoType extends AbstractType
                 'attr' => array(
                     'rows' => '12',
                     'data-ajax' => 'js',
+                    'style' => 'background:#222222;border:none;color:#f8f8f2;font-family:monospace;',
+                    'spellcheck' => 'false',
                 ),
             ))
             //->add('Enregistrer', 'submit')

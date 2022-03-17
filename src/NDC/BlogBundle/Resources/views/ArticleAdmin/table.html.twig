@@ -16,7 +16,11 @@
             <td>{{ article.id }}</td>
             {% if article.state == 'published' %}
                 <td class="success text-center" title="Publié">
-                    <i class="glyphicon glyphicon-list-alt"></i>
+                    {% if article.createdAt > date("now") %}
+                        <i class="glyphicon glyphicon-time"></i>
+                    {% else %}
+                        <i class="glyphicon glyphicon-list-alt"></i>
+                    {% endif %}
                 </td>
             {% elseif article.state == 'draft' %}
                 <td class="info text-center" title="Brouillon">

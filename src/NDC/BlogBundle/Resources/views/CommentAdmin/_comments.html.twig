@@ -1,5 +1,5 @@
 {% if comments|length %}
-    <table class="table table-bordered">
+    <table class="table table-bordered table-striped table-condensed table-hover">
         <tr>
             <th>#</th>
             <th>Article</th>
@@ -13,7 +13,7 @@
                 <td>{{ comment.id }}</td>
                 <td>
                     <div class="user" style="background-image: url({{ asset(comment.article.author.webPath) }})"></div>
-                    {{ comment.article.title }}
+                    {{ comment.article.title|slice(0, 30) }}{% if comment.article.title|length > 30 %}...{% endif %}
                 </td>
                 <td>{{ comment.createdAt|fullDate }} à {{ comment.createdAt|date('H:i') }}</td>
                 <td>{{ comment.username }}</td>

@@ -64,6 +64,11 @@
 			position: relative;
 			word-wrap: normal;
 
+			display: block;
+			overflow-x: auto;
+			background: #222;
+			color: #f8f8f2;
+
 			/*
 			&::before {
 				content: attr(class);

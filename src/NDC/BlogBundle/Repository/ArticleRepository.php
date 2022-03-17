@@ -5,6 +5,7 @@ namespace NDC\BlogBundle\Repository;
 use Doctrine\ORM\EntityRepository;
 use NDC\BlogBundle\Entity\Image;
 use NDC\BlogBundle\Entity\Demo;
+use NDC\UserBundle\Entity\User;
 
 /**
  * ArticleRepository
@@ -111,6 +112,20 @@ class ArticleRepository extends EntityRepository
         return $this->createQueryBuilder('a')
             ->where('a.html LIKE :image')
             ->setParameter('image', "%{$image->getFileName()}%")
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findFutureByAuthor(User $user)
+    {
+        return $this->createQueryBuilder('a')
+            ->where('a.author = :author')
+            ->setParameter('author', $user)
+            ->andWhere('a.state = :state')
+            ->setParameter('state', 'published')
+            ->andWhere('a.createdAt > :now')
+            ->setParameter('now', new \DateTime())
+            ->orderBy('a.createdAt', 'ASC')
             ->getQuery()
             ->getResult();
     }

@@ -27,10 +27,14 @@ class DateExtension extends \Twig_Extension
         if($date == null)
             return '';
 
-        if((new \DateTime())->format('d-m-Y') == $date->format('d-m-Y'))
+        $now = new \DateTime();
+
+        if($now->format('d-m-Y') == $date->format('d-m-Y'))
             return "aujourd'hui";
         if((new \DateTime("-1day"))->format('d-m-Y') == $date->format('d-m-Y'))
             return "hier";
+        if((new \DateTime("+1day"))->format('d-m-Y') == $date->format('d-m-Y'))
+            return "demain";
 
         $elements = array();;
 
@@ -40,7 +44,7 @@ class DateExtension extends \Twig_Extension
         $elements[] = $date->format('j');
         $elements[] = $this->trans('month.'.$date->format('n'));
 
-        if($date->format('o') != (new \DateTime())->format('o'))
+        if($date->format('Y') != (new \DateTime())->format('Y'))
             $elements[] = $date->format('o');
 
         return implode(' ', $elements);
