@@ -96,7 +96,7 @@
             <ul class="nav navbar-nav">
                 {{ helper.navbar('Blog', {Articles:'blog_article_admin_index', Demos:'blog_demo_admin_index', Commentaires: 'blog_comment_admin_index'}, {Articles:'file-text-o', Demos:'code', Commentaires:'comment'}) }}
                 {{ helper.navbar('Système', {Techno:'blog_tech_admin_index', Categorie:'blog_category_admin_index', Image:'blog_image_admin_index'}) }}
-                {{ helper.navbar('Utilisateurs', {Utilisateurs:'blog_user_admin_index'}, {Utilisateurs:'user'}) }}
+                <li><a href="{{ path('blog_user_admin_index') }}">Utilisateurs</a></li>
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
@@ -194,7 +194,7 @@
                 css: 'CSS',
                 scss: 'SCSS',
                 twig: 'Twig',
-                yaml: 'YAML',
+                ruby: 'YAML',
                 sql: 'SQL'
             },
             filebrowserImageBrowseUrl: '{{ path('blog_image_admin_browse') }}',

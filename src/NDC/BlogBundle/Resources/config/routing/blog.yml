@@ -26,9 +26,13 @@ blog_demo:
         id: \d+
 
 blog_cgu:
-    pattern: /cgu
+    pattern: /conditions-generales-d-utilisation
     defaults: { _controller: NDCBlogBundle:Blog:cgu }
 
+blog_ccontact:
+    pattern: /nous-contacter
+    defaults: { _controller: NDCBlogBundle:Blog:contact }
+
 blog_authors:
-    pattern: /authors
+    pattern: /redacteurs
     defaults: { _controller: NDCBlogBundle:Blog:authors }

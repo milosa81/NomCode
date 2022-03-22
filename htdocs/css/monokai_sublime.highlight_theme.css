@@ -149,3 +149,10 @@
 .language-php .hljs-variable {
     color: rgb(167, 131, 228);
 }
+
+.language-scss .hljs-variable {
+    color: #fd971f;
+}
+.language-scss .hljs-attribute {
+    color: #66d9ef;
+}

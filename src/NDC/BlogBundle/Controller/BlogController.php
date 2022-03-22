@@ -6,9 +6,11 @@ namespace NDC\BlogBundle\Controller;
 use NDC\BlogBundle\Entity\Article;
 use NDC\BlogBundle\Entity\Comment;
 use NDC\BlogBundle\Entity\CommentMonitoring;
+use NDC\BlogBundle\Entity\Contact;
 use NDC\BlogBundle\Entity\Demo;
 use NDC\BlogBundle\Form\CommentType;
 
+use NDC\BlogBundle\Form\ContactType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Doctrine\ORM\EntityManager;
 use Knp\Component\Pager\Paginator;
@@ -165,7 +167,57 @@ class BlogController extends Controller
     /**
      * @Template
      */
-    public function cguAction() { return array(); }
+    public function cguAction()
+    {
+        return array();
+    }
+
+    /**
+     * @Template
+     */
+    public function faqAction()
+    {
+        return array();
+    }
+
+    /**
+     * @Template
+     */
+    public function contactAction(Request $request)
+    {
+        $contact = new Contact;
+        $form = $this->createForm(new ContactType, $contact);
+
+        if($request->isMethod('post')){
+            $form->handleRequest($request);
+
+            if($form->isValid()){
+                $to = $this->em->getRepository('NDCUserBundle:User')->findContacts();
+
+                $message = \Swift_Message::newInstance()
+                    ->setSubject('[NomDeCode] Nouveau message depuis le site web')
+                    ->setFrom(array('contact@nomdeco.de' => 'NomDeCode'))
+                    ->setTo($to)
+                    ->setBody(
+                        $this->renderView(
+                            'NDCBlogBundle:Blog:email.txt.twig',
+                            array(
+                                'contact' => $contact,
+                                'ip' => $_SERVER['REMOTE_ADDR'],
+                            )
+                        )
+                    )
+                ;
+                $this->get('mailer')->send($message);
+
+                return array();
+            }
+        }
+
+        return array(
+            'form' => $form->createView(),
+        );
+    }
 
     private function isArticleReadable($article) {
         if($article->getState() != 'published' || $article->getCreatedAt() > new \DateTime()) {

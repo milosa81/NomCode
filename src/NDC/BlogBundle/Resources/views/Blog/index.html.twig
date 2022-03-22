@@ -32,7 +32,7 @@
 			var velocity_steps = 0,
 				velocity_delay = 140,
 				velocity_duration = velocity_delay*1.5;
-			jQuery.fn.extend({
+			$.fn.extend({
 				velocity_delay: function(has_delay) {
 			    	return this.each(function() {
 			    		if(!has_delay)
@@ -73,14 +73,14 @@
 					{ "e": "#fourth-element #fiole1", "p": { translateY: -50 } },
 				];
 
-				jQuery.each(deploy, function(i, v) {
-					if(!("has_delay" in v))
-						$.extend(v, { "has_delay" : true } );
-					$.extend(v.p, { opacity: 0, scale: 0.8 } );
-				    svg.find(v.e)
+			$.each(deploy, function(i, v) {
+				if(!("has_delay" in v))
+					$.extend(v, { "has_delay" : true } );
+				$.extend(v.p, { opacity: 0, scale: 0.8 } );
+			    svg.find(v.e)
 				    .velocity(v.p, { duration: 0 })
 				    .velocity_reset_position(v.has_delay);
-				});
+			});
 
 			function code_animation(currentSide) {
 				var currentSide = currentSide || "1";

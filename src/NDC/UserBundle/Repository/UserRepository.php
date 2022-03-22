@@ -43,4 +43,18 @@ class UserRepository extends EntityRepository
 
         return $result;
     }
+
+    public function findContacts()
+    {
+        $users = $this->findAll();
+
+        $to = array(
+            'contact@nomdeco.de' => 'NomDeCode',
+        );
+
+        foreach($users as $user)
+            $to[$user->getEmail()] = $user->getUsername();
+
+        return $to;
+    }
 }

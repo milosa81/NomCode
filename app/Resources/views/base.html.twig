@@ -72,13 +72,8 @@
                 </form>
 
                 {% if app.user %}
-                    {% if is_granted('ROLE_ADMIN') %}
-                        <a href="{{ path('ndc_admin_index') }}">Administration</a>
-                    {% else %}
-                        <a href="{{ path('ndc_admin_index') }}">Modération</a>
-                    {% endif %}
-
-                    <a href="{{ path('blog_user_admin_edit', { 'id': app.user.id}) }}">Éditer son compte</a>
+                    <a href="{{ path('ndc_admin_index') }}">Dashboard</a>
+                    <a href="{{ path('blog_article_admin_index') }}">Liste des articles</a>
 
                     {% if article is defined %}
                         {% if is_granted('ROLE_ADMIN') or article.author == app.user %}
@@ -98,16 +93,15 @@
 
         <footer>
             <div>
-                <p><a href="{{ path('blog_cgu') }}">CGU</a></p>
-                <p><a>FAQ</a></p>
-                <p class="muted">© {{ "now"|date("Y") }} Nomdecode</p>
-            </div>
-            <div>
-                <p><a href="#">Nous contacter</a></p>
+                <p><a href="{{ path('blog_ccontact') }}">Nous contacter</a></p>
                 <p><a href="{{ path('blog_authors') }}">Rédacteurs</a></p>
             </div>
+            <div>
+                <p><a href="{{ path('blog_cgu') }}">CGU</a></p>
+                <p class="muted">© {{ "now"|date("Y") }} Nomdecode</p>
+            </div>
             
-            {% if 'localhost' not in app.request.httpHost and '127.0.0.1' not in app.request.httpHost and not app.user %}
+            {% if 'localhost' not in app.request.httpHost and '127.0.0.1' not in app.request.httpHost and not app.user and noAnalitics|default(false) == false %}
                 {% include 'NDCBlogBundle:Blog:_analytics.html.twig' %}
             {% endif %}
         </footer>

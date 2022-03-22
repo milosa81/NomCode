@@ -1,5 +1,7 @@
 {% extends '::base.html.twig' %}
 
+{% set noAnalitics = true %}
+
 {% block title %}Connexion | {{ parent() }}{% endblock %}
 
 {% block body %}
@@ -28,7 +30,7 @@
 
 	<h1>Se connecter</h1>
 
-	<form action="{{ path("fos_user_security_check") }}" method="post" class="input-dark">
+	<form action="{{ path("fos_user_security_check") }}" method="post" class="form-classic">
 	    <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
 
 	    <input type="text" id="username" name="_username" placeholder="Nom" value="{{ last_username }}" required="required" />

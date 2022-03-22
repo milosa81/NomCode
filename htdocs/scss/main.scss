@@ -33,7 +33,6 @@ $margin-for-blocks: 0.5rem;
 // imports needing variables
 @import "article_theme";
 
-
 // mixins
 @mixin author-photo($diameter) {
 	width: $diameter;
@@ -141,54 +140,6 @@ a {
 	outline: 0;
 }
 
-input[type=text], input[type=password], input[type=email], textarea {
-	$color-before-focus-white: transparentize($color-over-header, 0.2);
-	box-sizing: border-box;
-	padding-left: 10px;
-	background-color: transparent;
-	border: none;
-	border-bottom: 2px solid transparentize($color-before-focus-white, 0.4);
-	color: $color-over-header;
-	margin-bottom: 10px;
-	transition: border-bottom 0.3s;
-
-	&:focus {
-		color: $color-over-header;
-		border-bottom-color: $color-over-header;
-	}
-
-	&::-webkit-input-placeholder { color: $color-before-focus-white; }
-	&:-moz-placeholder { color: $color-before-focus-white; }
-	&::-moz-placeholder { color: $color-before-focus-white; }
-	&:-ms-input-placeholder { color: $color-before-focus-white; }
-}
-
-.input-dark {
-	input[type=text], input[type=password], input[type=email], textarea {
-		border-color: $color-before-focus;
-		color: $font-color-base;
-		width: 100%;
-
-		&:focus {
-			color: $font-color-base;
-			border-bottom-color: $font-color-base;
-		}
-
-		&::-webkit-input-placeholder { color: $color-before-focus; }
-		&:-moz-placeholder { color: $color-before-focus; }
-		&::-moz-placeholder { color: $color-before-focus; }
-		&:-ms-input-placeholder { color: $color-before-focus; }
-	}
-}
-
-input[type=text], input[type=password], input[type=email] {
-	height: $height-input-text;
-}
-
-textarea {
-	resize: vertical;
-}
-
 .btn {
 	display: inline-block;
 	border: none;
@@ -212,6 +163,68 @@ textarea {
 		display: block;
 		margin: auto;
 	}
+}
+
+input[type=text], input[type=password], input[type=email], textarea {
+	$color-before-focus-white: transparentize($color-over-header, 0.2);
+	box-sizing: border-box;
+	padding-left: 10px;
+	background-color: transparent;
+	border: none;
+	border-bottom: 2px solid transparentize($color-before-focus-white, 0.4);
+	color: $color-over-header;
+	margin-bottom: 10px;
+	transition: border-bottom 0.3s;
+
+	&:focus {
+		color: $color-over-header;
+		border-bottom-color: $color-over-header;
+	}
+
+	&::-webkit-input-placeholder { color: $color-before-focus-white; }
+	&:-moz-placeholder { color: $color-before-focus-white; }
+	&::-moz-placeholder { color: $color-before-focus-white; }
+	&:-ms-input-placeholder { color: $color-before-focus-white; }
+}
+
+.form-classic {
+	.btn {
+		background-color: $color-before-focus;
+		color: $color-over-header;
+
+		&:hover {
+			background-color: transparentize($color-before-focus, 0.3);
+		}
+	}
+
+	ul {
+		list-style-type: none;
+		color: #EC7676;
+	}
+
+	input[type=text], input[type=password], input[type=email], textarea {
+		border-color: $color-before-focus;
+		color: $font-color-base;
+		width: 100%;
+
+		&:focus {
+			color: $font-color-base;
+			border-bottom-color: $font-color-base;
+		}
+
+		&::-webkit-input-placeholder { color: $color-before-focus; }
+		&:-moz-placeholder { color: $color-before-focus; }
+		&::-moz-placeholder { color: $color-before-focus; }
+		&:-ms-input-placeholder { color: $color-before-focus; }
+	}
+}
+
+input[type=text], input[type=password], input[type=email] {
+	height: $height-input-text;
+}
+
+textarea {
+	resize: vertical;
 }
 
 .long-text {
@@ -585,9 +598,7 @@ footer {
 	margin: $margin-section/2 auto;
 	display: flex;
 	justify-content: center;
-	height: 120px;
 	color: $font-color-article;
-	// background-color: $font-color-article;
 
 	div {
 		margin: 0 30px;
