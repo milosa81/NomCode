@@ -8,8 +8,8 @@
 	{% for author in authors %}
 		<div class="article-author list-authors">
 			<div class="container">
-					<a class="author"title="Rédacteur : {{ author.username }}">{{ author.username }}</a>
-					<a title="Rédacteur : {{ author.username }}">
+					<a href="{{ path('blog_search', {q: author.username}) }}" class="author" title="Rédacteur : {{ author.username }}">{{ author.username }}</a>
+					<a href="{{ path('blog_search', {q: author.username}) }}" title="Rédacteur : {{ author.username }}">
 						<img src="{{ asset(author.webPath) }}" class="author-img">
 					</a>
 					<p>{{ author.desc|raw }}</p>

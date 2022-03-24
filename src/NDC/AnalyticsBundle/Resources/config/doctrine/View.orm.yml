@@ -1,0 +1,22 @@
+NDC\AnalyticsBundle\Entity\View:
+    type: entity
+    table: ndc_view
+    repositoryClass: NDC\AnalyticsBundle\Repository\ViewRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        sessionId:
+            type: string
+            length: 255
+            column: session_id
+        createdAt:
+            type: datetime
+            column: created_at
+
+    manyToOne:
+        article:
+            targetEntity: NDC\BlogBundle\Entity\Article

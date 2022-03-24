@@ -1,3 +1,7 @@
+ndc_analytics_bundle:
+    resource: "@NDCAnalyticsBundle/Resources/config/routing.yml"
+    prefix:   /
+
 ndc_blog_bundle:
     resource: "@NDCBlogBundle/Resources/config/routing.yml"
     prefix:   /

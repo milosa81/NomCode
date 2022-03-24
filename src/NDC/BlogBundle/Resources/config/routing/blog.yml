@@ -29,10 +29,14 @@ blog_cgu:
     pattern: /conditions-generales-d-utilisation
     defaults: { _controller: NDCBlogBundle:Blog:cgu }
 
-blog_ccontact:
+blog_contact:
     pattern: /nous-contacter
     defaults: { _controller: NDCBlogBundle:Blog:contact }
 
 blog_authors:
     pattern: /redacteurs
     defaults: { _controller: NDCBlogBundle:Blog:authors }
+
+blog_set_view_session_id:
+    pattern: /set-view-session-id/{id}
+    defaults: { _controller: NDCBlogBundle:Blog:setViewSessionId }

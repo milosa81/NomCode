@@ -37,6 +37,7 @@ class AppKernel extends Kernel
             // NDC
             new NDC\UserBundle\NDCUserBundle(),
             new NDC\BlogBundle\NDCBlogBundle(),
+            new NDC\AnalyticsBundle\NDCAnalyticsBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

@@ -91,8 +91,15 @@
 {% endblock %}
 
 {% block javascripts %}
-{{ parent() }}
-<script src="{{ asset('js/ajax-comment.js') }}"></script>
-<script src="{{ asset('js/highlight.pack.js') }}"></script>
-<script>hljs.initHighlightingOnLoad();</script>
+    {{ parent() }}
+    <script src="{{ asset('js/ajax-comment.js') }}"></script>
+    <script src="{{ asset('js/highlight.pack.js') }}"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    {% if not app.user and view.sessionId is empty %}
+        <script type="text/javascript">
+            $(function(){
+                $.get('{{ path('blog_set_view_session_id', {id:view.id}) }}');
+            });
+        </script>
+    {% endif %}
 {% endblock %}

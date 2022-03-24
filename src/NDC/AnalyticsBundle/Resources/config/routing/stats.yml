@@ -1,0 +1,3 @@
+analytics_article:
+    pattern: /article/{id}
+    defaults: { _controller: NDCAnalyticsBundle:Stats:article }

@@ -6,13 +6,15 @@
     <section class="container spacer">
         <h1>Nous contacter</h1>
 
-		{% if form is defined %}
-			{{ form_start(form, {'attr': {'class': 'form-classic'}}) }}
-	    		{{ form_widget(form) }}
-	        {{ form_end(form) }}
-		{% else %}
-			<p style="color:#4EB56E;text-align:center;"><i class="fa fa-check"></i> Le message a bien été envoyé, nous lirons ça sous peu !</p>
-		{% endif %}
-        
+        {% for label, flashes in app.session.flashbag.all %}
+	        {% for flash in flashes %}
+	        	<p style="color:#4EB56E;"><i class="fa fa-check"></i> {{ flash }}</p>
+	        {% endfor %}
+	    {% endfor %}
+
+		{{ form_start(form, {'attr': {'class': 'form-classic'}}) }}
+	    	{{ form_widget(form) }}
+	    {{ form_end(form) }}
+
     </section>
 {% endblock %}

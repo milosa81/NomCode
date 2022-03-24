@@ -1,0 +1,3 @@
+ndc_analytics_bundle_stats:
+    resource: routing/stats.yml
+    prefix: /admin/stats

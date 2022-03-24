@@ -11,7 +11,7 @@
 	</a>
 	
 	<div class="information muted">
-		<a  href="{{ path('blog_search', {q: article.author.username}) }}" title="Rédacteur : {{ article.author.username }}">
+		<a href="{{ path('blog_search', {q: article.author.username}) }}" title="Rédacteur : {{ article.author.username }}">
 			<img src="{{ asset(article.author.webPath) }}" class="author-img">
 		</a>
 		<a class="author" href="{{ path('blog_search', {q: article.author.username}) }}" title="Rédacteur : {{ article.author.username }}">

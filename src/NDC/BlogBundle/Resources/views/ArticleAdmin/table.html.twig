@@ -1,19 +1,15 @@
 <table class="table table-bordered table-striped table-condensed table-hover">
     <tr>
-        <th>ID</th>
-        <th></th>
+        <th style="width: 32px;"></th>
         <th>Titre</th>
         <th>Vues</th>
-        <th>Technos</th>
         <th>Auteur</th>
         <th>Publié le</th>
         <th>Edité le</th>
-        <th title="Commentaires">Com.</th>
         <th>Actions</th>
     </tr>
     {% for article in articles %}
         <tr>
-            <td>{{ article.id }}</td>
             {% if article.state == 'published' %}
                 <td class="success text-center" title="Publié">
                     {% if article.createdAt > date("now") %}
@@ -35,29 +31,40 @@
                 <a href="{{ path('blog_article', {id: article.id, category: article.category.slug, slug:article.slug}) }}">
                     {{ article }}
                 </a>
-            </td>
-            <td>{{ article.views }}</td>
-            <td>
                 {{ helper.tech(article.category) }}
                 {% for tech in article.tech %}
                     {{ helper.tech(tech) }}
                 {% endfor %}
             </td>
+            <td>{{ article.views }}</td>
             <td>{{ article.author }}</td>
             <td>{{ article.createdAt|fullDate }}</td>
             <td>{{ article.updatedAt|fullDate }}</td>
-            <td>{{ article.comments|length }}</td>
             <td>
                 <div class="btn-group btn-group-xs">
                     <a class="btn btn-default" href="{{ path('blog_article_admin_edit', {id: article.id}) }}">
                         <i class="glyphicon glyphicon-pencil"></i>
                         Editer
                     </a>
-                    <a class="btn btn-danger">
+                </div>
+                <div class="btn-group btn-group-xs">
+                    {% if article.state != 'draft' %}
+                        <a class="btn btn-info" data-p="analytics" title="Statistiques">
+                            <i class="glyphicon glyphicon-stats"></i>
+                        </a>
+                    {% endif %}
+                    {# <a class="btn btn-danger">
                         <i class="glyphicon glyphicon-remove"></i>
-                    </a>
+                    </a> #}
                 </div>
             </td>
         </tr>
+        {% if article.state != 'draft' %}
+            <tr style="display:none;">
+                <td colspan="7">
+                    ANALYTICS
+                </td>
+            </tr>
+        {% endif %}
     {% endfor %}
 </table>

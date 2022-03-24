@@ -10,3 +10,12 @@
     {{ knp_pagination_render(articles) }}
 
 {% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	<script>
+		$('[data-p="analytics"]').on('click', function () {
+			$(this).closest('tr').next().toggle();
+		});
+	</script>
+{% endblock %}

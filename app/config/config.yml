@@ -51,6 +51,13 @@ doctrine:
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
         auto_mapping: true
+        dql:
+            datetime_functions:
+                date:     Luxifer\DQL\Datetime\Date
+                date_format:     Luxifer\DQL\Datetime\DateFormat
+                day:     Luxifer\DQL\Datetime\Day
+                month:     Luxifer\DQL\Datetime\Month
+                year:     Luxifer\DQL\Datetime\Year
         filters:
             softdeleteable:
                 class: Gedmo\SoftDeleteable\Filter\SoftDeleteableFilter
