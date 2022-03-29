@@ -5,6 +5,7 @@ namespace NDC\AnalyticsBundle\Repository;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query;
 use NDC\BlogBundle\Entity\Article;
+use NDC\UserBundle\Entity\User;
 
 /**
  * ViewRepository
@@ -14,21 +15,161 @@ use NDC\BlogBundle\Entity\Article;
  */
 class ViewRepository extends EntityRepository
 {
-    /**
-     * @param Article $article
-     * @param string $groupBy MYSQL syntax for date format
-     * @return array
-     */
-    public function articleStats(Article $article, $groupBy = '%j%y')
+    public function articleStats(Article $article, \DateTime $from, \DateTime $to, $step = '+1 day', $groupBy = '%j%y', $format = 'Y, m -1, d')
     {
-        return $this->createQueryBuilder('v')
+        $data = array();
+        $i = new \DateTime($from->format('Y-m-d H:i:sP'));
+
+        while($i <= $to){
+            $data[$i->format($format)] = 0;
+            $i->modify($step);
+        }
+
+        $result = $this->createQueryBuilder('v')
             ->select('DATE_FORMAT(v.createdAt, :groupBy) HIDDEN groupByDate, COUNT(DISTINCT v.sessionId) total, v.createdAt')
             ->setParameter('groupBy', $groupBy)
             ->where('v.article = :article')
             ->setParameter('article', $article)
+            ->andWhere('v.createdAt >= :from AND v.createdAt <= :to')
+            ->setParameter('from', $from)
+            ->setParameter('to', $to->setTime(23, 59, 59))
             ->groupBy('groupByDate')
             ->orderBy('v.createdAt', 'ASC')
             ->getQuery()
             ->getResult(Query::HYDRATE_ARRAY);
+
+        foreach($result as $r)
+            $data[$r['createdAt']->format($format)] = intval($r['total']);
+
+        return $data;
+    }
+
+    public function articleCumulativeStats(Article $article, \DateTime $from, \DateTime $to, $step = '+1 day', $format = 'Y, m -1, d')
+    {
+        $groupBy = '%j%y';
+
+        $allViews = $this->createQueryBuilder('v')
+            ->select('DATE_FORMAT(v.createdAt, :groupBy) HIDDEN groupByDate, COUNT(DISTINCT v.sessionId) total')
+            ->setParameter('groupBy', $groupBy)
+            ->where('v.article = :article')
+            ->setParameter('article', $article)
+            ->groupBy('groupByDate')
+            ->getQuery()
+            ->getResult(Query::HYDRATE_ARRAY);
+
+        $total = 0;
+        foreach($allViews as $v)
+            $total += $v['total'];
+
+        $data = array();
+        $i = new \DateTime($from->format('Y-m-d H:i:sP'));
+        $last = null;
+
+        while($i <= $to){
+            $last = $i->format($format);
+            $data[$last] = 0;
+            $i->modify($step);
+        }
+
+        $views = $this->articleStats($article, $from, $to);
+
+        $data[$last] = $total;
+        $keys = array_keys($views);
+        for($i = count($views) -1; $i > 0; --$i)
+            $data[$keys[$i -1]] = $data[$keys[$i]] - $views[$keys[$i]];
+
+        return $data;
+    }
+
+    public function readersStats(\DateTime $from, \DateTime $to, $step = '+1 day', $groupBy = '%j%y', $format = 'Y, m -1, d')
+    {
+        $data = array();
+        $i = new \DateTime($from->format('Y-m-d H:i:sP'));
+
+        while($i <= $to){
+            $data[$i->format($format)] = 0;
+            $i->modify($step);
+        }
+
+        $result = $this->createQueryBuilder('v')
+            ->select('DATE_FORMAT(v.createdAt, :groupBy) HIDDEN groupByDate, COUNT(DISTINCT v.sessionId) total, v.createdAt')
+            ->setParameter('groupBy', $groupBy)
+            ->andWhere('v.createdAt >= :from AND v.createdAt <= :to')
+            ->setParameter('from', $from)
+            ->setParameter('to', $to->setTime(23, 59, 59))
+            ->groupBy('groupByDate')
+            ->orderBy('v.createdAt', 'ASC')
+            ->getQuery()
+            ->getResult(Query::HYDRATE_ARRAY);
+
+        foreach($result as $r)
+            $data[$r['createdAt']->format($format)] = intval($r['total']);
+
+        return $data;
+    }
+
+    public function authorStats(User $author, \DateTime $from, \DateTime $to, $step = '+1 day', $groupBy = '%j%y', $format = 'Y, m -1, d')
+    {
+        $data = array();
+        $i = new \DateTime($from->format('Y-m-d H:i:sP'));
+
+        while($i <= $to){
+            $data[$i->format($format)] = 0;
+            $i->modify($step);
+        }
+
+        $result = $this->createQueryBuilder('v')
+            ->select('DATE_FORMAT(v.createdAt, :groupBy) HIDDEN groupByDate, COUNT(DISTINCT v.sessionId) total, v.createdAt')
+            ->setParameter('groupBy', $groupBy)
+            ->join('v.article', 'a')
+            ->where('a.author = :author')
+            ->setParameter('author', $author)
+            ->andWhere('v.createdAt >= :from AND v.createdAt <= :to')
+            ->setParameter('from', $from)
+            ->setParameter('to', $to->setTime(23, 59, 59))
+            ->groupBy('groupByDate')
+            ->orderBy('v.createdAt', 'ASC')
+            ->getQuery()
+            ->getResult(Query::HYDRATE_ARRAY);
+
+        foreach($result as $r)
+            $data[$r['createdAt']->format($format)] = intval($r['total']);
+
+        return $data;
+    }
+
+    public function articlesPerSessionStats(\DateTime $from, \DateTime $to, $step = '+1 day', $groupBy = '%j%y', $format = 'Y, m -1, d')
+    {
+        $data = array();
+        $total = array();
+        $i = new \DateTime($from->format('Y-m-d H:i:sP'));
+
+        while($i <= $to){
+            $data[$i->format($format)] = 0;
+            $total[$i->format($format)] = 0;
+            $i->modify($step);
+        }
+
+        $result = $this->createQueryBuilder('v')
+            ->select('DATE_FORMAT(v.createdAt, :groupBy) HIDDEN groupByDate, COUNT(DISTINCT v.article) total, v.createdAt, v.sessionId')
+            ->setParameter('groupBy', $groupBy)
+            ->andWhere('v.createdAt >= :from AND v.createdAt <= :to')
+            ->setParameter('from', $from)
+            ->setParameter('to', $to->setTime(23, 59, 59))
+            ->groupBy('groupByDate, v.sessionId')
+            ->orderBy('v.createdAt', 'ASC')
+            ->getQuery()
+            ->getResult(Query::HYDRATE_ARRAY);
+
+        foreach($result as $r){
+            $data[$r['createdAt']->format($format)] += intval($r['total']);
+            $total[$r['createdAt']->format($format)] += 1;
+        }
+
+        foreach($data as $key => $val)
+            $data[$key] = $total[$key] === 0 ? 0 : $val / $total[$key];
+
+        return $data;
+
     }
 }

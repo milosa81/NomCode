@@ -75,6 +75,27 @@
         <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
         <link href="{{ asset('css/admin.css') }}" rel="stylesheet">
+
+        <script type="text/javascript" src="{{ asset('js/jquery.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/highcharts.js') }}"></script>
+        <script>
+            $(function () {
+                Highcharts.setOptions({
+                    lang: {
+                        months: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin',  'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
+                        shortMonths: ['Jan', 'Fév', 'Mars', 'Avr', 'Mai', 'Juin', 'Juil', 'Août', 'Sept', 'Oct', 'Nov', 'Déc'],
+                        weekdays: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
+                        decimalPoint: ',',
+                        thousandsSep: ' ',
+                        loading: 'Chargement...',
+                        rangeSelectorFrom: 'De',
+                        rangeSelectorTo: 'à',
+                        resetZoom: 'Réinitialiser le zoom',
+                        resetZoomTitle: 'Réinitialiser le zoom à 1:1'
+                    }
+                });
+            });
+        </script>
     {% endblock %}
 </head>
 
@@ -172,7 +193,6 @@
 </div>
 
 {% block javascripts %}
-<script type="text/javascript" src="{{ asset('js/jquery.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/bootstrap.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/ajax-save.js') }}"></script>
 <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>

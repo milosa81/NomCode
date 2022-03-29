@@ -15,7 +15,26 @@
 	{{ parent() }}
 	<script>
 		$('[data-p="analytics"]').on('click', function () {
-			$(this).closest('tr').next().toggle();
+			var $this = $(this),
+				$analytics = $this.closest('tr').next();
+			if(!$this.find('.fa-spinner').length) {
+				if (!$.trim($analytics.children('td').html())) {
+					$this.append('<i class="fa fa-spinner fa-spin"></i>');
+					$.ajax({
+						url: $this.data('route'),
+						type: 'post',
+						success: function (data) {
+							$analytics.show();
+							$analytics.children('td').html(data);
+						},
+						complete: function(data) {
+							$this.find('.fa-spinner').remove();
+						}
+					});
+				} else {
+					$analytics.toggle();
+				}
+			}
 		});
 	</script>
 {% endblock %}

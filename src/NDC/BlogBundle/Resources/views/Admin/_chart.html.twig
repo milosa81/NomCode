@@ -1,0 +1,38 @@
+{% if title is defined %}
+	<h4 class="text-center">{{ title|raw }}</h4>
+{% endif %}
+<div id="{{ selector }}" class="chart"></div>
+<script>
+    $(function () {
+        $('#{{ selector }}').highcharts({
+            chart: {type: '{{ type|default("column") }}' },
+            title: {text: ''},
+            xAxis: {
+                type: 'datetime',
+                dateTimeLabelFormats: {
+                    day: '%e %b',
+                    week: '%e %b',
+                    month: '%b %Y'
+                }
+            },
+            yAxis: {
+                allowDecimals: false,
+                min: 0,
+                title: {text: ''},
+            },
+            legend: {enabled: false},
+            credits: {enabled: false},
+            series: [{
+                pointInterval: 24 * 3600 * 1000,
+                pointStart: Date.UTC({{ data|keys|first }}),
+                groupPadding: 0,
+                tooltip: {
+                    dateTimeLabelFormats: {day:"%a %e %b"},
+                    pointFormat: '<b> {% if decimal is defined %}{point.y:,.1f}{% else %}{point.y:,.0f}{% endif %} </b>',
+                    valueDecimals: 2
+                },
+                data: [{{ data|join(',') }}]
+            }]
+        });
+    });
+</script>

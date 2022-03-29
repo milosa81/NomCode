@@ -29,10 +29,25 @@ class AdminController extends Controller
 
         $unseen = $this->em->getRepository('NDCBlogBundle:Comment')->findUnseen($this->getUser());
 
+        // Analytics
+        $now = new \DateTime;
+        $now->setTime(0,0);
+
+        $from = new \DateTime;
+        $from->setTime(0,0);
+        $from->modify('-2 weeks');
+
+        $stats = array(
+            'readers' => $this->em->getRepository('NDCAnalyticsBundle:View')->readersStats($from, $now),
+            'myreaders' => $this->em->getRepository('NDCAnalyticsBundle:View')->authorStats($this->getUser(), $from, $now),
+            'persession' => $this->em->getRepository('NDCAnalyticsBundle:View')->articlesPerSessionStats($from, $now),
+        );
+
         return array(
             'wip' => $wip,
             'future' => $future,
             'unseen' => $unseen,
+            'stats' => $stats,
         );
     }
 }
