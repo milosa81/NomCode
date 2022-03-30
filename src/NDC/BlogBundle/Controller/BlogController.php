@@ -66,11 +66,8 @@ class BlogController extends Controller
             return $this->redirect($this->generateUrl('blog_article', array('id'=>$article->getId(), 'category' => $article->getCategory()->getSlug(), 'slug'=>$article->getSlug())), 301);
 
         // View counter
-        $view = new View($article);
+        $view = new View($article, $this->get('session')->getId());
         if($this->getUser() === null){
-            $article->setViews($article->getViews() +1);
-
-            $this->em->persist($article);
             $this->em->persist($view);
             $this->em->flush();
         }
@@ -244,7 +241,7 @@ class BlogController extends Controller
         if($view->getSessionId() != '')
             throw new BadRequestHttpException;
 
-        $view->setSessionId(session_id());
+        $view->setSessionId($this->get('session')->getId());
         $this->em->persist($view);
         $this->em->flush();
 

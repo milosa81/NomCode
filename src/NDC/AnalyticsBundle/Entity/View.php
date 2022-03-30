@@ -30,11 +30,11 @@ class View
      */
     private $article;
 
-    public function __construct(Article $article)
+    public function __construct(Article $article, $sessionId)
     {
         $this->article = $article;
         $this->createdAt = new \DateTime;
-        $this->sessionId = session_id();
+        $this->sessionId = $sessionId;
     }
 
     /**

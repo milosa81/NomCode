@@ -350,33 +350,15 @@ class Article
     {
         return $this->comments;
     }
-    /**
-     * @var integer
-     */
-    private $views;
-
 
     /**
-     * Set views
+     * Get demo
      *
-     * @param integer $views
-     * @return Article
+     * @return \NDC\BlogBundle\Entity\Demo
      */
-    public function setViews($views)
+    public function getDemo()
     {
-        $this->views = $views;
-
-        return $this;
-    }
-
-    /**
-     * Get views
-     *
-     * @return integer 
-     */
-    public function getViews()
-    {
-        return $this->views;
+        return $this->demo;
     }
 
     /**
@@ -390,15 +372,5 @@ class Article
         $this->demo = $demo;
 
         return $this;
-    }
-
-    /**
-     * Get demo
-     *
-     * @return \NDC\BlogBundle\Entity\Demo 
-     */
-    public function getDemo()
-    {
-        return $this->demo;
     }
 }

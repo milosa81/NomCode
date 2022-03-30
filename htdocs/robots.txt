@@ -2,3 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /demo/
 Disallow: /search*
+Disallow: /set-view-session-id*
